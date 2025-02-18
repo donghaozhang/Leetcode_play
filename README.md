@@ -10,3 +10,4 @@
 | 通配符匹配 (Wildcard Matching)                     | 44              |
 | 编辑距离 (Edit Distance)                           | 72              |
 | 单词划分 (Word Break)                              | 139             |
+| 解码方法 (Decode Ways)                             | 91              |
