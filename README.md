@@ -1,27 +1,41 @@
-# Leetcode_play
+# LeetCode 题解
 
-## Problem List
+这个仓库包含了我的 LeetCode 题解，按照不同的算法类型进行分类。每个题目都包含了详细的解题思路和 Python 实现。
 
-| Problem Name (中文/英文)                           | LeetCode Number | Solution |
-| -------------------------------------------------- | --------------- | -------- |
-| [最长回文子串](longest_palindrome.md) (Longest Palindromic Substring) | 5 | [Python](longest_palindrome.py) |
-| [石子归并](stone_game.md) (Merge Stones) | N/A | [Python](stone_game.py) |
-| [戳气球](burst_balloons.md) (Burst Balloons) | 312 | [Python](burst_balloons.py) |
-| [通配符匹配](wildcard_matching.md) (Wildcard Matching) | 44 | [Python](wildcard_matching.py) |
-| [编辑距离](edit_distance.md) (Edit Distance) | 72 | [Python](edit_distance.py) |
-| [单词划分](word_break.md) (Word Break) | 139 | [Python](word_break.py) |
-| [解码方法](decode_ways.md) (Decode Ways) | 91 | [Python](decode_ways.py) |
-| [复印书籍](copy_books.md) (Copy Books) | N/A | [Python](copy_books.py) |
-| [最长上升子序列](longest_increasing_subsequence.md) (Longest Increasing Subsequence) | 300 | [Python](longest_increasing_subsequence.py) |
-| [最大整除子集](largest_divisible_subset.md) (Largest Divisible Subset) | N/A | [Python](largest_divisible_subset.py) |
-| [最小栈](min_stack.md) (Min Stack) | 155 | [Python](min_stack.py) |
-| [最大栈](max_stack.md) (Max Stack) | N/A | [Python](max_stack.py) |
-| [两个队列实现栈](stack_by_two_queues.md) (Stack by Two Queues) | N/A | [Python](stack_by_two_queues.py) |
-| [N皇后II](n_queens_ii.md) (N Queens II) | 52 | [Python](n_queens_ii.py) |
-| [数独](sudoku_solver.md) (Sudoku Solver) | 37 | [Python](sudoku_solver.py) |
-| [数字三角形](triangle.md) (Triangle) | 120 | [Python](triangle.py) |
 
-## 说明
-- 点击题目名称可以查看详细的问题描述和解题思路
-- 点击 Python 链接可以查看对应的代码实现
-- LeetCode Number 为 N/A 表示该题在 LeetCode 上没有对应题号
+## Dynamic Programming
+
+- 最长上升子序列 / Longest Increasing Subsequence - [Python](leetcode_questions/dynamic_programming/longest_increasing_subsequence/longest_increasing_subsequence.py) - [题解](leetcode_questions/dynamic_programming/longest_increasing_subsequence/longest_increasing_subsequence.md)
+- 回文子串 / Palindrome Substring - Python - [题解](leetcode_questions/dynamic_programming/palindrome/palindrome_substring.md)
+- 石子游戏 / Stone Game - [Python](leetcode_questions/dynamic_programming/stone_game/stone_game.py) - [题解](leetcode_questions/dynamic_programming/stone_game/stone_game.md)
+- 戳气球 / Burst Balloons - [Python](leetcode_questions/dynamic_programming/burst_balloons/burst_balloons.py) - [题解](leetcode_questions/dynamic_programming/burst_balloons/burst_balloons.md)
+- 三角形最小路径和 / Triangle - [Python](leetcode_questions/dynamic_programming/triangle/triangle.py) - [题解](leetcode_questions/dynamic_programming/triangle/triangle.md)
+- 解码方法 / Decode Ways - [Python](leetcode_questions/dynamic_programming/decode_ways/decode_ways.py) - [题解](leetcode_questions/dynamic_programming/decode_ways/decode_ways.md)
+- 复制书籍 / Copy Books - [Python](leetcode_questions/dynamic_programming/copy_books/copy_books.py) - [题解](leetcode_questions/dynamic_programming/copy_books/copy_books.md)
+- 最大整除子集 / Largest Divisible Subset - [Python](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.py) - [题解](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.md)
+
+## String Processing
+
+- 通配符匹配 / Wildcard Matching - [Python](leetcode_questions/string_processing/wildcard_matching/wildcard_matching.py) - [题解](leetcode_questions/string_processing/wildcard_matching/wildcard_matching.md)
+- 编辑距离 / Edit Distance - [Python](leetcode_questions/string_processing/edit_distance/edit_distance.py) - [题解](leetcode_questions/string_processing/edit_distance/edit_distance.md)
+- 单词拆分 / Word Break - [Python](leetcode_questions/string_processing/word_break/word_break.py) - [题解](leetcode_questions/string_processing/word_break/word_break.md)
+
+## Data Structure
+
+- 最大栈 / Max Stack - [Python](leetcode_questions/data_structure/max_stack/max_stack.py) - [题解](leetcode_questions/data_structure/max_stack/max_stack.md)
+- 用两个队列实现栈 / Stack Using Two Queues - [Python](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.py) - [题解](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.md)
+- 用两个栈实现队列 / Queue Using Two Stacks - [Python](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.py) - [题解](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.md)
+
+## Backtracking
+
+- N皇后 II / N-Queens II - [Python](leetcode_questions/backtracking/n_queens/n_queens_ii.py)
+- 子集 / Subsets - [Python](leetcode_questions/backtracking/subsets/subsets.py) - [题解](leetcode_questions/backtracking/subsets/subsets.md)
+
+## Game Theory
+
+- Bash游戏 / Bash Game - [Python](leetcode_questions/game_theory/bash_game/bash_game.py) - [题解](leetcode_questions/game_theory/bash_game/bash_game.md)
+
+## Graph Search
+
+- 骑士最短路径 / Knight Shortest Path - [Python](leetcode_questions/graph_search/knight_shortest_path/knight_shortest_path.py) - [题解](leetcode_questions/graph_search/knight_shortest_path/knight_shortest_path.md)
+- 单词接龙 / Word Ladder - [Python](leetcode_questions/graph_search/word_ladder/word_ladder.py) - [题解](leetcode_questions/graph_search/word_ladder/word_ladder.md)
