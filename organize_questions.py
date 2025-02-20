@@ -5,44 +5,10 @@ import subprocess
 
 # 按照题目类型归类文件
 question_types = {
-    'dynamic_programming': {
-        'longest_increasing_subsequence': [
-            'longest_increasing_subsequence.py',
-            'longest_increasing_subsequence.md',
-            'Longest_Increasing_Subsequence_Explanation.md'
-        ],
-        'palindrome': ['palindrome_substring.md', 'longest_palindrome.md'],
-        'stone_game': ['stone_game.md', 'stone_game.py'],
-        'burst_balloons': ['burst_balloons.md', 'burst_balloons.py'],
-        'triangle': ['triangle.md', 'triangle.py'],
-        'decode_ways': ['decode_ways.md', 'decode_ways.py'],
-        'copy_books': ['copy_books.md', 'copy_books.py'],
-        'largest_divisible_subset': ['largest_divisible_subset.md', 'largest_divisible_subset.py']
-    },
-    'string_processing': {
-        'wildcard_matching': ['wildcard_matching.md', 'wildcard_matching.py'],
-        'edit_distance': ['edit_distance.md', 'edit_distance.py'],
-        'word_break': ['word_break.md', 'word_break.py']
-    },
-    'data_structure': {
-        'max_stack': ['max_stack.md', 'max_stack.py'],
-        'stack_by_two_queues': ['stack_by_two_queues.md', 'stack_by_two_queues.py'],
-        'queue_by_two_stacks': ['queue_by_two_stacks.md', 'queue_by_two_stacks.py']
-    },
     'backtracking': {
-        'n_queens': ['n_queens_ii.py'],
         'subsets': ['subsets.md', 'subsets.py']
     },
-    'game_theory': {
-        'bash_game': ['bash_game.md', 'bash_game.py']
-    },
     'graph_search': {
-        'knight_shortest_path': [
-            'knight_shortest_path.md', 
-            'knight_shortest_path.py',
-            'knight_shortest_path_ii.md',
-            'knight_shortest_path_ii.py'
-        ],
         'word_ladder': ['word_ladder.md', 'word_ladder.py']
     },
     'math': {
@@ -53,24 +19,7 @@ question_types = {
 def update_readme():
     # 题目中英文对照
     question_translations = {
-        'longest_increasing_subsequence': ('最长上升子序列', 'Longest Increasing Subsequence'),
-        'palindrome': ('回文子串', 'Palindrome Substring'),
-        'stone_game': ('石子游戏', 'Stone Game'),
-        'burst_balloons': ('戳气球', 'Burst Balloons'),
-        'triangle': ('三角形最小路径和', 'Triangle'),
-        'decode_ways': ('解码方法', 'Decode Ways'),
-        'copy_books': ('复制书籍', 'Copy Books'),
-        'largest_divisible_subset': ('最大整除子集', 'Largest Divisible Subset'),
-        'wildcard_matching': ('通配符匹配', 'Wildcard Matching'),
-        'edit_distance': ('编辑距离', 'Edit Distance'),
-        'word_break': ('单词拆分', 'Word Break'),
-        'max_stack': ('最大栈', 'Max Stack'),
-        'stack_by_two_queues': ('用两个队列实现栈', 'Stack Using Two Queues'),
-        'queue_by_two_stacks': ('用两个栈实现队列', 'Queue Using Two Stacks'),
-        'n_queens': ('N皇后 II', 'N-Queens II'),
         'subsets': ('全子集', 'Subsets [LintCode 17]'),
-        'bash_game': ('Bash游戏', 'Bash Game'),
-        'knight_shortest_path': ('骑士最短路径', 'Knight Shortest Path'),
         'word_ladder': ('单词接龙', 'Word Ladder [LintCode 120]'),
         'fast_power': ('快速幂', 'Fast Power [LintCode 140]')
     }
