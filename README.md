@@ -57,3 +57,4 @@
 ## Array
 * 滑动窗口求和 / Window Sum [LintCode] - [Python](leetcode_questions/array/window_sum/window_sum.py) - [题解](leetcode_questions/array/window_sum/window_sum.md)
 * K次替换后的最长重复字符 / Longest Repeating Character Replacement [LintCode] - [Python](leetcode_questions/array/longest_repeating_character/longest_repeating_character.py) - [题解](leetcode_questions/array/longest_repeating_character/longest_repeating_character.md)
+* 两数之差 / Two Sum Difference [LintCode] - [Python](leetcode_questions/array/two_sum_difference/two_sum_difference.py) - [题解](leetcode_questions/array/two_sum_difference/two_sum_difference.md)
