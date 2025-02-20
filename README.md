@@ -3,6 +3,8 @@
 这个仓库包含了我的 LeetCode 题解，按照不同的算法类型进行分类。
 部分题目正在完善中...
 
+## Binary Search
+* 搜索二维矩阵 / Search 2D Matrix - [Python](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.py) - [题解](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.md)
 
 ## Dynamic Programming
 
