@@ -6,6 +6,7 @@
 ## Binary Search
 * 搜索二维矩阵 / Search 2D Matrix - [Python](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.py) - [题解](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.md)
 * 搜索二维矩阵 II / Search 2D Matrix II [LintCode] - [Python](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.py) - [题解](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.md)
+* 最小黑色像素矩形 / Smallest Rectangle Enclosing Black Pixels [LintCode] - [Python](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.py) - [题解](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.md)
 
 ## Dynamic Programming
 
