@@ -1,6 +1,3 @@
-import os
-import shutil
-import glob
 import subprocess
 
 # 按照题目类型归类文件
@@ -104,15 +101,14 @@ def update_readme():
             elif question == 'subsets':
                 problem_link = "http://www.lintcode.com/problem/subsets"
             
-            # 查找 Python 文件
+            # 生成文件链接
             python_file = next((f for f in files if f.endswith('.py')), None)
             python_link = f"[Python](leetcode_questions/{type_name}/{question}/{python_file})" if python_file else "Python"
             
-            # 查找 Markdown 文件（说明文件）
             md_file = next((f for f in files if f.endswith('.md') and not f.startswith('README')), None)
             solution_link = f"[题解](leetcode_questions/{type_name}/{question}/{md_file})" if md_file else ""
             
-            # 生成题目行，添加题目链接
+            # 生成题目行
             readme_content += f"- {chinese_name} / {english_name}"
             if problem_link:
                 readme_content += f" - [题目链接]({problem_link})"
@@ -121,7 +117,7 @@ def update_readme():
                 readme_content += f" - {solution_link}"
             readme_content += "\n"
             
-            # 如果有题目描述，添加描述
+            # 添加题目描述
             if question in problem_descriptions:
                 readme_content += f"```\n{problem_descriptions[question].strip()}\n```\n\n"
     
@@ -130,20 +126,14 @@ def update_readme():
 
 def git_commit_and_push():
     try:
-        # 检查是否有更改需要提交
         status = subprocess.run(['git', 'status', '--porcelain'], 
                               capture_output=True, 
                               text=True)
         
         if status.stdout.strip():
-            # 添加所有更改
             subprocess.run(['git', 'add', '.'], check=True)
-            
-            # 提交更改
-            commit_message = "整理 LeetCode 题解文件结构"
+            commit_message = "更新 README.md"
             subprocess.run(['git', 'commit', '-m', commit_message], check=True)
-            
-            # 推送到远程仓库
             subprocess.run(['git', 'push'], check=True)
             print("成功提交并推送更改到远程仓库")
         else:
@@ -154,65 +144,6 @@ def git_commit_and_push():
     except Exception as e:
         print(f"发生错误: {e}")
 
-def organize_files():
-    # 获取当前目录
-    current_dir = os.getcwd()
-    print(f"当前工作目录: {current_dir}")
-    
-    # 列出当前目录下的所有文件
-    all_files = glob.glob('*.*')
-    print(f"找到的文件: {all_files}")
-    
-    # 创建基础目录
-    base_dir = 'leetcode_questions'
-    if not os.path.exists(base_dir):
-        os.makedirs(base_dir)
-    
-    # 如果存在旧的 questions 目录，移动其内容
-    old_questions_dir = 'questions'
-    if os.path.exists(old_questions_dir):
-        for item in os.listdir(old_questions_dir):
-            src_path = os.path.join(old_questions_dir, item)
-            dst_path = os.path.join(base_dir, item)
-            if os.path.isdir(src_path):
-                if not os.path.exists(dst_path):
-                    shutil.copytree(src_path, dst_path)
-                else:
-                    for file in os.listdir(src_path):
-                        shutil.move(
-                            os.path.join(src_path, file),
-                            os.path.join(dst_path, file)
-                        )
-        # 删除旧的 questions 目录
-        shutil.rmtree(old_questions_dir)
-    
-    # 为每种类型创建文件夹并移动文件
-    for type_name, questions in question_types.items():
-        # 创建类型目录
-        type_dir = os.path.join(base_dir, type_name)
-        if not os.path.exists(type_dir):
-            os.makedirs(type_dir)
-        
-        # 为每个问题创建子目录
-        for question, files in questions.items():
-            question_dir = os.path.join(type_dir, question)
-            if not os.path.exists(question_dir):
-                os.makedirs(question_dir)
-            
-            # 移动相关文件
-            for file in files:
-                file_path = os.path.join(current_dir, file)
-                if os.path.exists(file_path):
-                    print(f"移动文件: {file} 到 {question_dir}")
-                    shutil.move(file_path, os.path.join(question_dir, file))
-                else:
-                    print(f"警告: 未找到文件 {file}")
-    
-    # 更新 README.md
-    update_readme()
-    
-    # 提交并推送更改
-    git_commit_and_push()
-
 if __name__ == "__main__":
-    organize_files() 
+    update_readme()
+    git_commit_and_push() 
