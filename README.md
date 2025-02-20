@@ -21,6 +21,9 @@
 - 复制书籍 / Copy Books - [Python](leetcode_questions/dynamic_programming/copy_books/copy_books.py) - [题解](leetcode_questions/dynamic_programming/copy_books/copy_books.md)
 - 最大整除子集 / Largest Divisible Subset - [Python](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.py) - [题解](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.md)
 - 骑士最短路径 II / Knight Shortest Path II [LintCode] - [Python](leetcode_questions/dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.py) - [题解](leetcode_questions/dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.md)
+- 01背包 / Backpack [LintCode] - [Python](leetcode_questions/dynamic_programming/backpack/backpack.py) - [题解](leetcode_questions/dynamic_programming/backpack/backpack.md)
+- 最小划分 / Minimum Partition [LintCode] - [Python](leetcode_questions/dynamic_programming/minimum_partition/minimum_partition.py) - [题解](leetcode_questions/dynamic_programming/minimum_partition/minimum_partition.md)
+- 外卖优惠券 / Takeout Coupon - [Python](leetcode_questions/dynamic_programming/takeout_coupon/takeout_coupon.py) - [题解](leetcode_questions/dynamic_programming/takeout_coupon/takeout_coupon.md)
 
 ## String Processing
 
@@ -62,3 +65,7 @@
 * 滑动窗口求和 / Window Sum [LintCode] - [Python](leetcode_questions/array/window_sum/window_sum.py) - [题解](leetcode_questions/array/window_sum/window_sum.md)
 * K次替换后的最长重复字符 / Longest Repeating Character Replacement [LintCode] - [Python](leetcode_questions/array/longest_repeating_character/longest_repeating_character.py) - [题解](leetcode_questions/array/longest_repeating_character/longest_repeating_character.md)
 * 两数之差 / Two Sum Difference [LintCode] - [Python](leetcode_questions/array/two_sum_difference/two_sum_difference.py) - [题解](leetcode_questions/array/two_sum_difference/two_sum_difference.md)
+
+## Greedy
+- 会议室 II / Meeting Rooms II - [Python](leetcode_questions/greedy/meeting_rooms_ii/meeting_rooms_ii.py) - [题解](leetcode_questions/greedy/meeting_rooms_ii/meeting_rooms_ii.md)
+- 石头碰撞 / Stone Collision - [Python](leetcode_questions/greedy/stone_collision/stone_collision.py) - [题解](leetcode_questions/greedy/stone_collision/stone_collision.md)
