@@ -44,6 +44,9 @@ question_types = {
             'knight_shortest_path_ii.py'
         ],
         'word_ladder': ['word_ladder.md', 'word_ladder.py']
+    },
+    'math': {
+        'fast_power': ['fast_power.py', 'fast_power.md']
     }
 }
 
@@ -69,6 +72,7 @@ def update_readme():
         'bash_game': ('Bash游戏', 'Bash Game'),
         'knight_shortest_path': ('骑士最短路径', 'Knight Shortest Path'),
         'word_ladder': ('单词接龙', 'Word Ladder [LintCode 120]'),
+        'fast_power': ('快速幂', 'Fast Power [LintCode 140]')
     }
 
     # 添加题目描述字典
@@ -115,7 +119,19 @@ def update_readme():
 1. 组合式搜索树：每个节点代表是否选择当前数字
 2. 排列式搜索树：每层代表枚举下一个可以选择的数字
 """,
-        # ... 其他题目描述 ...
+        'fast_power': """
+实现 pow(x, n) ，即计算 x 的 n 次幂函数。
+
+要求时间复杂度为 O(log n)。
+
+示例：
+输入: x = 2.00000, n = 10
+输出: 1024.00000
+
+解题思路：
+1. 递归方法：将指数二分，递归计算
+2. 迭代方法：利用二进制思想，按位计算
+"""
     }
 
     readme_content = """# LeetCode 题解

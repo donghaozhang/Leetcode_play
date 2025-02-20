@@ -83,3 +83,21 @@
 最短转换序列是: "hit" -> "hot" -> "dot" -> "dog" -> "cog"
 ```
 
+
+## Math
+
+- 快速幂 / Fast Power [LintCode 140] - [Python](leetcode_questions/math/fast_power/fast_power.py) - [题解](leetcode_questions/math/fast_power/fast_power.md)
+```
+实现 pow(x, n) ，即计算 x 的 n 次幂函数。
+
+要求时间复杂度为 O(log n)。
+
+示例：
+输入: x = 2.00000, n = 10
+输出: 1024.00000
+
+解题思路：
+1. 递归方法：将指数二分，递归计算
+2. 迭代方法：利用二进制思想，按位计算
+```
+
