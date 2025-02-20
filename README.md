@@ -22,6 +22,7 @@
 - 最大整除子集 / Largest Divisible Subset - [Python](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.py) - [题解](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.md)
 - 骑士最短路径 II / Knight Shortest Path II [LintCode] - [Python](leetcode_questions/dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.py) - [题解](leetcode_questions/dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.md)
 - 01背包 / Backpack [LintCode] - [Python](leetcode_questions/dynamic_programming/backpack/backpack.py) - [题解](leetcode_questions/dynamic_programming/backpack/backpack.md)
+- 多重背包 / Backpack III [LintCode] - [Python](leetcode_questions/dynamic_programming/backpack_iii/backpack_iii.py) - [题解](leetcode_questions/dynamic_programming/backpack_iii/backpack_iii.md)
 - 最小划分 / Minimum Partition [LintCode] - [Python](leetcode_questions/dynamic_programming/minimum_partition/minimum_partition.py) - [题解](leetcode_questions/dynamic_programming/minimum_partition/minimum_partition.md)
 - 外卖优惠券 / Takeout Coupon - [Python](leetcode_questions/dynamic_programming/takeout_coupon/takeout_coupon.py) - [题解](leetcode_questions/dynamic_programming/takeout_coupon/takeout_coupon.md)
 
