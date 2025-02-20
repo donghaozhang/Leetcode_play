@@ -5,6 +5,7 @@
 
 ## Binary Search
 * 搜索二维矩阵 / Search 2D Matrix - [Python](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.py) - [题解](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.md)
+* 搜索二维矩阵 II / Search 2D Matrix II [LintCode] - [Python](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.py) - [题解](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.md)
 
 ## Dynamic Programming
 
@@ -31,7 +32,7 @@
 
 ## Backtracking
 
-- N皇后 II / N-Queens II - [Python](leetcode_questions/backtracking/n_queens/n_queens_ii.py) - 🚧 题解
+- N皇后 II / N-Queens II - [Python](leetcode_questions/backtracking/n_queens/n_queens_ii.py) - [题解](leetcode_questions/backtracking/n_queens/n_queens_ii.md)
 - 全子集 / Subsets [LintCode 17] - [题目链接](http://www.lintcode.com/problem/subsets) - [Python](leetcode_questions/backtracking/subsets/subsets.py) - [题解](leetcode_questions/backtracking/subsets/subsets.md)
 
 ## Game Theory
