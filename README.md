@@ -12,6 +12,7 @@
 ## Dynamic Programming
 
 - 最长上升子序列 / Longest Increasing Subsequence - [Python](leetcode_questions/dynamic_programming/longest_increasing_subsequence/longest_increasing_subsequence.py) - [题解](leetcode_questions/dynamic_programming/longest_increasing_subsequence/longest_increasing_subsequence.md)
+- 最长连续递增子序列 II / Longest Continuous Increasing Subsequence II [LintCode] - [Python](leetcode_questions/dynamic_programming/longest_continuous_increasing_subsequence_ii/longest_continuous_increasing_subsequence_ii.py) - [题解](leetcode_questions/dynamic_programming/longest_continuous_increasing_subsequence_ii/longest_continuous_increasing_subsequence_ii.md)
 - 回文子串 / Palindrome Substring - 🚧 Python - [题解](leetcode_questions/dynamic_programming/palindrome/palindrome_substring.md)
 - 石子游戏 / Stone Game - [Python](leetcode_questions/dynamic_programming/stone_game/stone_game.py) - [题解](leetcode_questions/dynamic_programming/stone_game/stone_game.md)
 - 戳气球 / Burst Balloons - [Python](leetcode_questions/dynamic_programming/burst_balloons/burst_balloons.py) - [题解](leetcode_questions/dynamic_programming/burst_balloons/burst_balloons.md)
@@ -19,12 +20,14 @@
 - 解码方法 / Decode Ways - [Python](leetcode_questions/dynamic_programming/decode_ways/decode_ways.py) - [题解](leetcode_questions/dynamic_programming/decode_ways/decode_ways.md)
 - 复制书籍 / Copy Books - [Python](leetcode_questions/dynamic_programming/copy_books/copy_books.py) - [题解](leetcode_questions/dynamic_programming/copy_books/copy_books.md)
 - 最大整除子集 / Largest Divisible Subset - [Python](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.py) - [题解](leetcode_questions/dynamic_programming/largest_divisible_subset/largest_divisible_subset.md)
+- 骑士最短路径 II / Knight Shortest Path II [LintCode] - [Python](leetcode_questions/dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.py) - [题解](leetcode_questions/dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.md)
 
 ## String Processing
 
 - 通配符匹配 / Wildcard Matching - [Python](leetcode_questions/string_processing/wildcard_matching/wildcard_matching.py) - [题解](leetcode_questions/string_processing/wildcard_matching/wildcard_matching.md)
 - 编辑距离 / Edit Distance - [Python](leetcode_questions/string_processing/edit_distance/edit_distance.py) - [题解](leetcode_questions/string_processing/edit_distance/edit_distance.md)
 - 单词拆分 / Word Break - [Python](leetcode_questions/string_processing/word_break/word_break.py) - [题解](leetcode_questions/string_processing/word_break/word_break.md)
+- 全零子串统计 / Zero Substrings [LintCode] - [Python](leetcode_questions/string_processing/zero_substrings/zero_substrings.py) - [题解](leetcode_questions/string_processing/zero_substrings/zero_substrings.md)
 
 ## Data Structure
 
@@ -49,6 +52,7 @@
 ## Math
 
 - 快速幂 / Fast Power [LintCode 140] - [Python](leetcode_questions/math/fast_power/fast_power.py) - [题解](leetcode_questions/math/fast_power/fast_power.md)
+- 斐波那契数列 / Fibonacci [LintCode] - [Python](leetcode_questions/math/fibonacci/fibonacci.py) - [题解](leetcode_questions/math/fibonacci/fibonacci.md)
 
 ## Algorithm Techniques
 
