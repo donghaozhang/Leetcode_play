@@ -45,6 +45,9 @@ question_types = {
     },
     'math': {
         'fast_power': ['fast_power.py', 'fast_power.md']
+    },
+    'algorithm_techniques': {
+        'sqrt_decomposition': ['sqrt_decomposition.md', 'sqrt_decomposition_example.py']
     }
 }
 
@@ -70,7 +73,8 @@ def update_readme():
         'bash_game': ('Bash游戏', 'Bash Game'),
         'knight_shortest_path': ('骑士最短路径', 'Knight Shortest Path'),
         'word_ladder': ('单词接龙', 'Word Ladder [LintCode 120]'),
-        'fast_power': ('快速幂', 'Fast Power [LintCode 140]')
+        'fast_power': ('快速幂', 'Fast Power [LintCode 140]'),
+        'sqrt_decomposition': ('分块检索算法', 'Sqrt Decomposition')
     }
 
     readme_content = """# LeetCode 题解

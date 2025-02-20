@@ -44,3 +44,7 @@
 ## Math
 
 - 快速幂 / Fast Power [LintCode 140] - [Python](leetcode_questions/math/fast_power/fast_power.py) - [题解](leetcode_questions/math/fast_power/fast_power.md)
+
+## Algorithm Techniques
+
+- 分块检索算法 / Sqrt Decomposition - [Python](leetcode_questions/algorithm_techniques/sqrt_decomposition/sqrt_decomposition_example.py) - [题解](leetcode_questions/algorithm_techniques/sqrt_decomposition/sqrt_decomposition.md)
