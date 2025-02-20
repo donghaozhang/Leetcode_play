@@ -7,6 +7,7 @@
 * 搜索二维矩阵 / Search 2D Matrix - [Python](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.py) - [题解](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.md)
 * 搜索二维矩阵 II / Search 2D Matrix II [LintCode] - [Python](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.py) - [题解](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.md)
 * 最小黑色像素矩形 / Smallest Rectangle Enclosing Black Pixels [LintCode] - [Python](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.py) - [题解](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.md)
+* 抄书问题 / Copy Books [LintCode] - [Python](leetcode_questions/binary_search/copy_books/copy_books.py) - [题解](leetcode_questions/binary_search/copy_books/copy_books.md)
 
 ## Dynamic Programming
 
@@ -52,3 +53,7 @@
 ## Algorithm Techniques
 
 - 分块检索算法 / Sqrt Decomposition - [Python](leetcode_questions/algorithm_techniques/sqrt_decomposition/sqrt_decomposition_example.py) - [题解](leetcode_questions/algorithm_techniques/sqrt_decomposition/sqrt_decomposition.md)
+
+## Array
+* 滑动窗口求和 / Window Sum [LintCode] - [Python](leetcode_questions/array/window_sum/window_sum.py) - [题解](leetcode_questions/array/window_sum/window_sum.md)
+* K次替换后的最长重复字符 / Longest Repeating Character Replacement [LintCode] - [Python](leetcode_questions/array/longest_repeating_character/longest_repeating_character.py) - [题解](leetcode_questions/array/longest_repeating_character/longest_repeating_character.md)
