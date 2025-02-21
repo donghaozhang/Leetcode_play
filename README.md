@@ -30,6 +30,7 @@
 - 最小划分 / Minimum Partition [LintCode] - [Python](leetcode_questions/dynamic_programming/minimum_partition/minimum_partition.py) - [题解](leetcode_questions/dynamic_programming/minimum_partition/minimum_partition.md)
 - 外卖优惠券 / Takeout Coupon - [Python](leetcode_questions/dynamic_programming/takeout_coupon/takeout_coupon.py) - [题解](leetcode_questions/dynamic_programming/takeout_coupon/takeout_coupon.md)
 - 不同路径 / Unique Paths [LintCode] - [Python](leetcode_questions/dynamic_programming/unique_paths/unique_paths.py) - [题解](leetcode_questions/dynamic_programming/unique_paths/unique_paths.md)
+- 跳跃游戏 / Jump Game [LintCode] - [Python](leetcode_questions/dynamic_programming/jump_game/jump_game.py) - [题解](leetcode_questions/dynamic_programming/jump_game/jump_game.md)
 
 ## String Processing
 - 通配符匹配 / Wildcard Matching - [Python](leetcode_questions/string_processing/wildcard_matching/wildcard_matching.py) - [题解](leetcode_questions/string_processing/wildcard_matching/wildcard_matching.md)
