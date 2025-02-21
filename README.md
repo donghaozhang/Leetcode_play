@@ -40,10 +40,14 @@
 
 ## Data Structure
 - 最大栈 / Max Stack - [Python](leetcode_questions/data_structure/max_stack/max_stack.py) - [题解](leetcode_questions/data_structure/max_stack/max_stack.md)
-- LRU缓存 / LRU Cache [LintCode] - [Python](leetcode_questions/data_structure/lru_cache/lru_cache.py) - [题解](leetcode_questions/data_structure/lru_cache/lru_cache.md)
+- LRU缓存 / LRU Cache [LintCode] - [Python](leetcode_questions/data_structure/lru_cache/lru_cache.py) | [单链表实现](leetcode_questions/data_structure/lru_cache/lru_cache_singly.py) - [题解](leetcode_questions/data_structure/lru_cache/lru_cache.md)
 - 数据流中第一个唯一数字 / First Unique Number in Data Stream [LintCode] - [Python](leetcode_questions/data_structure/first_unique_number/first_unique_number.py) - [题解](leetcode_questions/data_structure/first_unique_number/first_unique_number.md)
-- 用两个队列实现栈 / Stack Using Two Queues - [Python](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.py) - [题解](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.md)
-- 用两个栈实现队列 / Queue Using Two Stacks - [Python](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.py) - [题解](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.md)
+- High Five [LintCode] - [Python](leetcode_questions/data_structure/high_five/high_five.py) - [题解](leetcode_questions/data_structure/high_five/high_five.md)
+- 合并K个有序数组 / Merge K Sorted Arrays [LintCode] - [Python](leetcode_questions/data_structure/merge_k_sorted_arrays/merge_k_sorted_arrays.py) - [题解](leetcode_questions/data_structure/merge_k_sorted_arrays/merge_k_sorted_arrays.md)
+- 丑数 II / Ugly Number II [LintCode] - [Python](leetcode_questions/data_structure/ugly_number_ii/ugly_number_ii.py) - [题解](leetcode_questions/data_structure/ugly_number_ii/ugly_number_ii.md)
+- 负载均衡器 / Load Balancer [LintCode] - [Python](leetcode_questions/data_structure/load_balancer/load_balancer.py) - [题解](leetcode_questions/data_structure/load_balancer/load_balancer.md)
+- 字符串的全排列 II / String Permutation II [LintCode] - [Python](leetcode_questions/data_structure/string_permutation_ii/string_permutation_ii.py) - [题解](leetcode_questions/data_structure/string_permutation_ii/string_permutation_ii.md)
+- 组合总和 / Combination Sum [LintCode] - [Python](leetcode_questions/data_structure/combination_sum/combination_sum.py) - [题解](leetcode_questions/data_structure/combination_sum/combination_sum.md)
 
 ## Backtracking
 - N皇后 II / N-Queens II - [Python](leetcode_questions/backtracking/n_queens/n_queens_ii.py) - [题解](leetcode_questions/backtracking/n_queens/n_queens_ii.md)
