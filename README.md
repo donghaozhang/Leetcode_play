@@ -40,6 +40,7 @@
 
 ## Data Structure
 - 最大栈 / Max Stack - [Python](leetcode_questions/data_structure/max_stack/max_stack.py) - [题解](leetcode_questions/data_structure/max_stack/max_stack.md)
+- LRU缓存 / LRU Cache [LintCode] - [Python](leetcode_questions/data_structure/lru_cache/lru_cache.py) - [题解](leetcode_questions/data_structure/lru_cache/lru_cache.md)
 - 用两个队列实现栈 / Stack Using Two Queues - [Python](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.py) - [题解](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.md)
 - 用两个栈实现队列 / Queue Using Two Stacks - [Python](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.py) - [题解](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.md)
 
