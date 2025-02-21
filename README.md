@@ -3,7 +3,7 @@
 这个仓库包含了我的 LeetCode 题解，按照不同的算法类型进行分类。
 部分题目正在完善中...
 
-## Binary Search
+# Binary Search
 - 搜索二维矩阵 / Search 2D Matrix - [Python](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.py) - [题解](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.md)
 - 搜索二维矩阵 II / Search 2D Matrix II [LintCode] - [Python](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.py) - [题解](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.md)
 - 最小黑色像素矩形 / Smallest Rectangle Enclosing Black Pixels [LintCode] - [Python](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.py) - [题解](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.md)
@@ -41,6 +41,7 @@
 ## Data Structure
 - 最大栈 / Max Stack - [Python](leetcode_questions/data_structure/max_stack/max_stack.py) - [题解](leetcode_questions/data_structure/max_stack/max_stack.md)
 - LRU缓存 / LRU Cache [LintCode] - [Python](leetcode_questions/data_structure/lru_cache/lru_cache.py) - [题解](leetcode_questions/data_structure/lru_cache/lru_cache.md)
+- 数据流中第一个唯一数字 / First Unique Number in Data Stream [LintCode] - [Python](leetcode_questions/data_structure/first_unique_number/first_unique_number.py) - [题解](leetcode_questions/data_structure/first_unique_number/first_unique_number.md)
 - 用两个队列实现栈 / Stack Using Two Queues - [Python](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.py) - [题解](leetcode_questions/data_structure/stack_by_two_queues/stack_by_two_queues.md)
 - 用两个栈实现队列 / Queue Using Two Stacks - [Python](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.py) - [题解](leetcode_questions/data_structure/queue_by_two_stacks/queue_by_two_stacks.md)
 
