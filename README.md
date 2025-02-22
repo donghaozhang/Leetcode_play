@@ -88,3 +88,7 @@
 - 二叉树展开为链表 / Flatten Binary Tree to Linked List [LintCode] - [Python](leetcode_questions/tree/flatten_binary_tree/flatten_binary_tree.py) - [题解](leetcode_questions/tree/flatten_binary_tree/flatten_binary_tree.md)
 - BST中第k小的元素 / Kth Smallest Element in BST [LintCode] - [Python](leetcode_questions/tree/kth_smallest_bst/kth_smallest_bst.py) - [题解](leetcode_questions/tree/kth_smallest_bst/kth_smallest_bst.md)
 - BST中最接近的值 / Closest Binary Search Tree Value [LintCode] - [Python](leetcode_questions/tree/closest_bst_value/closest_bst_value.py) - [题解](leetcode_questions/tree/closest_bst_value/closest_bst_value.md)
+
+## Graph
+- 克隆图 / Clone Graph [LintCode] - [Python](leetcode_questions/graph/clone_graph/clone_graph.py) - [题解](leetcode_questions/graph/clone_graph/clone_graph.md)
+- 岛屿数量 / Number of Islands [LintCode] - [Python](leetcode_questions/graph/number_of_islands/number_of_islands.py) - [题解](leetcode_questions/graph/number_of_islands/number_of_islands.md)
