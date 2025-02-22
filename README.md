@@ -83,3 +83,5 @@
 - 最大平均值子树 / Subtree with Maximum Average [LintCode] - [Python](leetcode_questions/tree/subtree_maximum_average/subtree_maximum_average.py) - [题解](leetcode_questions/tree/subtree_maximum_average/subtree_maximum_average.md)
 - 翻转二叉树 / Invert Binary Tree [LintCode] - [Python](leetcode_questions/tree/invert_binary_tree/invert_binary_tree.py) - [题解](leetcode_questions/tree/invert_binary_tree/invert_binary_tree.md)
 - 验证二叉搜索树 / Validate Binary Search Tree [LintCode] - [Python](leetcode_questions/tree/validate_bst/validate_bst.py) - [题解](leetcode_questions/tree/validate_bst/validate_bst.md)
+- 最小子树和 / Minimum Subtree [LintCode] - [Python](leetcode_questions/tree/minimum_subtree/minimum_subtree.py) - [题解](leetcode_questions/tree/minimum_subtree/minimum_subtree.md)
+- 最近公共祖先 / Lowest Common Ancestor [LintCode] - [Python](leetcode_questions/tree/lowest_common_ancestor/lowest_common_ancestor.py) - [题解](leetcode_questions/tree/lowest_common_ancestor/lowest_common_ancestor.md)
