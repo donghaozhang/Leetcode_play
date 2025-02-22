@@ -8,43 +8,37 @@ class TreeNode:
         self.right = right
 
 class BSTIterator:
-    """
-    二叉搜索树迭代器
-    使用栈实现中序遍历的迭代器模式
-    """
+    """二叉搜索树迭代器"""
     def __init__(self, root: Optional[TreeNode]):
         """
         初始化迭代器
-        :param root: TreeNode，二叉搜索树的根节点
+        :param root: 二叉搜索树的根节点
         """
         self.stack = []
-        # 将最左路径节点全部入栈
-        self._push_left(root)
-    
-    def _push_left(self, node: Optional[TreeNode]) -> None:
+        self._leftmost_inorder(root)
+        
+    def _leftmost_inorder(self, root: Optional[TreeNode]) -> None:
         """
-        将节点及其所有左子节点入栈
-        :param node: TreeNode，当前节点
+        将当前节点到最左叶子节点的路径上的所有节点入栈
+        :param root: 当前节点
         """
-        while node:
-            self.stack.append(node)
-            node = node.left
-    
+        while root:
+            self.stack.append(root)
+            root = root.left
+            
     def next(self) -> int:
         """
         返回二叉搜索树中的下一个最小值
         :return: int，下一个最小值
         """
-        if not self.hasNext():
-            return -1
+        topmost_node = self.stack.pop()
         
-        # 弹出栈顶节点（当前最小值）
-        curr = self.stack.pop()
-        # 将右子树的最左路径入栈
-        self._push_left(curr.right)
+        # 如果当前节点有右子树，将右子树的最左路径入栈
+        if topmost_node.right:
+            self._leftmost_inorder(topmost_node.right)
+            
+        return topmost_node.val
         
-        return curr.val
-    
     def hasNext(self) -> bool:
         """
         判断是否还有下一个值
@@ -53,31 +47,22 @@ class BSTIterator:
         return len(self.stack) > 0
 
 def test_bst_iterator():
-    """测试二叉搜索树迭代器"""
+    """测试二叉搜索树迭代器的实现"""
+    # 构建测试用的二叉搜索树
+    #     7
+    #    / \
+    #   3   15
+    #      /  \
+    #     9    20
     
-    def create_bst(values: List[int], index: int = 0) -> Optional[TreeNode]:
-        """
-        根据层序遍历数组创建二叉搜索树
-        :param values: List[int]，层序遍历数组
-        :param index: int，当前索引
-        :return: TreeNode，创建的二叉树根节点
-        """
-        if not values or index >= len(values) or values[index] is None:
-            return None
-        
-        root = TreeNode(values[index])
-        root.left = create_bst(values, 2 * index + 1)
-        root.right = create_bst(values, 2 * index + 2)
-        return root
+    root = TreeNode(7)
+    root.left = TreeNode(3)
+    root.right = TreeNode(15)
+    root.right.left = TreeNode(9)
+    root.right.right = TreeNode(20)
     
-    # 测试用例1：基本二叉搜索树
-    #       7
-    #      / \
-    #     3   15
-    #        /  \
-    #       9    20
-    bst1 = create_bst([7, 3, 15, None, None, 9, 20])
-    iterator1 = BSTIterator(bst1)
+    # 测试用例1：基本功能测试
+    iterator1 = BSTIterator(root)
     result1 = []
     while iterator1.hasNext():
         result1.append(iterator1.next())
@@ -88,22 +73,16 @@ def test_bst_iterator():
     assert not iterator2.hasNext(), "Empty tree should have no next element"
     
     # 测试用例3：单节点树
-    bst3 = TreeNode(1)
-    iterator3 = BSTIterator(bst3)
-    assert iterator3.hasNext(), "Single node tree should have one element"
-    assert iterator3.next() == 1, "Should return the only node value"
+    root3 = TreeNode(1)
+    iterator3 = BSTIterator(root3)
+    assert iterator3.next() == 1, "Should return the only value"
     assert not iterator3.hasNext(), "Should have no more elements"
     
     # 测试用例4：左倾树
-    #     3
-    #    /
-    #   2
-    #  /
-    # 1
-    bst4 = TreeNode(3)
-    bst4.left = TreeNode(2)
-    bst4.left.left = TreeNode(1)
-    iterator4 = BSTIterator(bst4)
+    root4 = TreeNode(3)
+    root4.left = TreeNode(2)
+    root4.left.left = TreeNode(1)
+    iterator4 = BSTIterator(root4)
     result4 = []
     while iterator4.hasNext():
         result4.append(iterator4.next())
