@@ -40,7 +40,7 @@
 
 ## Data Structure
 - 最大栈 / Max Stack - [Python](leetcode_questions/data_structure/max_stack/max_stack.py) - [题解](leetcode_questions/data_structure/max_stack/max_stack.md)
-- LRU缓存 / LRU Cache [LintCode] - [Python](leetcode_questions/data_structure/lru_cache/lru_cache.py) | [单链表实现](leetcode_questions/data_structure/lru_cache/lru_cache_singly.py) - [题解](leetcode_questions/data_structure/lru_cache/lru_cache.md)
+- LRU缓存 / LRU Cache [LintCode] - [双向链表实现](leetcode_questions/data_structure/lru_cache/lru_cache.py) | [单链表实现](leetcode_questions/data_structure/lru_cache/lru_cache_singly.py) - [题解](leetcode_questions/data_structure/lru_cache/lru_cache.md)
 - 数据流中第一个唯一数字 / First Unique Number in Data Stream [LintCode] - [Python](leetcode_questions/data_structure/first_unique_number/first_unique_number.py) - [题解](leetcode_questions/data_structure/first_unique_number/first_unique_number.md)
 - High Five [LintCode] - [Python](leetcode_questions/data_structure/high_five/high_five.py) - [题解](leetcode_questions/data_structure/high_five/high_five.md)
 - 合并K个有序数组 / Merge K Sorted Arrays [LintCode] - [Python](leetcode_questions/data_structure/merge_k_sorted_arrays/merge_k_sorted_arrays.py) - [题解](leetcode_questions/data_structure/merge_k_sorted_arrays/merge_k_sorted_arrays.md)
@@ -48,6 +48,9 @@
 - 负载均衡器 / Load Balancer [LintCode] - [Python](leetcode_questions/data_structure/load_balancer/load_balancer.py) - [题解](leetcode_questions/data_structure/load_balancer/load_balancer.md)
 - 字符串的全排列 II / String Permutation II [LintCode] - [Python](leetcode_questions/data_structure/string_permutation_ii/string_permutation_ii.py) - [题解](leetcode_questions/data_structure/string_permutation_ii/string_permutation_ii.md)
 - 组合总和 / Combination Sum [LintCode] - [Python](leetcode_questions/data_structure/combination_sum/combination_sum.py) - [题解](leetcode_questions/data_structure/combination_sum/combination_sum.md)
+- 二叉搜索树迭代器 / Binary Search Tree Iterator [LintCode] - [Python](leetcode_questions/data_structure/bst_iterator/bst_iterator.py) - [题解](leetcode_questions/data_structure/bst_iterator/bst_iterator.md)
+- 全排列 / Permutations [LintCode] - [Python](leetcode_questions/data_structure/permutations/permutations.py) - [题解](leetcode_questions/data_structure/permutations/permutations.md)
+- 旅行商问题 / Traveling Salesman Problem [LintCode] - [Python](leetcode_questions/data_structure/traveling_salesman/traveling_salesman.py) - [题解](leetcode_questions/data_structure/traveling_salesman/traveling_salesman.md)
 
 ## Backtracking
 - N皇后 II / N-Queens II - [Python](leetcode_questions/backtracking/n_queens/n_queens_ii.py) - [题解](leetcode_questions/backtracking/n_queens/n_queens_ii.md)
