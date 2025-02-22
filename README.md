@@ -64,6 +64,7 @@
 ## Graph Search
 - 骑士最短路径 / Knight Shortest Path - [Python](leetcode_questions/graph_search/knight_shortest_path/knight_shortest_path.py) - [题解](leetcode_questions/graph_search/knight_shortest_path/knight_shortest_path.md)
 - 单词接龙 / Word Ladder [LintCode 120] - [Python](leetcode_questions/graph_search/word_ladder/word_ladder.py) - [题解](leetcode_questions/graph_search/word_ladder/word_ladder.md)
+- 单词接龙 II / Word Ladder II [LintCode] - [Python](leetcode_questions/graph_search/word_ladder_ii/word_ladder_ii.py) - [题解](leetcode_questions/graph_search/word_ladder_ii/word_ladder_ii.md)
 
 ## Math
 - 快速幂 / Fast Power [LintCode 140] - [Python](leetcode_questions/math/fast_power/fast_power.py) - [题解](leetcode_questions/math/fast_power/fast_power.md)
