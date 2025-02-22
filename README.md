@@ -48,6 +48,8 @@
 - 负载均衡器 / Load Balancer [LintCode] - [Python](leetcode_questions/data_structure/load_balancer/load_balancer.py) - [题解](leetcode_questions/data_structure/load_balancer/load_balancer.md)
 - 字符串的全排列 II / String Permutation II [LintCode] - [Python](leetcode_questions/data_structure/string_permutation_ii/string_permutation_ii.py) - [题解](leetcode_questions/data_structure/string_permutation_ii/string_permutation_ii.md)
 - 组合总和 / Combination Sum [LintCode] - [Python](leetcode_questions/data_structure/combination_sum/combination_sum.py) - [题解](leetcode_questions/data_structure/combination_sum/combination_sum.md)
+- K数之和 II / K Sum II [LintCode] - [Python](leetcode_questions/data_structure/k_sum_ii/k_sum_ii.py) - [题解](leetcode_questions/data_structure/k_sum_ii/k_sum_ii.md)
+- 电话号码的字母组合 / Letter Combinations of Phone Number [LintCode] - [Python](leetcode_questions/data_structure/letter_combinations/letter_combinations.py) - [题解](leetcode_questions/data_structure/letter_combinations/letter_combinations.md)
 - 二叉搜索树迭代器 / Binary Search Tree Iterator [LintCode] - [Python](leetcode_questions/data_structure/bst_iterator/bst_iterator.py) - [题解](leetcode_questions/data_structure/bst_iterator/bst_iterator.md)
 - 全排列 / Permutations [LintCode] - [Python](leetcode_questions/data_structure/permutations/permutations.py) - [题解](leetcode_questions/data_structure/permutations/permutations.md)
 - 旅行商问题 / Traveling Salesman Problem [LintCode] - [Python](leetcode_questions/data_structure/traveling_salesman/traveling_salesman.py) - [题解](leetcode_questions/data_structure/traveling_salesman/traveling_salesman.md)
