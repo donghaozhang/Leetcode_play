@@ -95,3 +95,4 @@
 - 拓扑排序 / Topological Sort [LintCode] - [Python](leetcode_questions/graph/topological_sort/topological_sort.py) - [题解](leetcode_questions/graph/topological_sort/topological_sort.md)
 - 课程表 II / Course Schedule II [LintCode] - [Python](leetcode_questions/graph/course_schedule_ii/course_schedule_ii.py) - [题解](leetcode_questions/graph/course_schedule_ii/course_schedule_ii.md)
 - 序列重构 / Sequence Reconstruction [LintCode] - [Python](leetcode_questions/graph/sequence_reconstruction/sequence_reconstruction.py) - [题解](leetcode_questions/graph/sequence_reconstruction/sequence_reconstruction.md)
+- 外星文字典 / Alien Dictionary [LintCode] - [Python](leetcode_questions/graph/alien_dictionary/alien_dictionary.py) - [题解](leetcode_questions/graph/alien_dictionary/alien_dictionary.md)
