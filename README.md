@@ -86,3 +86,4 @@
 - 最小子树和 / Minimum Subtree [LintCode] - [Python](leetcode_questions/tree/minimum_subtree/minimum_subtree.py) - [题解](leetcode_questions/tree/minimum_subtree/minimum_subtree.md)
 - 最近公共祖先 / Lowest Common Ancestor [LintCode] - [Python](leetcode_questions/tree/lowest_common_ancestor/lowest_common_ancestor.py) - [题解](leetcode_questions/tree/lowest_common_ancestor/lowest_common_ancestor.md)
 - 二叉树展开为链表 / Flatten Binary Tree to Linked List [LintCode] - [Python](leetcode_questions/tree/flatten_binary_tree/flatten_binary_tree.py) - [题解](leetcode_questions/tree/flatten_binary_tree/flatten_binary_tree.md)
+- BST中第k小的元素 / Kth Smallest Element in BST [LintCode] - [Python](leetcode_questions/tree/kth_smallest_bst/kth_smallest_bst.py) - [题解](leetcode_questions/tree/kth_smallest_bst/kth_smallest_bst.md)
