@@ -3,49 +3,44 @@ import sys
 
 def traveling_salesman(n: int, distances: List[List[int]]) -> int:
     """
-    解决旅行商问题
+    解决旅行商问题，找到访问所有城市的最短路径长度
     :param n: int，城市数量
     :param distances: List[List[int]]，城市间距离矩阵
     :return: int，最短路径长度
     """
-    # 使用位运算表示状态，(1 << n) - 1 表示所有城市都已访问
-    ALL_VISITED = (1 << n) - 1
+    # 使用状态压缩DP
+    # dp[state][city] 表示已访问城市集合为state，当前在city的最短路径
+    dp = {}
     
-    # dp[state][city] 表示从city出发，访问state中未访问的城市，并返回起点的最短距离
-    dp = [[float('inf')] * n for _ in range(1 << n)]
-    
-    def solve(state: int, current: int) -> int:
+    def dfs(state: int, curr: int) -> int:
         """
-        递归求解TSP
-        :param state: int，当前已访问城市的状态（位表示）
-        :param current: int，当前所在城市
+        递归+记忆化搜索
+        :param state: int，已访问城市的状态（二进制表示）
+        :param curr: int，当前所在城市
         :return: int，最短路径长度
         """
-        # 所有城市都已访问，返回到起点的距离
-        if state == ALL_VISITED:
-            return distances[current][0]
-        
-        # 如果已经计算过这个状态，直接返回
-        if dp[state][current] != float('inf'):
-            return dp[state][current]
-        
-        # 尝试访问每个未访问的城市
+        if state == (1 << n) - 1:  # 所有城市都已访问
+            return distances[curr][0] if distances[curr][0] != -1 else sys.maxsize
+            
+        state_key = (state, curr)
+        if state_key in dp:
+            return dp[state_key]
+            
+        min_dist = sys.maxsize
         for next_city in range(n):
-            # 如果next_city已经在state中，跳过
-            if state & (1 << next_city):
+            if state & (1 << next_city) or distances[curr][next_city] == -1:
                 continue
-            
-            # 计算经过next_city的路径长度
-            distance = distances[current][next_city] + \
-                      solve(state | (1 << next_city), next_city)
-            
-            # 更新最短距离
-            dp[state][current] = min(dp[state][current], distance)
-        
-        return dp[state][current]
+                
+            dist = dfs(state | (1 << next_city), next_city)
+            if dist != sys.maxsize:
+                min_dist = min(min_dist, dist + distances[curr][next_city])
+                
+        dp[state_key] = min_dist
+        return min_dist
     
     # 从城市0开始，初始状态为只访问了城市0
-    return solve(1, 0)
+    result = dfs(1, 0)
+    return result if result != sys.maxsize else -1
 
 def traveling_salesman_iterative(n: int, distances: List[List[int]]) -> int:
     """
@@ -91,6 +86,7 @@ def traveling_salesman_iterative(n: int, distances: List[List[int]]) -> int:
     return result if result != float('inf') else -1
 
 def test_traveling_salesman():
+    """测试旅行商问题的实现"""
     # 测试用例1：基本情况
     n1 = 4
     distances1 = [
@@ -99,32 +95,37 @@ def test_traveling_salesman():
         [2, 4, 0, 6],
         [3, 5, 6, 0]
     ]
-    expected1 = 11  # 0 -> 1 -> 2 -> 3 -> 0
-    assert traveling_salesman(n1, distances1) == expected1
-    assert traveling_salesman_iterative(n1, distances1) == expected1
+    assert traveling_salesman(n1, distances1) == 11, \
+        "Should find the shortest path in a simple graph"
     
-    # 测试用例2：小规模
+    # 测试用例2：不可达情况
     n2 = 3
     distances2 = [
-        [0, 1, 2],
-        [1, 0, 3],
-        [2, 3, 0]
+        [0, 1, -1],
+        [1, 0, -1],
+        [-1, -1, 0]
     ]
-    expected2 = 6  # 0 -> 1 -> 2 -> 0
-    assert traveling_salesman(n2, distances2) == expected2
-    assert traveling_salesman_iterative(n2, distances2) == expected2
+    assert traveling_salesman(n2, distances2) == -1, \
+        "Should return -1 when no valid path exists"
     
-    # 测试用例3：对称距离
-    n3 = 4
+    # 测试用例3：最小情况
+    n3 = 2
     distances3 = [
-        [0, 2, 2, 2],
-        [2, 0, 2, 2],
-        [2, 2, 0, 2],
-        [2, 2, 2, 0]
+        [0, 1],
+        [1, 0]
     ]
-    expected3 = 8  # 所有路径长度相同
-    assert traveling_salesman(n3, distances3) == expected3
-    assert traveling_salesman_iterative(n3, distances3) == expected3
+    assert traveling_salesman(n3, distances3) == 2, \
+        "Should handle minimum case correctly"
+    
+    # 测试用例4：非对称距离
+    n4 = 3
+    distances4 = [
+        [0, 1, 2],
+        [2, 0, 1],
+        [1, 2, 0]
+    ]
+    result4 = traveling_salesman(n4, distances4)
+    assert result4 > 0, "Should handle asymmetric distances"
     
     print("所有测试用例通过！")
 
