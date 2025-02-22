@@ -97,3 +97,4 @@
 - 序列重构 / Sequence Reconstruction [LintCode] - [Python](leetcode_questions/graph/sequence_reconstruction/sequence_reconstruction.py) - [题解](leetcode_questions/graph/sequence_reconstruction/sequence_reconstruction.md)
 - 外星文字典 / Alien Dictionary [LintCode] - [Python](leetcode_questions/graph/alien_dictionary/alien_dictionary.py) - [题解](leetcode_questions/graph/alien_dictionary/alien_dictionary.md)
 - 图是否是树 / Graph Valid Tree [LintCode] - [Python](leetcode_questions/graph/graph_valid_tree/graph_valid_tree.py) - [题解](leetcode_questions/graph/graph_valid_tree/graph_valid_tree.md)
+- 搜索图中节点 / Search Graph Nodes [LintCode] - [Python](leetcode_questions/graph/search_graph_nodes/search_graph_nodes.py) - [题解](leetcode_questions/graph/search_graph_nodes/search_graph_nodes.md)
