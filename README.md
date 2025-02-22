@@ -80,3 +80,4 @@
 ## Tree
 - 二叉树的所有路径 / Binary Tree Paths [LintCode] - [Python](leetcode_questions/tree/binary_tree_paths/binary_tree_paths.py) - [题解](leetcode_questions/tree/binary_tree_paths/binary_tree_paths.md)
 - 平衡二叉树 / Balanced Binary Tree [LintCode] - [Python](leetcode_questions/tree/balanced_binary_tree/balanced_binary_tree.py) - [题解](leetcode_questions/tree/balanced_binary_tree/balanced_binary_tree.md)
+- 最大平均值子树 / Subtree with Maximum Average [LintCode] - [Python](leetcode_questions/tree/subtree_maximum_average/subtree_maximum_average.py) - [题解](leetcode_questions/tree/subtree_maximum_average/subtree_maximum_average.md)
