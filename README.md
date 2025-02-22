@@ -76,3 +76,7 @@
 ## Greedy
 - 会议室 II / Meeting Rooms II - [Python](leetcode_questions/greedy/meeting_rooms_ii/meeting_rooms_ii.py) - [题解](leetcode_questions/greedy/meeting_rooms_ii/meeting_rooms_ii.md)
 - 石头碰撞 / Stone Collision - [Python](leetcode_questions/greedy/stone_collision/stone_collision.py) - [题解](leetcode_questions/greedy/stone_collision/stone_collision.md)
+
+## Tree
+- 二叉树的所有路径 / Binary Tree Paths [LintCode] - [Python](leetcode_questions/tree/binary_tree_paths/binary_tree_paths.py) - [题解](leetcode_questions/tree/binary_tree_paths/binary_tree_paths.md)
+- 平衡二叉树 / Balanced Binary Tree [LintCode] - [Python](leetcode_questions/tree/balanced_binary_tree/balanced_binary_tree.py) - [题解](leetcode_questions/tree/balanced_binary_tree/balanced_binary_tree.md)
