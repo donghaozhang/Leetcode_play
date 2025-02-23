@@ -10,6 +10,8 @@
 - 经典二分查找 / Classical Binary Search [LintCode] - [Python](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.py) - [题解](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.md)
 - 目标值的第一个位置 / First Position of Target [LintCode] - [Python](leetcode_questions/binary_search/first_position/first_position.py) - [题解](leetcode_questions/binary_search/first_position/first_position.md)
 - 目标值的最后一个位置 / Last Position of Target [LintCode] - [Python](leetcode_questions/binary_search/last_position/last_position.py) - [题解](leetcode_questions/binary_search/last_position/last_position.md)
+- 搜索大有序数组 / Search in Big Sorted Array [LintCode] - [Python](leetcode_questions/binary_search/search_big_sorted_array/search_big_sorted_array.py) - [题解](leetcode_questions/binary_search/search_big_sorted_array/search_big_sorted_array.md)
+- 找到K个最接近的元素 / Find K Closest Elements [LintCode] - [Python](leetcode_questions/binary_search/k_closest_elements/k_closest_elements.py) - [题解](leetcode_questions/binary_search/k_closest_elements/k_closest_elements.md)
 
 ## 数组 (Array)
 - 滑动窗口求和 / Window Sum [LintCode] - [Python](leetcode_questions/array/window_sum/window_sum.py) - [题解](leetcode_questions/array/window_sum/window_sum.md)
