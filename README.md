@@ -12,6 +12,7 @@
 - 目标值的最后一个位置 / Last Position of Target [LintCode] - [Python](leetcode_questions/binary_search/last_position/last_position.py) - [题解](leetcode_questions/binary_search/last_position/last_position.md)
 - 搜索大有序数组 / Search in Big Sorted Array [LintCode] - [Python](leetcode_questions/binary_search/search_big_sorted_array/search_big_sorted_array.py) - [题解](leetcode_questions/binary_search/search_big_sorted_array/search_big_sorted_array.md)
 - 找到K个最接近的元素 / Find K Closest Elements [LintCode] - [Python](leetcode_questions/binary_search/k_closest_elements/k_closest_elements.py) - [题解](leetcode_questions/binary_search/k_closest_elements/k_closest_elements.md)
+- 旋转排序数组中的最小值 / Find Minimum in Rotated Sorted Array [LintCode] - [Python](leetcode_questions/binary_search/find_minimum_rotated/find_minimum_rotated.py) - [题解](leetcode_questions/binary_search/find_minimum_rotated/find_minimum_rotated.md)
 
 ## 数组 (Array)
 - 滑动窗口求和 / Window Sum [LintCode] - [Python](leetcode_questions/array/window_sum/window_sum.py) - [题解](leetcode_questions/array/window_sum/window_sum.md)
