@@ -86,7 +86,7 @@
 - BST中最接近的值 / Closest BST Value - [Python](leetcode_questions/tree/closest_bst_value/closest_bst_value.py) - [题解](leetcode_questions/tree/closest_bst_value/closest_bst_value.md)
 
 ## 字符串处理 (String Manipulation)
-- 翻转字符串 / Reverse String - [Python](leetcode_questions/string_manipulation/reverse_string/reverse_string.py) - [题解](leetcode_questions/string_manipulation/reverse_string/reverse_string.md)
-- 判断回文串 / Valid Palindrome - [Python](leetcode_questions/string_manipulation/palindrome/palindrome.py) - [题解](leetcode_questions/string_manipulation/palindrome/palindrome.md)
-- 验证回文串 II / Valid Palindrome II [LintCode] - [Python](leetcode_questions/string_manipulation/palindrome_ii/palindrome_ii.py) - [题解](leetcode_questions/string_manipulation/palindrome_ii/palindrome_ii.md)
-- 实现 strStr() / Implement strStr() [LintCode] - [Python](leetcode_questions/string_manipulation/str_str/str_str.py) - [题解](leetcode_questions/string_manipulation/str_str/str_str.md)
+- 翻转字符串 / Reverse String [LeetCode 344] - [Python](leetcode_questions/string_manipulation/reverse_string/reverse_string.py) - [题解](leetcode_questions/string_manipulation/reverse_string/reverse_string.md)
+- 判断回文串 / Valid Palindrome [LeetCode 125] - [Python](leetcode_questions/string_manipulation/palindrome/palindrome.py) - [题解](leetcode_questions/string_manipulation/palindrome/palindrome.md)
+- 验证回文串 II / Valid Palindrome II [LeetCode 680] - [Python](leetcode_questions/string_manipulation/palindrome_ii/palindrome_ii.py) - [题解](leetcode_questions/string_manipulation/palindrome_ii/palindrome_ii.md)
+- 实现 strStr() / Implement strStr() [LeetCode 28] - [Python](leetcode_questions/string_manipulation/str_str/str_str.py) - [题解](leetcode_questions/string_manipulation/str_str/str_str.md)
