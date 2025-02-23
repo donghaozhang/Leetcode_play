@@ -7,6 +7,9 @@
 - 搜索二维矩阵 II / Search 2D Matrix II [LintCode] - [Python](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.py) - [题解](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.md)
 - 最小黑色像素矩形 / Smallest Rectangle Enclosing Black Pixels [LintCode] - [Python](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.py) - [题解](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.md)
 - 抄书问题 / Copy Books [LintCode] - [Python](leetcode_questions/binary_search/copy_books/copy_books.py) - [题解](leetcode_questions/binary_search/copy_books/copy_books.md)
+- 经典二分查找 / Classical Binary Search [LintCode] - [Python](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.py) - [题解](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.md)
+- 目标值的第一个位置 / First Position of Target [LintCode] - [Python](leetcode_questions/binary_search/first_position/first_position.py) - [题解](leetcode_questions/binary_search/first_position/first_position.md)
+- 目标值的最后一个位置 / Last Position of Target [LintCode] - [Python](leetcode_questions/binary_search/last_position/last_position.py) - [题解](leetcode_questions/binary_search/last_position/last_position.md)
 
 ## 数组 (Array)
 - 滑动窗口求和 / Window Sum [LintCode] - [Python](leetcode_questions/array/window_sum/window_sum.py) - [题解](leetcode_questions/array/window_sum/window_sum.md)
