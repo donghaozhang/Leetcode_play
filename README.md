@@ -14,6 +14,7 @@
 - 找到K个最接近的元素 / Find K Closest Elements [LintCode] - [Python](leetcode_questions/binary_search/k_closest_elements/k_closest_elements.py) - [题解](leetcode_questions/binary_search/k_closest_elements/k_closest_elements.md)
 - 旋转排序数组中的最小值 / Find Minimum in Rotated Sorted Array [LintCode] - [Python](leetcode_questions/binary_search/find_minimum_rotated/find_minimum_rotated.py) - [题解](leetcode_questions/binary_search/find_minimum_rotated/find_minimum_rotated.md)
 - 搜索旋转排序数组 / Search in Rotated Sorted Array [LintCode] - [Python](leetcode_questions/binary_search/search_rotated/search_rotated.py) - [题解](leetcode_questions/binary_search/search_rotated/search_rotated.md)
+- 寻找峰值元素 / Find Peak Element [LintCode] - [Python](leetcode_questions/binary_search/find_peak_element/find_peak_element.py) - [题解](leetcode_questions/binary_search/find_peak_element/find_peak_element.md)
 
 ## 数组 (Array)
 - 滑动窗口求和 / Window Sum [LintCode] - [Python](leetcode_questions/array/window_sum/window_sum.py) - [题解](leetcode_questions/array/window_sum/window_sum.md)
