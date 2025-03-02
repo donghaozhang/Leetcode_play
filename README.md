@@ -3,11 +3,11 @@
 这个仓库包含了我的 LeetCode 题解，按照不同的算法类型进行分类。
 
 ## 二分查找 (Binary Search)
-- 搜索二维矩阵 / Search 2D Matrix [LeetCode 74] - [Python](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.py) - [题解](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.md)
-- 搜索二维矩阵 II / Search 2D Matrix II [LeetCode 240] - [Python](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.py) - [题解](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.md)
-- 最小黑色像素矩形 / Smallest Rectangle Enclosing Black Pixels [LintCode] - [Python](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.py) - [题解](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.md)
-- 抄书问题 / Copy Books [LintCode] - [Python](leetcode_questions/binary_search/copy_books/copy_books.py) - [题解](leetcode_questions/binary_search/copy_books/copy_books.md)
-- 经典二分查找 / Classical Binary Search [LintCode] - [Python](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.py) - [题解](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.md)
+- 搜索二维矩阵 / Search 2D Matrix [LeetCode 74] - [Python](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.py) - [题解](leetcode_questions/binary_search/search_2d_matrix/search_2d_matrix.md) ✅
+- 搜索二维矩阵 II / Search 2D Matrix II [LeetCode 240] - [Python](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.py) - [题解](leetcode_questions/binary_search/search_2d_matrix_ii/search_2d_matrix_ii.md) ✅
+- 最小黑色像素矩形 / Smallest Rectangle Enclosing Black Pixels [LintCode] - [Python](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.py) - [题解](leetcode_questions/binary_search/smallest_rectangle/smallest_rectangle.md) ✅
+- 抄书问题 / Copy Books [LintCode] - [Python](leetcode_questions/binary_search/copy_books/copy_books.py) - [题解](leetcode_questions/binary_search/copy_books/copy_books.md) ✅
+- 经典二分查找 / Classical Binary Search [LintCode] - [Python](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.py) - [题解](leetcode_questions/binary_search/classical_binary_search/classical_binary_search.md) ✅
 - 目标值的第一个位置 / First Position of Target [LintCode] - [Python](leetcode_questions/binary_search/first_position/first_position.py) - [题解](leetcode_questions/binary_search/first_position/first_position.md)
 - 目标值的最后一个位置 / Last Position of Target [LintCode] - [Python](leetcode_questions/binary_search/last_position/last_position.py) - [题解](leetcode_questions/binary_search/last_position/last_position.md)
 - 搜索大有序数组 / Search in Big Sorted Array [LintCode] - [Python](leetcode_questions/binary_search/search_big_sorted_array/search_big_sorted_array.py) - [题解](leetcode_questions/binary_search/search_big_sorted_array/search_big_sorted_array.md)
