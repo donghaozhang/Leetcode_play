@@ -1,4 +1,4 @@
-# palindrome.md)
+# palindrome.md
 - 验证回文串 II / Valid Palindrome II [LeetCode 680]
 
 ## Problem Description

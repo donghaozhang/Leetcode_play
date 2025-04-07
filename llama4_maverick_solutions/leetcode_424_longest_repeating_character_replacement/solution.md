@@ -1,4 +1,4 @@
-# window_sum.md)
+# window_sum.md
 - 最长重复字符替换 / Longest Repeating Character Replacement [LeetCode 424]
 
 ## Problem Description

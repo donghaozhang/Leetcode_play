@@ -1,4 +1,4 @@
-# alien_dictionary.md)
+# alien_dictionary.md
 - 图是否是树 / Graph Valid Tree [LeetCode 261]
 
 ## Problem Description

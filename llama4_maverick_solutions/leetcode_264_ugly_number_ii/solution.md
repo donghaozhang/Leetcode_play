@@ -1,4 +1,4 @@
-# merge_k_sorted_arrays.md)
+# merge_k_sorted_arrays.md
 - 丑数 II / Ugly Number II [LeetCode 264]
 
 ## Problem Description

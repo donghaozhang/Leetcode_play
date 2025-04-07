@@ -1,4 +1,4 @@
-# search_2d_matrix.md) ✅
+# search_2d_matrix.md ✅
 - 搜索二维矩阵 II / Search 2D Matrix II [LeetCode 240]
 
 ## Problem Description

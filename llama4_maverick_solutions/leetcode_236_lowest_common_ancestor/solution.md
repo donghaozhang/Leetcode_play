@@ -1,4 +1,4 @@
-# minimum_subtree.md)
+# minimum_subtree.md
 - 最近公共祖先 / Lowest Common Ancestor [LeetCode 236]
 
 ## Problem Description
