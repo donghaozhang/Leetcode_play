@@ -51,7 +51,7 @@ def generate_html_report(problems):
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>力扣刷题进度报告</title>
+        <title>LeetCode Progress Report</title>
         <style>
             body {{
                 font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -124,24 +124,24 @@ def generate_html_report(problems):
         </style>
     </head>
     <body>
-        <h1>力扣刷题进度报告</h1>
+        <h1>LeetCode Progress Report</h1>
         
         <div class="summary">
-            <h2>统计信息</h2>
-            <p>总题目数: {total_problems}</p>
-            <p>已解决: {solved_count} ({solved_percentage:.1f}%)</p>
-            <p>通过测试: {passed_count} ({passed_percentage:.1f}%)</p>
-            <p>有语法错误: {error_count} ({error_percentage:.1f}%)</p>
+            <h2>Statistics</h2>
+            <p>Total Problems: {total_problems}</p>
+            <p>Solved: {solved_count} ({solved_percentage:.1f}%)</p>
+            <p>Passed: {passed_count} ({passed_percentage:.1f}%)</p>
+            <p>Failed: {error_count} ({error_percentage:.1f}%)</p>
         </div>
         
         <table>
             <thead>
                 <tr>
-                    <th>题号</th>
-                    <th>题目名称</th>
-                    <th>状态</th>
-                    <th>创建时间</th>
-                    <th>详细信息</th>
+                    <th>No.</th>
+                    <th>Problem Name</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Details</th>
                 </tr>
             </thead>
             <tbody>
@@ -150,7 +150,7 @@ def generate_html_report(problems):
         </table>
         
         <div class="last-updated">
-            最后更新时间: {current_time}
+            Last Updated: {current_time}
         </div>
         
         <script>
@@ -169,9 +169,9 @@ def generate_html_report(problems):
     
     # 计算统计数据
     total_problems = len(problems)
-    solved_count = sum(1 for p in problems if p['status'] != '未解决')
-    passed_count = sum(1 for p in problems if p['status'] == '通过')
-    error_count = sum(1 for p in problems if p['status'] == '语法错误')
+    solved_count = sum(1 for p in problems if p['status'] != 'Unsolved')
+    passed_count = sum(1 for p in problems if p['status'] == 'Pass')
+    error_count = sum(1 for p in problems if p['status'] == 'Fail')
     
     solved_percentage = (solved_count / total_problems * 100) if total_problems > 0 else 0
     passed_percentage = (passed_count / total_problems * 100) if total_problems > 0 else 0
@@ -181,23 +181,23 @@ def generate_html_report(problems):
     table_rows = []
     for i, problem in enumerate(problems):
         status_class = {
-            '通过': 'status-pass',
-            '语法错误': 'status-fail',
-            '未解决': 'status-unknown'
+            'Pass': 'status-pass',
+            'Fail': 'status-fail',
+            'Unsolved': 'status-unknown'
         }[problem['status']]
         
         error_details = ''
-        if problem['status'] == '语法错误' and problem['error_msg']:
+        if problem['status'] == 'Fail' and problem['error_msg']:
             error_id = f"error-{i}"
             error_details = f"""
-                <span class="toggle-error" onclick="toggleErrorDetails('{error_id}')">查看错误</span>
+                <span class="toggle-error" onclick="toggleErrorDetails('{error_id}')">View Error</span>
                 <div id="{error_id}" class="error-details">{problem['error_msg']}</div>
             """
         
         table_rows.append(f"""
             <tr>
                 <td>{problem['number']}</td>
-                <td>{problem['chinese_name']}</td>
+                <td>{problem['name']}</td>
                 <td class="{status_class}">{problem['status']}</td>
                 <td>{problem['creation_time'].strftime('%Y-%m-%d %H:%M:%S') if problem['creation_time'] else '-'}</td>
                 <td>{error_details}</td>
@@ -219,6 +219,28 @@ def generate_html_report(problems):
     
     return html
 
+def clean_problem_name(english_name, chinese_name):
+    """Clean up problem names by removing markdown references and file extensions"""
+    # Remove markdown/file references in parentheses
+    english_name = re.sub(r'\([^)]*\.md\)', '', english_name)
+    english_name = re.sub(r'\([^)]*\.py\)', '', english_name)
+    
+    # Remove file extensions
+    english_name = re.sub(r'\.md$', '', english_name)
+    english_name = re.sub(r'\.py$', '', english_name)
+    
+    # Remove any remaining markdown headers or sections
+    english_name = re.sub(r'#.*?$', '', english_name)
+    english_name = re.sub(r'^[-\s]*', '', english_name)
+    
+    # Clean up Chinese name
+    chinese_name = chinese_name.strip()
+    
+    # Remove any trailing/leading whitespace
+    english_name = english_name.strip()
+    
+    return english_name, chinese_name
+
 def main():
     # 读取README.md获取所有题目
     with open("README.md", 'r', encoding='utf-8') as file:
@@ -233,14 +255,17 @@ def main():
         chinese_name, english_name, leetcode_number = match
         folder_name = f"llama4_maverick_solutions/leetcode_{leetcode_number}_{english_name.strip().lower().replace(' ', '_')}"
         
+        # Clean up problem names
+        clean_english, clean_chinese = clean_problem_name(english_name, chinese_name)
+        
         # 分析解决方案
         analysis = analyze_solution(folder_name)
         
         if analysis:
-            status = '通过' if not analysis['has_error'] else '语法错误'
+            status = 'Pass' if not analysis['has_error'] else 'Fail'
             problems.append({
                 'number': leetcode_number,
-                'chinese_name': chinese_name.strip(),
+                'name': f"{clean_english} ({clean_chinese})",
                 'status': status,
                 'creation_time': analysis['creation_time'],
                 'error_msg': analysis['error_msg']
@@ -248,8 +273,8 @@ def main():
         else:
             problems.append({
                 'number': leetcode_number,
-                'chinese_name': chinese_name.strip(),
-                'status': '未解决',
+                'name': f"{clean_english} ({clean_chinese})",
+                'status': 'Unsolved',
                 'creation_time': None,
                 'error_msg': None
             })
@@ -265,7 +290,7 @@ def main():
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write(html)
     
-    print(f"报告已生成: {os.path.abspath(report_path)}")
+    print(f"Report generated: {os.path.abspath(report_path)}")
     webbrowser.open(f"file://{os.path.abspath(report_path)}")
 
 if __name__ == "__main__":
