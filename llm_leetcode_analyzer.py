@@ -45,7 +45,57 @@ def analyze_solution(folder_path):
 
 def generate_html_report(problems):
     """生成HTML格式的进度报告"""
-    html = """
+    # 计算统计数据
+    total_problems = len(problems)
+    solved_count = sum(1 for p in problems if p['status'] != 'Unsolved')
+    passed_count = sum(1 for p in problems if p['status'] == 'Pass')
+    error_count = sum(1 for p in problems if p['status'] == 'Fail')
+    
+    solved_percentage = (solved_count / total_problems * 100) if total_problems > 0 else 0
+    passed_percentage = (passed_count / total_problems * 100) if total_problems > 0 else 0
+    error_percentage = (error_count / total_problems * 100) if total_problems > 0 else 0
+    
+    # 生成表格行
+    table_rows = []
+    for i, problem in enumerate(problems):
+        status_class = {
+            'Pass': 'status-pass',
+            'Fail': 'status-fail',
+            'Unsolved': 'status-unknown'
+        }[problem['status']]
+        
+        error_details = ''
+        if problem['status'] == 'Fail' and problem['error_msg']:
+            error_id = f"error-{i}"
+            error_details = f"""
+                <span class="toggle-error" onclick="toggleErrorDetails('{error_id}')">View Error</span>
+                <div id="{error_id}" class="error-details">{problem['error_msg']}</div>
+            """
+        
+        # Add solution links
+        solution_links = f"""
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.md" class="solution-link">题解</a>
+            </div>
+        """ if problem['status'] != 'Unsolved' else '-'
+        
+        table_rows.append(f"""
+            <tr>
+                <td>{problem['number']}</td>
+                <td>{problem['name']}</td>
+                <td class="{status_class}">{problem['status']}</td>
+                <td>{problem['creation_time'].strftime('%Y-%m-%d %H:%M:%S') if problem['creation_time'] else '-'}</td>
+                <td>{solution_links}</td>
+                <td>{error_details}</td>
+            </tr>
+        """)
+    
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    table_rows_str = '\n'.join(table_rows)
+    
+    # Use f-string for the entire HTML template
+    html = f"""
     <!DOCTYPE html>
     <html lang="zh-CN">
     <head>
@@ -121,7 +171,42 @@ def generate_html_report(problems):
                 color: #6c757d;
                 font-size: 0.9em;
             }}
+            .solution-links {{
+                display: flex;
+                gap: 10px;
+            }}
+            .solution-link {{
+                color: #007bff;
+                text-decoration: none;
+            }}
+            .solution-link:hover {{
+                text-decoration: underline;
+            }}
         </style>
+        <script>
+            // Intercept clicks on Python and Markdown file links and redirect to appropriate viewers
+            document.addEventListener('DOMContentLoaded', function() {{
+                document.addEventListener('click', function(event) {{
+                    // Check if the clicked element is a link
+                    if (event.target.tagName === 'A') {{
+                        const href = event.target.getAttribute('href');
+                        // Create an absolute URL if it's a relative path
+                        const absolutePath = href.startsWith('http') ? href : new URL(href, window.location.href).href;
+                        
+                        // Handle Python files
+                        if (href.endsWith('.py')) {{
+                            event.preventDefault();
+                            window.location.href = `code-viewer.html?file=${{encodeURIComponent(absolutePath)}}`;
+                        }} 
+                        // Handle Markdown files
+                        else if (href.endsWith('.md')) {{
+                            event.preventDefault();
+                            window.location.href = `markdown-viewer.html?file=${{encodeURIComponent(absolutePath)}}`;
+                        }}
+                    }}
+                }});
+            }});
+        </script>
     </head>
     <body>
         <h1>LeetCode Progress Report</h1>
@@ -141,11 +226,12 @@ def generate_html_report(problems):
                     <th>Problem Name</th>
                     <th>Status</th>
                     <th>Created</th>
+                    <th>Solutions</th>
                     <th>Details</th>
                 </tr>
             </thead>
             <tbody>
-                {table_rows}
+                {table_rows_str}
             </tbody>
         </table>
         
@@ -166,56 +252,6 @@ def generate_html_report(problems):
     </body>
     </html>
     """
-    
-    # 计算统计数据
-    total_problems = len(problems)
-    solved_count = sum(1 for p in problems if p['status'] != 'Unsolved')
-    passed_count = sum(1 for p in problems if p['status'] == 'Pass')
-    error_count = sum(1 for p in problems if p['status'] == 'Fail')
-    
-    solved_percentage = (solved_count / total_problems * 100) if total_problems > 0 else 0
-    passed_percentage = (passed_count / total_problems * 100) if total_problems > 0 else 0
-    error_percentage = (error_count / total_problems * 100) if total_problems > 0 else 0
-    
-    # 生成表格行
-    table_rows = []
-    for i, problem in enumerate(problems):
-        status_class = {
-            'Pass': 'status-pass',
-            'Fail': 'status-fail',
-            'Unsolved': 'status-unknown'
-        }[problem['status']]
-        
-        error_details = ''
-        if problem['status'] == 'Fail' and problem['error_msg']:
-            error_id = f"error-{i}"
-            error_details = f"""
-                <span class="toggle-error" onclick="toggleErrorDetails('{error_id}')">View Error</span>
-                <div id="{error_id}" class="error-details">{problem['error_msg']}</div>
-            """
-        
-        table_rows.append(f"""
-            <tr>
-                <td>{problem['number']}</td>
-                <td>{problem['name']}</td>
-                <td class="{status_class}">{problem['status']}</td>
-                <td>{problem['creation_time'].strftime('%Y-%m-%d %H:%M:%S') if problem['creation_time'] else '-'}</td>
-                <td>{error_details}</td>
-            </tr>
-        """)
-    
-    # 填充HTML模板
-    html = html.format(
-        total_problems=total_problems,
-        solved_count=solved_count,
-        solved_percentage=solved_percentage,
-        passed_count=passed_count,
-        passed_percentage=passed_percentage,
-        error_count=error_count,
-        error_percentage=error_percentage,
-        table_rows='\n'.join(table_rows),
-        current_time=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    )
     
     return html
 
@@ -286,7 +322,7 @@ def main():
     html = generate_html_report(problems)
     
     # 保存并打开报告
-    report_path = "leetcode_progress_report.html"
+    report_path = "llm_solution_comparison_report.html"
     with open(report_path, 'w', encoding='utf-8') as f:
         f.write(html)
     

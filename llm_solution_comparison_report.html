@@ -74,7 +74,42 @@
                 color: #6c757d;
                 font-size: 0.9em;
             }
+            .solution-links {
+                display: flex;
+                gap: 10px;
+            }
+            .solution-link {
+                color: #007bff;
+                text-decoration: none;
+            }
+            .solution-link:hover {
+                text-decoration: underline;
+            }
         </style>
+        <script>
+            // Intercept clicks on Python and Markdown file links and redirect to appropriate viewers
+            document.addEventListener('DOMContentLoaded', function() {
+                document.addEventListener('click', function(event) {
+                    // Check if the clicked element is a link
+                    if (event.target.tagName === 'A') {
+                        const href = event.target.getAttribute('href');
+                        // Create an absolute URL if it's a relative path
+                        const absolutePath = href.startsWith('http') ? href : new URL(href, window.location.href).href;
+                        
+                        // Handle Python files
+                        if (href.endsWith('.py')) {
+                            event.preventDefault();
+                            window.location.href = `code-viewer.html?file=${encodeURIComponent(absolutePath)}`;
+                        } 
+                        // Handle Markdown files
+                        else if (href.endsWith('.md')) {
+                            event.preventDefault();
+                            window.location.href = `markdown-viewer.html?file=${encodeURIComponent(absolutePath)}`;
+                        }
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         <h1>LeetCode Progress Report</h1>
@@ -94,6 +129,7 @@
                     <th>Problem Name</th>
                     <th>Status</th>
                     <th>Created</th>
+                    <th>Solutions</th>
                     <th>Details</th>
                 </tr>
             </thead>
@@ -105,6 +141,12 @@
 - 电话号码的字母组合)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:21:28</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_17_letter_combinations/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_17_letter_combinations/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -115,6 +157,12 @@
 - 实现 strStr())</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:23:50</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_28_implement_strstr()/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_28_implement_strstr()/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -125,6 +173,12 @@
 - 搜索旋转排序数组)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 17:12:38</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_33_search_in_rotated_sorted_array/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_33_search_in_rotated_sorted_array/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -135,6 +189,12 @@
 - 组合总和)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:05:02</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_39_combination_sum/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_39_combination_sum/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -145,6 +205,12 @@
 - 全排列)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:06:30</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_46_permutations/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_46_permutations/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -155,6 +221,12 @@
 - 跳跃游戏)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:30:39</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_55_jump_game/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_55_jump_game/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -165,6 +237,12 @@
 - 不同路径)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:14:06</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_62_unique_paths/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_62_unique_paths/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -179,6 +257,12 @@
 - 搜索二维矩阵)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:23:15</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_74_search_2d_matrix/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_74_search_2d_matrix/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -189,6 +273,12 @@
   - 中序遍历)</td>
                 <td class="status-fail">Fail</td>
                 <td>2025-04-07 18:09:06</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_94_in-order_traversal/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_94_in-order_traversal/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td>
                 <span class="toggle-error" onclick="toggleErrorDetails('error-8')">View Error</span>
                 <div id="error-8" class="error-details">EEEE
@@ -239,6 +329,12 @@ FAILED (errors=4)
 - 验证二叉搜索树)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 22:31:30</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_98_validate_bst/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_98_validate_bst/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -249,6 +345,12 @@ FAILED (errors=4)
 - 层序遍历)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 22:00:48</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_102_level_order_traversal/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_102_level_order_traversal/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -259,6 +361,12 @@ FAILED (errors=4)
 - 平衡二叉树)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 16:56:51</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_110_balanced_binary_tree/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_110_balanced_binary_tree/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -269,6 +377,12 @@ FAILED (errors=4)
 - 二叉树展开为链表)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:03:26</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_114_flatten_binary_tree/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_114_flatten_binary_tree/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -279,6 +393,12 @@ FAILED (errors=4)
 - 判断回文串)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 17:54:23</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_125_valid_palindrome/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_125_valid_palindrome/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -291,6 +411,12 @@ FAILED (errors=4)
 - 单词接龙 II)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:22:13</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_126_word_ladder_ii/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_126_word_ladder_ii/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -301,6 +427,12 @@ FAILED (errors=4)
 - 克隆图)</td>
                 <td class="status-fail">Fail</td>
                 <td>2025-04-07 18:07:18</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_133_clone_graph/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_133_clone_graph/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td>
                 <span class="toggle-error" onclick="toggleErrorDetails('error-15')">View Error</span>
                 <div id="error-15" class="error-details">Traceback (most recent call last):
@@ -320,6 +452,12 @@ NameError: name 'Node' is not defined
   - 先序遍历)</td>
                 <td class="status-fail">Fail</td>
                 <td>2025-04-07 18:03:59</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_144_pre-order_traversal/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_144_pre-order_traversal/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td>
                 <span class="toggle-error" onclick="toggleErrorDetails('error-16')">View Error</span>
                 <div id="error-16" class="error-details">EEEE
@@ -370,6 +508,12 @@ FAILED (errors=4)
   - 后序遍历)</td>
                 <td class="status-fail">Fail</td>
                 <td>2025-04-07 22:33:23</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_145_post-order_traversal/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_145_post-order_traversal/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td>
                 <span class="toggle-error" onclick="toggleErrorDetails('error-17')">View Error</span>
                 <div id="error-17" class="error-details">EEEE
@@ -422,6 +566,12 @@ FAILED (errors=4)
 - LRU缓存)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:02:33</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_146_lru_cache/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_146_lru_cache/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -432,6 +582,12 @@ FAILED (errors=4)
 - 旋转排序数组中的最小值)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:31:13</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_153_find_minimum_in_rotated_sorted_array/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_153_find_minimum_in_rotated_sorted_array/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -442,6 +598,12 @@ FAILED (errors=4)
 - 寻找峰值元素)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:27:46</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_162_find_peak_element/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_162_find_peak_element/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -452,6 +614,12 @@ FAILED (errors=4)
 - 二叉搜索树迭代器)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:31:46</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_173_bst_iterator/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_173_bst_iterator/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -462,6 +630,12 @@ FAILED (errors=4)
 - 岛屿数量)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:00:58</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_200_number_of_islands/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_200_number_of_islands/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -472,6 +646,12 @@ FAILED (errors=4)
 - 课程表 II)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:15:28</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_210_course_schedule_ii/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_210_course_schedule_ii/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -482,6 +662,12 @@ FAILED (errors=4)
 - 翻转二叉树)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 16:59:04</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_226_invert_binary_tree/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_226_invert_binary_tree/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -492,6 +678,12 @@ FAILED (errors=4)
 - BST中第k小的元素)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 22:34:53</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_230_kth_smallest_in_bst/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_230_kth_smallest_in_bst/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -502,6 +694,12 @@ FAILED (errors=4)
 - 最近公共祖先)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:28:27</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_236_lowest_common_ancestor/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_236_lowest_common_ancestor/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -512,6 +710,12 @@ FAILED (errors=4)
 - 搜索二维矩阵 II)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:12:58</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_240_search_2d_matrix_ii/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_240_search_2d_matrix_ii/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -524,6 +728,12 @@ FAILED (errors=4)
 - 二叉树路径)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:01:33</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_257_binary_tree_paths/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_257_binary_tree_paths/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -534,6 +744,12 @@ FAILED (errors=4)
 - 图是否是树)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 22:33:54</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_261_graph_valid_tree/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_261_graph_valid_tree/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -544,6 +760,12 @@ FAILED (errors=4)
 - 丑数 II)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 18:32:24</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_264_ugly_number_ii/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_264_ugly_number_ii/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -556,6 +778,7 @@ FAILED (errors=4)
 - 翻转字符串)</td>
                 <td class="status-unknown">Unsolved</td>
                 <td>-</td>
+                <td>-</td>
                 <td></td>
             </tr>
         
@@ -566,6 +789,12 @@ FAILED (errors=4)
 - 最长重复字符替换)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 22:30:51</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_424_longest_repeating_character_replacement/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_424_longest_repeating_character_replacement/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -576,6 +805,12 @@ FAILED (errors=4)
 - 找到K个最接近的元素)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 22:35:28</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_658_find_k_closest_elements/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_658_find_k_closest_elements/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -586,6 +821,12 @@ FAILED (errors=4)
 - 验证回文串 II)</td>
                 <td class="status-pass">Pass</td>
                 <td>2025-04-07 17:43:29</td>
+                <td>
+            <div class="solution-links">
+                <a href="llama4_maverick_solutions/leetcode_680_valid_palindrome_ii/solution.py" class="solution-link">Python</a>
+                <a href="llama4_maverick_solutions/leetcode_680_valid_palindrome_ii/solution.md" class="solution-link">题解</a>
+            </div>
+        </td>
                 <td></td>
             </tr>
         
@@ -593,7 +834,7 @@ FAILED (errors=4)
         </table>
         
         <div class="last-updated">
-            Last Updated: 2025-04-07 23:03:27
+            Last Updated: 2025-04-07 23:17:51
         </div>
         
         <script>
