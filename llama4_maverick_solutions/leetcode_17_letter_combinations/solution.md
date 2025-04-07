@@ -1,4 +1,4 @@
-# k_sum_ii.md)
+# k_sum_ii.md
 - 电话号码的字母组合 / Letter Combinations [LeetCode 17]
 
 ## Problem Description

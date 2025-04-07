@@ -1,4 +1,4 @@
-# unique_paths.md)
+# unique_paths.md
 - 跳跃游戏 / Jump Game [LeetCode 55]
 
 ## Problem Description

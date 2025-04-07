@@ -1,4 +1,4 @@
-# binary_tree_paths.md)
+# binary_tree_paths.md
 - 平衡二叉树 / Balanced Binary Tree [LeetCode 110]
 
 ## Problem Description

@@ -1,4 +1,4 @@
-# palindrome_ii.md)
+# palindrome_ii.md
 - 实现 strStr() / Implement strStr() [LeetCode 28]
 
 ## Problem Description

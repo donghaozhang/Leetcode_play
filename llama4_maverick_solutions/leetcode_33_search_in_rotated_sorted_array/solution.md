@@ -1,4 +1,4 @@
-# find_minimum_rotated.md)
+# find_minimum_rotated.md
 - 搜索旋转排序数组 / Search in Rotated Sorted Array [LeetCode 33]
 
 ## Problem Description
