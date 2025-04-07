@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeetCode 题解</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Set the base path for all file links
+        const basePath = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+        
+        // Intercept clicks on Python and Markdown file links and redirect to appropriate viewers
+        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('click', function(event) {
+                // Check if the clicked element is a link
+                if (event.target.tagName === 'A') {
+                    const href = event.target.getAttribute('href');
+                    // Create an absolute URL if it's a relative path
+                    const absolutePath = href.startsWith('http') ? href : new URL(href, window.location.href).href;
+                    
+                    // Handle Python files
+                    if (href.endsWith('.py')) {
+                        event.preventDefault();
+                        window.location.href = `code-viewer.html?file=${encodeURIComponent(absolutePath)}`;
+                    } 
+                    // Handle Markdown files
+                    else if (href.endsWith('.md')) {
+                        event.preventDefault();
+                        window.location.href = `markdown-viewer.html?file=${encodeURIComponent(absolutePath)}`;
+                    }
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
