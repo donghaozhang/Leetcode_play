@@ -29,11 +29,16 @@ def extract_leetcode_questions(readme_path):
     leetcode_questions = []
     for match in matches:
         chinese_name, english_name, leetcode_number = match
+        folder_name = f"llama4_maverick_solutions/leetcode_{leetcode_number}_{english_name.strip().lower().replace(' ', '_')}"
+        is_solved = os.path.exists(folder_name)
+        
         leetcode_questions.append({
             'chinese_name': chinese_name.strip(),
             'english_name': english_name.strip(),
             'leetcode_number': leetcode_number,
-            'full_name': f"{chinese_name.strip()} / {english_name.strip()} [LeetCode {leetcode_number}]"
+            'full_name': f"{chinese_name.strip()} / {english_name.strip()} [LeetCode {leetcode_number}]",
+            'is_solved': is_solved,
+            'folder_name': folder_name
         })
     
     return leetcode_questions
@@ -162,32 +167,55 @@ def main():
         print("没有在README.md文件中找到LeetCode题目。")
         return
     
+    # Count solved and unsolved questions
+    solved_count = sum(1 for q in leetcode_questions if q['is_solved'])
+    total_count = len(leetcode_questions)
+    
+    print(f"\n当前进度: 已解决 {solved_count}/{total_count} 题 ({(solved_count/total_count*100):.1f}%)")
+    
+    # Ask if user wants to see solved problems
+    show_solved = input("\n是否显示已解决的题目？(y/n, 默认n): ").lower().strip() == 'y'
+    
     # Display available LeetCode questions
-    print(f"找到 {len(leetcode_questions)} 个 LeetCode 题目在 README.md 中:")
-    for i, question in enumerate(leetcode_questions):
-        print(f"{i+1}. {question['full_name']}")
+    print(f"\n找到 {len(leetcode_questions)} 个 LeetCode 题目在 README.md 中:")
+    available_questions = []
+    for i, question in enumerate(leetcode_questions, 1):
+        if not question['is_solved'] or show_solved:
+            status = "[已解决]" if question['is_solved'] else "[未解决]"
+            print(f"{i}. {status} {question['full_name']}")
+            available_questions.append(question)
+    
+    if not available_questions:
+        print("\n恭喜！所有题目都已解决！")
+        return
     
     # Choose a random question or let user select
     try:
         choice = input("\n输入题目编号来解题 (或直接按回车随机选择一题): ")
         if choice.strip():
             index = int(choice) - 1
-            if 0 <= index < len(leetcode_questions):
-                selected_question = leetcode_questions[index]
+            if 0 <= index < len(available_questions):
+                selected_question = available_questions[index]
             else:
                 print("无效的选择。随机选择一题。")
-                selected_question = random.choice(leetcode_questions)
+                # Only select from unsolved questions if not showing solved ones
+                candidates = [q for q in available_questions if not q['is_solved']] if not show_solved else available_questions
+                selected_question = random.choice(candidates)
         else:
-            selected_question = random.choice(leetcode_questions)
+            # Only select from unsolved questions if not showing solved ones
+            candidates = [q for q in available_questions if not q['is_solved']] if not show_solved else available_questions
+            selected_question = random.choice(candidates)
     except:
         print("无效的输入。随机选择一题。")
-        selected_question = random.choice(leetcode_questions)
+        # Only select from unsolved questions if not showing solved ones
+        candidates = [q for q in available_questions if not q['is_solved']] if not show_solved else available_questions
+        selected_question = random.choice(candidates)
     
     problem_number = selected_question['leetcode_number']
     print(f"\n已选择题目: {selected_question['full_name']}")
     
     # Create folder structure
-    folder_name = f"llama4_maverick_solutions/leetcode_{problem_number}_{selected_question['english_name'].strip().lower().replace(' ', '_')}"
+    folder_name = selected_question['folder_name']
     os.makedirs(folder_name, exist_ok=True)
     
     # Check if solution already exists
