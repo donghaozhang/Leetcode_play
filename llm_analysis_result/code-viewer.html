@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Viewer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Add Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    <style>
+        .code-container {
+            position: relative;
+            background-color: #272822;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #1e1f1c;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #3a3a3a;
+        }
+        
+        .file-path {
+            color: #f8f8f2;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background: none;
+            border: none;
+            color: #f8f8f2;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .action-button:hover {
+            background-color: #3a3a3a;
+        }
+        
+        pre {
+            margin: 0;
+            border-radius: 0 0 8px 8px;
+            max-height: 700px;
+            overflow: auto;
+        }
+        
+        code {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            tab-size: 4;
+        }
+        
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid #3a3a3a;
+        }
+        
+        .back-to-list {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-to-list:hover {
+            text-decoration: underline;
+        }
+        
+        #loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .file-error {
+            background-color: #fff3f3;
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .file-error h3 {
+            margin-top: 0;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LeetCode Solution Code Viewer</h1>
+        
+        <a href="models_comparison_report.html" class="back-to-list">← Back to Comparison</a>
+        
+        <div id="loading">Loading...</div>
+        
+        <div id="error-container" style="display: none;">
+            <div class="file-error">
+                <h3>File Load Error</h3>
+                <p id="error-message">Unable to load file. This might be due to browser security restrictions.</p>
+                <p>Due to browser security restrictions, some files might not be directly accessible. Try these options:</p>
+                <ol>
+                    <li>Make sure you're using the web server to view files (not opening directly from filesystem)</li>
+                    <li>Enter code manually in the box below</li>
+                    <li>View the original file: <a id="error-file-link" href="#" target="_blank">View Original File</a></li>
+                </ol>
+            </div>
+            
+            <div class="manual-input">
+                <h3>Manual Code Input</h3>
+                <p>You can copy code from the original file and paste it below, then click "Display Code":</p>
+                <textarea id="manual-code" style="width:100%;min-height:300px;" placeholder="Paste Python code here..."></textarea>
+                <br><br>
+                <button id="display-manual-code" style="background:#007bff;color:white;border:none;padding:10px 16px;border-radius:4px;cursor:pointer;">Display Code</button>
+            </div>
+        </div>
+        
+        <div id="code-viewer" style="display: none;">
+            <h2 id="file-title">File Name</h2>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <div class="file-path" id="file-path">Path/to/file</div>
+                    <div class="actions">
+                        <button class="action-button" id="copy-btn">Copy Code</button>
+                        <button class="action-button" id="raw-btn">View Raw File</button>
+                    </div>
+                </div>
+                <pre class="line-numbers"><code id="code-content" class="language-python"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    
+    <script>
+        function displayCode(code, filePath) {
+            // Display the code with syntax highlighting
+            const codeElement = document.getElementById('code-content');
+            codeElement.textContent = code;
+            
+            // Detect language from file extension
+            const fileExt = filePath.split('.').pop().toLowerCase();
+            let language = 'python'; // Default
+            
+            // Map file extensions to Prism language classes
+            const langMap = {
+                'py': 'python',
+                'js': 'javascript',
+                'ts': 'typescript',
+                'html': 'html',
+                'css': 'css',
+                'json': 'json',
+                'md': 'markdown'
+            };
+            
+            if (langMap[fileExt]) {
+                language = langMap[fileExt];
+                codeElement.className = `language-${language}`;
+            }
+            
+            // Force Prism to highlight the code
+            Prism.highlightElement(codeElement);
+            
+            // Show the code viewer
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('code-viewer').style.display = 'block';
+            
+            // Update file title and path
+            const fileName = filePath.split('/').pop();
+            document.getElementById('file-title').textContent = fileName;
+            document.getElementById('file-path').textContent = filePath;
+            document.title = `${fileName} - Code Viewer`;
+            
+            // Add event listeners for buttons
+            document.getElementById('copy-btn').addEventListener('click', function() {
+                navigator.clipboard.writeText(code)
+                    .then(() => alert('Code copied to clipboard'))
+                    .catch(err => console.error('Copy failed:', err));
+            });
+            
+            document.getElementById('raw-btn').addEventListener('click', function() {
+                window.location.href = filePath;
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get file path from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const filePath = urlParams.get('file');
+            
+            if (!filePath) {
+                document.getElementById('loading').textContent = 'No file path specified';
+                return;
+            }
+            
+            // Setup error handling UI
+            document.getElementById('error-file-link').href = filePath;
+            
+            // Try different methods to load the file
+            let loadedSuccessfully = false;
+            
+            // First try XMLHttpRequest (works better with local files)
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && !loadedSuccessfully) {
+                        loadedSuccessfully = true;
+                        displayCode(xhr.responseText, filePath);
+                    } else if (xhr.status !== 200 && !loadedSuccessfully) {
+                        // If XHR fails, try fetch API as backup
+                        fetch(filePath)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.text();
+                            })
+                            .then(code => {
+                                loadedSuccessfully = true;
+                                displayCode(code, filePath);
+                            })
+                            .catch(error => {
+                                if (!loadedSuccessfully) {
+                                    document.getElementById('loading').style.display = 'none';
+                                    document.getElementById('error-message').textContent = `Load error: ${error.message}`;
+                                    document.getElementById('error-container').style.display = 'block';
+                                }
+                            });
+                    }
+                }
+            };
+            xhr.open('GET', filePath, true);
+            xhr.send();
+            
+            // Setup manual code input button
+            document.getElementById('display-manual-code').addEventListener('click', function() {
+                const manualCode = document.getElementById('manual-code').value;
+                if (manualCode.trim()) {
+                    displayCode(manualCode, filePath);
+                    document.getElementById('error-container').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -43,6 +43,633 @@ def analyze_solution(folder_path):
             'creation_time': creation_time
         }
 
+def setup_viewers(results_dir):
+    """Copy and setup the code and markdown viewers"""
+    # Copy the existing style.css file to the results directory
+    try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        source_css_path = os.path.join(current_dir, "style.css")
+        
+        if os.path.exists(source_css_path):
+            # Copy the existing CSS file
+            with open(source_css_path, 'r', encoding='utf-8') as source:
+                css_content = source.read()
+                with open(os.path.join(results_dir, "style.css"), 'w', encoding='utf-8') as target:
+                    target.write(css_content)
+            print(f"Copied style.css to {results_dir}")
+        else:
+            # Create basic CSS if original not found
+            print(f"style.css not found in {current_dir}. Creating a basic style.")
+            basic_css = """
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1, h2 {
+                margin-bottom: 20px;
+            }
+            pre {
+                background-color: #f5f5f5;
+                padding: 15px;
+                border-radius: 8px;
+                overflow: auto;
+            }
+            .solution-links {
+                display: flex;
+                gap: 10px;
+            }
+            .solution-link {
+                color: #007bff;
+                text-decoration: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                background-color: #f8f9fa;
+            }
+            .solution-link:hover {
+                background-color: #e9ecef;
+                text-decoration: underline;
+            }
+            """
+            with open(os.path.join(results_dir, "style.css"), 'w', encoding='utf-8') as f:
+                f.write(basic_css)
+    except Exception as e:
+        print(f"Warning: Could not copy or create style.css: {e}")
+    
+    # Create the code and markdown viewers
+    code_viewer = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Viewer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Add Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    <style>
+        .code-container {
+            position: relative;
+            background-color: #272822;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #1e1f1c;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #3a3a3a;
+        }
+        
+        .file-path {
+            color: #f8f8f2;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background: none;
+            border: none;
+            color: #f8f8f2;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .action-button:hover {
+            background-color: #3a3a3a;
+        }
+        
+        pre {
+            margin: 0;
+            border-radius: 0 0 8px 8px;
+            max-height: 700px;
+            overflow: auto;
+        }
+        
+        code {
+            font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            tab-size: 4;
+        }
+        
+        .line-numbers .line-numbers-rows {
+            border-right: 1px solid #3a3a3a;
+        }
+        
+        .back-to-list {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-to-list:hover {
+            text-decoration: underline;
+        }
+        
+        #loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .file-error {
+            background-color: #fff3f3;
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .file-error h3 {
+            margin-top: 0;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LeetCode Solution Code Viewer</h1>
+        
+        <a href="models_comparison_report.html" class="back-to-list">← Back to Comparison</a>
+        
+        <div id="loading">Loading...</div>
+        
+        <div id="error-container" style="display: none;">
+            <div class="file-error">
+                <h3>File Load Error</h3>
+                <p id="error-message">Unable to load file. This might be due to browser security restrictions.</p>
+                <p>Due to browser security restrictions, some files might not be directly accessible. Try these options:</p>
+                <ol>
+                    <li>Make sure you're using the web server to view files (not opening directly from filesystem)</li>
+                    <li>Enter code manually in the box below</li>
+                    <li>View the original file: <a id="error-file-link" href="#" target="_blank">View Original File</a></li>
+                </ol>
+            </div>
+            
+            <div class="manual-input">
+                <h3>Manual Code Input</h3>
+                <p>You can copy code from the original file and paste it below, then click "Display Code":</p>
+                <textarea id="manual-code" style="width:100%;min-height:300px;" placeholder="Paste Python code here..."></textarea>
+                <br><br>
+                <button id="display-manual-code" style="background:#007bff;color:white;border:none;padding:10px 16px;border-radius:4px;cursor:pointer;">Display Code</button>
+            </div>
+        </div>
+        
+        <div id="code-viewer" style="display: none;">
+            <h2 id="file-title">File Name</h2>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <div class="file-path" id="file-path">Path/to/file</div>
+                    <div class="actions">
+                        <button class="action-button" id="copy-btn">Copy Code</button>
+                        <button class="action-button" id="raw-btn">View Raw File</button>
+                    </div>
+                </div>
+                <pre class="line-numbers"><code id="code-content" class="language-python"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    
+    <script>
+        function displayCode(code, filePath) {
+            // Display the code with syntax highlighting
+            const codeElement = document.getElementById('code-content');
+            codeElement.textContent = code;
+            
+            // Detect language from file extension
+            const fileExt = filePath.split('.').pop().toLowerCase();
+            let language = 'python'; // Default
+            
+            // Map file extensions to Prism language classes
+            const langMap = {
+                'py': 'python',
+                'js': 'javascript',
+                'ts': 'typescript',
+                'html': 'html',
+                'css': 'css',
+                'json': 'json',
+                'md': 'markdown'
+            };
+            
+            if (langMap[fileExt]) {
+                language = langMap[fileExt];
+                codeElement.className = `language-${language}`;
+            }
+            
+            // Force Prism to highlight the code
+            Prism.highlightElement(codeElement);
+            
+            // Show the code viewer
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('code-viewer').style.display = 'block';
+            
+            // Update file title and path
+            const fileName = filePath.split('/').pop();
+            document.getElementById('file-title').textContent = fileName;
+            document.getElementById('file-path').textContent = filePath;
+            document.title = `${fileName} - Code Viewer`;
+            
+            // Add event listeners for buttons
+            document.getElementById('copy-btn').addEventListener('click', function() {
+                navigator.clipboard.writeText(code)
+                    .then(() => alert('Code copied to clipboard'))
+                    .catch(err => console.error('Copy failed:', err));
+            });
+            
+            document.getElementById('raw-btn').addEventListener('click', function() {
+                window.location.href = filePath;
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get file path from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const filePath = urlParams.get('file');
+            
+            if (!filePath) {
+                document.getElementById('loading').textContent = 'No file path specified';
+                return;
+            }
+            
+            // Setup error handling UI
+            document.getElementById('error-file-link').href = filePath;
+            
+            // Try different methods to load the file
+            let loadedSuccessfully = false;
+            
+            // First try XMLHttpRequest (works better with local files)
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && !loadedSuccessfully) {
+                        loadedSuccessfully = true;
+                        displayCode(xhr.responseText, filePath);
+                    } else if (xhr.status !== 200 && !loadedSuccessfully) {
+                        // If XHR fails, try fetch API as backup
+                        fetch(filePath)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.text();
+                            })
+                            .then(code => {
+                                loadedSuccessfully = true;
+                                displayCode(code, filePath);
+                            })
+                            .catch(error => {
+                                if (!loadedSuccessfully) {
+                                    document.getElementById('loading').style.display = 'none';
+                                    document.getElementById('error-message').textContent = `Load error: ${error.message}`;
+                                    document.getElementById('error-container').style.display = 'block';
+                                }
+                            });
+                    }
+                }
+            };
+            xhr.open('GET', filePath, true);
+            xhr.send();
+            
+            // Setup manual code input button
+            document.getElementById('display-manual-code').addEventListener('click', function() {
+                const manualCode = document.getElementById('manual-code').value;
+                if (manualCode.trim()) {
+                    displayCode(manualCode, filePath);
+                    document.getElementById('error-container').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>"""
+
+    markdown_viewer = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Viewer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- GitHub Markdown CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <!-- Prism for code highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    <style>
+        .markdown-container {
+            position: relative;
+            background-color: #fff;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+        }
+        
+        .markdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #f6f8fa;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #e1e4e8;
+            margin: -20px -30px 20px;
+        }
+        
+        .file-path {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #586069;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background: none;
+            border: 1px solid #ddd;
+            color: #24292e;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .action-button:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .back-to-list {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-to-list:hover {
+            text-decoration: underline;
+        }
+        
+        #loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .file-error {
+            background-color: #fff3f3;
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .file-error h3 {
+            margin-top: 0;
+            color: #e74c3c;
+        }
+        
+        /* GitHub Markdown customization */
+        .markdown-body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            padding: 15px 0;
+        }
+        
+        .markdown-body pre {
+            padding: 16px;
+            overflow: auto;
+            font-size: 85%;
+            line-height: 1.5;
+            background-color: #282c34;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .markdown-body code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LeetCode Solution Markdown Viewer</h1>
+        
+        <a href="models_comparison_report.html" class="back-to-list">← Back to Comparison</a>
+        
+        <div id="loading">Loading...</div>
+        
+        <div id="error-container" style="display: none;">
+            <div class="file-error">
+                <h3>File Load Error</h3>
+                <p id="error-message">Unable to load file. This might be due to browser security restrictions.</p>
+                <p>Due to browser security restrictions, some files might not be directly accessible. Try these options:</p>
+                <ol>
+                    <li>Make sure you're using the web server to view files (not opening directly from filesystem)</li>
+                    <li>Enter markdown manually in the box below</li>
+                    <li>View the original file: <a id="error-file-link" href="#" target="_blank">View Original File</a></li>
+                </ol>
+            </div>
+            
+            <div class="manual-input">
+                <h3>Manual Markdown Input</h3>
+                <p>You can copy markdown from the original file and paste it below, then click "Render Markdown":</p>
+                <textarea id="manual-markdown" style="width:100%;min-height:300px;" placeholder="Paste markdown content here..."></textarea>
+                <br><br>
+                <button id="display-manual-markdown" style="background:#007bff;color:white;border:none;padding:10px 16px;border-radius:4px;cursor:pointer;">Render Markdown</button>
+            </div>
+        </div>
+        
+        <div id="markdown-viewer" style="display: none;">
+            <h2 id="file-title">File Name</h2>
+            
+            <div class="markdown-container">
+                <div class="markdown-header">
+                    <div class="file-path" id="file-path">Path/to/file</div>
+                    <div class="actions">
+                        <button class="action-button" id="copy-btn">Copy Source</button>
+                        <button class="action-button" id="raw-btn">View Raw File</button>
+                    </div>
+                </div>
+                <div id="markdown-content" class="markdown-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Add Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <script>
+        // Configure Marked to use Prism for syntax highlighting
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (Prism.languages[lang]) {
+                    return Prism.highlight(code, Prism.languages[lang], lang);
+                } else {
+                    return code;
+                }
+            },
+            breaks: true,
+            gfm: true
+        });
+        
+        function renderMarkdown(markdown, filePath) {
+            // Render the markdown content
+            const markdownHTML = marked.parse(markdown);
+            document.getElementById('markdown-content').innerHTML = markdownHTML;
+            
+            // Show the markdown viewer
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('markdown-viewer').style.display = 'block';
+            
+            // Update file title and path
+            const fileName = filePath.split('/').pop();
+            document.getElementById('file-title').textContent = fileName;
+            document.getElementById('file-path').textContent = filePath;
+            document.title = `${fileName} - Markdown Viewer`;
+            
+            // Add event listeners for buttons
+            document.getElementById('copy-btn').addEventListener('click', function() {
+                navigator.clipboard.writeText(markdown)
+                    .then(() => alert('Markdown source copied to clipboard'))
+                    .catch(err => console.error('Copy failed:', err));
+            });
+            
+            document.getElementById('raw-btn').addEventListener('click', function() {
+                window.location.href = filePath;
+            });
+            
+            // Highlight all code blocks after rendering
+            const codeBlocks = document.querySelectorAll('pre code');
+            codeBlocks.forEach(block => {
+                Prism.highlightElement(block);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get file path from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const filePath = urlParams.get('file');
+            
+            if (!filePath) {
+                document.getElementById('loading').textContent = 'No file path specified';
+                return;
+            }
+            
+            // Setup error handling UI
+            document.getElementById('error-file-link').href = filePath;
+            
+            // Try different methods to load the file
+            let loadedSuccessfully = false;
+            
+            // First try XMLHttpRequest (works better with local files)
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && !loadedSuccessfully) {
+                        loadedSuccessfully = true;
+                        renderMarkdown(xhr.responseText, filePath);
+                    } else if (xhr.status !== 200 && !loadedSuccessfully) {
+                        // If XHR fails, try fetch API as backup
+                        fetch(filePath)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.text();
+                            })
+                            .then(markdown => {
+                                loadedSuccessfully = true;
+                                renderMarkdown(markdown, filePath);
+                            })
+                            .catch(error => {
+                                if (!loadedSuccessfully) {
+                                    document.getElementById('loading').style.display = 'none';
+                                    document.getElementById('error-message').textContent = `Load error: ${error.message}`;
+                                    document.getElementById('error-container').style.display = 'block';
+                                }
+                            });
+                    }
+                }
+            };
+            xhr.open('GET', filePath, true);
+            xhr.send();
+            
+            // Setup manual markdown input button
+            document.getElementById('display-manual-markdown').addEventListener('click', function() {
+                const manualMarkdown = document.getElementById('manual-markdown').value;
+                if (manualMarkdown.trim()) {
+                    renderMarkdown(manualMarkdown, filePath);
+                    document.getElementById('error-container').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>"""
+
+    # Write the viewers to files
+    with open(os.path.join(results_dir, "code-viewer.html"), 'w', encoding='utf-8') as f:
+        f.write(code_viewer)
+    
+    with open(os.path.join(results_dir, "markdown-viewer.html"), 'w', encoding='utf-8') as f:
+        f.write(markdown_viewer)
+
+def generate_solution_links(model_name, problem, base_path=""):
+    """Generate HTML for solution links with viewers"""
+    if problem['status'] == 'Unsolved':
+        return '-'
+    
+    # Create clean problem path
+    problem_base = f"leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}"
+    
+    # For direct links use relative paths
+    direct_path = f"{base_path}/{model_name}_solutions/{problem_base}"
+    
+    # For viewers, ensure proper path to the solution files
+    # Use ../ as files are in the parent directory relative to the viewer in llm_analysis_result
+    viewer_path = f"../{model_name}_solutions/{problem_base}"
+    
+    return f"""
+        <div class="solution-links">
+            <a href="{direct_path}/solution.py" class="solution-link" target="_blank">Python</a>
+            <a href="{direct_path}/solution.md" class="solution-link" target="_blank">Solution</a>
+            <a href="code-viewer.html?file={viewer_path}/solution.py" class="solution-link" target="_blank">View Python</a>
+            <a href="markdown-viewer.html?file={viewer_path}/solution.md" class="solution-link" target="_blank">View Solution</a>
+        </div>
+    """
+
 def generate_html_report(problems, model_name):
     """Generate HTML progress report"""
     # Calculate statistics
@@ -72,13 +699,8 @@ def generate_html_report(problems, model_name):
                 <div id="{error_id}" class="error-details">{problem['error_msg']}</div>
             """
         
-        # Add solution links
-        solution_links = f"""
-            <div class="solution-links">
-                <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.py" class="solution-link">Python</a>
-                <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.md" class="solution-link">Solution</a>
-            </div>
-        """ if problem['status'] != 'Unsolved' else '-'
+        # Generate solution links with relative path
+        solution_links = generate_solution_links(model_name, problem, base_path="..")
         
         table_rows.append(f"""
             <tr>
@@ -354,51 +976,57 @@ def generate_summary_report(model_results):
                 'Unsolved': 'status-unknown'
             }[problem['status']]
             
-            solution_links = f"""
-                <div class="solution-links">
-                    <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.py" class="solution-link">Python</a>
-                    <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.md" class="solution-link">Solution</a>
-                </div>
-            """ if problem['status'] != 'Unsolved' else '-'
-            
-            error_details = ''
-            if problem['status'] == 'Fail' and problem['error_msg']:
-                error_id = f"error-{model_name}-{number}"
-                error_details = f"""
-                    <span class="toggle-error" onclick="toggleErrorDetails('{error_id}')">View Error</span>
-                    <div id="{error_id}" class="error-details">{problem['error_msg']}</div>
-                """
-            
+            # Store the actual problem object for this model
             problem_details[number]['models'][model_name] = {
                 'status': problem['status'],
                 'status_class': status_class,
-                'solution_links': solution_links,
-                'error_details': error_details
+                'error_msg': problem.get('error_msg', None),
+                'number': number,
+                'name': problem['name']
             }
     
     # Generate comparison rows
     comparison_rows = []
     for number in sorted(problem_details.keys(), key=int):
-        problem = problem_details[number]
+        problem_info = problem_details[number]
         model_columns = []
         for model_name in model_results.keys():
-            model_data = problem['models'].get(model_name, {
-                'status': 'Unsolved',
-                'status_class': 'status-unknown',
-                'solution_links': '-',
-                'error_details': ''
-            })
+            if model_name in problem_info['models']:
+                model_data = problem_info['models'][model_name]
+                
+                # Generate proper solution links
+                solution_links = generate_solution_links(
+                    model_name, 
+                    model_data,  # Pass the actual model data which has structure needed
+                    base_path=".."
+                )
+                
+                error_details = ''
+                if model_data['status'] == 'Fail' and model_data.get('error_msg'):
+                    error_id = f"error-{model_name}-{number}"
+                    error_details = f"""
+                        <span class="toggle-error" onclick="toggleErrorDetails('{error_id}')">View Error</span>
+                        <div id="{error_id}" class="error-details">{model_data['error_msg']}</div>
+                    """
+            else:
+                # Default values if this model doesn't have data for this problem
+                model_data = {
+                    'status': 'Unsolved',
+                    'status_class': 'status-unknown'
+                }
+                solution_links = '-'
+                error_details = ''
             
             model_columns.append(f"""
                 <td class="{model_data['status_class']}">{model_data['status']}</td>
-                <td>{model_data['solution_links']}</td>
-                <td>{model_data['error_details']}</td>
+                <td>{solution_links}</td>
+                <td>{error_details}</td>
             """)
         
         comparison_rows.append(f"""
             <tr>
                 <td>{number}</td>
-                <td>{problem['name']}</td>
+                <td>{problem_info['name']}</td>
                 {''.join(model_columns)}
             </tr>
         """)
@@ -585,6 +1213,9 @@ def main():
     # Create results directory
     results_dir = "llm_analysis_result"
     os.makedirs(results_dir, exist_ok=True)
+    
+    # Setup viewers
+    setup_viewers(results_dir)
     
     # Analyze all models
     models = ['llama4_maverick', 'deepseek', 'gemini']

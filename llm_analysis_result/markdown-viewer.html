@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Viewer</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- GitHub Markdown CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <!-- Prism for code highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    <style>
+        .markdown-container {
+            position: relative;
+            background-color: #fff;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+        }
+        
+        .markdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #f6f8fa;
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #e1e4e8;
+            margin: -20px -30px 20px;
+        }
+        
+        .file-path {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #586069;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background: none;
+            border: 1px solid #ddd;
+            color: #24292e;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .action-button:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .back-to-list {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .back-to-list:hover {
+            text-decoration: underline;
+        }
+        
+        #loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .file-error {
+            background-color: #fff3f3;
+            border-left: 4px solid #ff6b6b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .file-error h3 {
+            margin-top: 0;
+            color: #e74c3c;
+        }
+        
+        /* GitHub Markdown customization */
+        .markdown-body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            padding: 15px 0;
+        }
+        
+        .markdown-body pre {
+            padding: 16px;
+            overflow: auto;
+            font-size: 85%;
+            line-height: 1.5;
+            background-color: #282c34;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .markdown-body code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LeetCode Solution Markdown Viewer</h1>
+        
+        <a href="models_comparison_report.html" class="back-to-list">← Back to Comparison</a>
+        
+        <div id="loading">Loading...</div>
+        
+        <div id="error-container" style="display: none;">
+            <div class="file-error">
+                <h3>File Load Error</h3>
+                <p id="error-message">Unable to load file. This might be due to browser security restrictions.</p>
+                <p>Due to browser security restrictions, some files might not be directly accessible. Try these options:</p>
+                <ol>
+                    <li>Make sure you're using the web server to view files (not opening directly from filesystem)</li>
+                    <li>Enter markdown manually in the box below</li>
+                    <li>View the original file: <a id="error-file-link" href="#" target="_blank">View Original File</a></li>
+                </ol>
+            </div>
+            
+            <div class="manual-input">
+                <h3>Manual Markdown Input</h3>
+                <p>You can copy markdown from the original file and paste it below, then click "Render Markdown":</p>
+                <textarea id="manual-markdown" style="width:100%;min-height:300px;" placeholder="Paste markdown content here..."></textarea>
+                <br><br>
+                <button id="display-manual-markdown" style="background:#007bff;color:white;border:none;padding:10px 16px;border-radius:4px;cursor:pointer;">Render Markdown</button>
+            </div>
+        </div>
+        
+        <div id="markdown-viewer" style="display: none;">
+            <h2 id="file-title">File Name</h2>
+            
+            <div class="markdown-container">
+                <div class="markdown-header">
+                    <div class="file-path" id="file-path">Path/to/file</div>
+                    <div class="actions">
+                        <button class="action-button" id="copy-btn">Copy Source</button>
+                        <button class="action-button" id="raw-btn">View Raw File</button>
+                    </div>
+                </div>
+                <div id="markdown-content" class="markdown-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Marked.js for Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Add Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <script>
+        // Configure Marked to use Prism for syntax highlighting
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (Prism.languages[lang]) {
+                    return Prism.highlight(code, Prism.languages[lang], lang);
+                } else {
+                    return code;
+                }
+            },
+            breaks: true,
+            gfm: true
+        });
+        
+        function renderMarkdown(markdown, filePath) {
+            // Render the markdown content
+            const markdownHTML = marked.parse(markdown);
+            document.getElementById('markdown-content').innerHTML = markdownHTML;
+            
+            // Show the markdown viewer
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('markdown-viewer').style.display = 'block';
+            
+            // Update file title and path
+            const fileName = filePath.split('/').pop();
+            document.getElementById('file-title').textContent = fileName;
+            document.getElementById('file-path').textContent = filePath;
+            document.title = `${fileName} - Markdown Viewer`;
+            
+            // Add event listeners for buttons
+            document.getElementById('copy-btn').addEventListener('click', function() {
+                navigator.clipboard.writeText(markdown)
+                    .then(() => alert('Markdown source copied to clipboard'))
+                    .catch(err => console.error('Copy failed:', err));
+            });
+            
+            document.getElementById('raw-btn').addEventListener('click', function() {
+                window.location.href = filePath;
+            });
+            
+            // Highlight all code blocks after rendering
+            const codeBlocks = document.querySelectorAll('pre code');
+            codeBlocks.forEach(block => {
+                Prism.highlightElement(block);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get file path from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const filePath = urlParams.get('file');
+            
+            if (!filePath) {
+                document.getElementById('loading').textContent = 'No file path specified';
+                return;
+            }
+            
+            // Setup error handling UI
+            document.getElementById('error-file-link').href = filePath;
+            
+            // Try different methods to load the file
+            let loadedSuccessfully = false;
+            
+            // First try XMLHttpRequest (works better with local files)
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && !loadedSuccessfully) {
+                        loadedSuccessfully = true;
+                        renderMarkdown(xhr.responseText, filePath);
+                    } else if (xhr.status !== 200 && !loadedSuccessfully) {
+                        // If XHR fails, try fetch API as backup
+                        fetch(filePath)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.text();
+                            })
+                            .then(markdown => {
+                                loadedSuccessfully = true;
+                                renderMarkdown(markdown, filePath);
+                            })
+                            .catch(error => {
+                                if (!loadedSuccessfully) {
+                                    document.getElementById('loading').style.display = 'none';
+                                    document.getElementById('error-message').textContent = `Load error: ${error.message}`;
+                                    document.getElementById('error-container').style.display = 'block';
+                                }
+                            });
+                    }
+                }
+            };
+            xhr.open('GET', filePath, true);
+            xhr.send();
+            
+            // Setup manual markdown input button
+            document.getElementById('display-manual-markdown').addEventListener('click', function() {
+                const manualMarkdown = document.getElementById('manual-markdown').value;
+                if (manualMarkdown.trim()) {
+                    renderMarkdown(manualMarkdown, filePath);
+                    document.getElementById('error-container').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
