@@ -5,7 +5,7 @@ from datetime import datetime
 import webbrowser
 
 def analyze_solution(folder_path):
-    """分析单个解决方案的状态"""
+    """Analyze the status of a single solution"""
     if not os.path.exists(folder_path):
         return None
     
@@ -13,10 +13,10 @@ def analyze_solution(folder_path):
     if not os.path.exists(py_path):
         return None
     
-    # 获取创建时间
+    # Get creation time
     creation_time = datetime.fromtimestamp(os.path.getctime(py_path))
     
-    # 尝试运行Python文件
+    # Try to run the Python file
     try:
         result = subprocess.run(["python", py_path], capture_output=True, text=True, timeout=5)
         has_error = bool(result.stderr)
@@ -32,7 +32,7 @@ def analyze_solution(folder_path):
         return {
             'has_error': True,
             'has_output': False,
-            'error_msg': "运行超时（5秒）",
+            'error_msg': "Execution timeout (5 seconds)",
             'creation_time': creation_time
         }
     except Exception as e:
@@ -43,9 +43,9 @@ def analyze_solution(folder_path):
             'creation_time': creation_time
         }
 
-def generate_html_report(problems):
-    """生成HTML格式的进度报告"""
-    # 计算统计数据
+def generate_html_report(problems, model_name):
+    """Generate HTML progress report"""
+    # Calculate statistics
     total_problems = len(problems)
     solved_count = sum(1 for p in problems if p['status'] != 'Unsolved')
     passed_count = sum(1 for p in problems if p['status'] == 'Pass')
@@ -55,7 +55,7 @@ def generate_html_report(problems):
     passed_percentage = (passed_count / total_problems * 100) if total_problems > 0 else 0
     error_percentage = (error_count / total_problems * 100) if total_problems > 0 else 0
     
-    # 生成表格行
+    # Generate table rows
     table_rows = []
     for i, problem in enumerate(problems):
         status_class = {
@@ -75,8 +75,8 @@ def generate_html_report(problems):
         # Add solution links
         solution_links = f"""
             <div class="solution-links">
-                <a href="llama4_maverick_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.py" class="solution-link">Python</a>
-                <a href="llama4_maverick_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.md" class="solution-link">题解</a>
+                <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.py" class="solution-link">Python</a>
+                <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.md" class="solution-link">Solution</a>
             </div>
         """ if problem['status'] != 'Unsolved' else '-'
         
@@ -85,7 +85,6 @@ def generate_html_report(problems):
                 <td>{problem['number']}</td>
                 <td>{problem['name']}</td>
                 <td class="{status_class}">{problem['status']}</td>
-                <td>{problem['creation_time'].strftime('%Y-%m-%d %H:%M:%S') if problem['creation_time'] else '-'}</td>
                 <td>{solution_links}</td>
                 <td>{error_details}</td>
             </tr>
@@ -94,17 +93,17 @@ def generate_html_report(problems):
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     table_rows_str = '\n'.join(table_rows)
     
-    # Use f-string for the entire HTML template
+    # HTML template
     html = f"""
     <!DOCTYPE html>
-    <html lang="zh-CN">
+    <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>LeetCode Progress Report</title>
+        <title>LeetCode Progress Report - {model_name}</title>
         <style>
             body {{
-                font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
                 line-height: 1.6;
                 color: #333;
                 max-width: 1200px;
@@ -182,34 +181,31 @@ def generate_html_report(problems):
             .solution-link:hover {{
                 text-decoration: underline;
             }}
+            .model-tabs {{
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+            }}
+            .model-tab {{
+                padding: 10px 20px;
+                background-color: #f8f9fa;
+                border-radius: 4px;
+                cursor: pointer;
+            }}
+            .model-tab.active {{
+                background-color: #007bff;
+                color: white;
+            }}
         </style>
-        <script>
-            // Intercept clicks on Python and Markdown file links and redirect to appropriate viewers
-            document.addEventListener('DOMContentLoaded', function() {{
-                document.addEventListener('click', function(event) {{
-                    // Check if the clicked element is a link
-                    if (event.target.tagName === 'A') {{
-                        const href = event.target.getAttribute('href');
-                        // Create an absolute URL if it's a relative path
-                        const absolutePath = href.startsWith('http') ? href : new URL(href, window.location.href).href;
-                        
-                        // Handle Python files
-                        if (href.endsWith('.py')) {{
-                            event.preventDefault();
-                            window.location.href = `code-viewer.html?file=${{encodeURIComponent(absolutePath)}}`;
-                        }} 
-                        // Handle Markdown files
-                        else if (href.endsWith('.md')) {{
-                            event.preventDefault();
-                            window.location.href = `markdown-viewer.html?file=${{encodeURIComponent(absolutePath)}}`;
-                        }}
-                    }}
-                }});
-            }});
-        </script>
     </head>
     <body>
-        <h1>LeetCode Progress Report</h1>
+        <h1>LeetCode Progress Report - {model_name}</h1>
+        
+        <div class="model-tabs">
+            <a href="llama4_maverick_solution_report.html" class="model-tab {' active' if model_name == 'llama4_maverick' else ''}">Llama-4 Maverick Solutions</a>
+            <a href="deepseek_solution_report.html" class="model-tab {' active' if model_name == 'deepseek' else ''}">DeepSeek Solutions</a>
+            <a href="gemini_solution_report.html" class="model-tab {' active' if model_name == 'gemini' else ''}">Gemini 2.5 Pro Solutions</a>
+        </div>
         
         <div class="summary">
             <h2>Statistics</h2>
@@ -225,7 +221,6 @@ def generate_html_report(problems):
                     <th>No.</th>
                     <th>Problem Name</th>
                     <th>Status</th>
-                    <th>Created</th>
                     <th>Solutions</th>
                     <th>Details</th>
                 </tr>
@@ -277,24 +272,25 @@ def clean_problem_name(english_name, chinese_name):
     
     return english_name, chinese_name
 
-def main():
-    # 读取README.md获取所有题目
+def analyze_solutions(model_name):
+    """Analyze solutions for a specific model"""
+    # Read README.md to get all problems
     with open("README.md", 'r', encoding='utf-8') as file:
         content = file.read()
     
-    # 提取题目信息
+    # Extract problem information
     leetcode_pattern = r'([^/]+) / ([^[]+) \[LeetCode (\d+)\]'
     matches = re.findall(leetcode_pattern, content)
     
     problems = []
     for match in matches:
         chinese_name, english_name, leetcode_number = match
-        folder_name = f"llama4_maverick_solutions/leetcode_{leetcode_number}_{english_name.strip().lower().replace(' ', '_')}"
+        folder_name = f"{model_name}_solutions/leetcode_{leetcode_number}_{english_name.strip().lower().replace(' ', '_')}"
         
         # Clean up problem names
         clean_english, clean_chinese = clean_problem_name(english_name, chinese_name)
         
-        # 分析解决方案
+        # Analyze solution
         analysis = analyze_solution(folder_name)
         
         if analysis:
@@ -315,19 +311,35 @@ def main():
                 'error_msg': None
             })
     
-    # 按题号排序
+    # Sort by problem number
     problems.sort(key=lambda x: int(x['number']))
     
-    # 生成HTML报告
-    html = generate_html_report(problems)
+    return problems
+
+def main():
+    # Create results directory
+    results_dir = "llm_analysis_result"
+    os.makedirs(results_dir, exist_ok=True)
     
-    # 保存并打开报告
-    report_path = "llm_solution_comparison_report.html"
-    with open(report_path, 'w', encoding='utf-8') as f:
-        f.write(html)
+    # Analyze all models
+    models = ['llama4_maverick', 'deepseek', 'gemini']
     
-    print(f"Report generated: {os.path.abspath(report_path)}")
-    webbrowser.open(f"file://{os.path.abspath(report_path)}")
+    for model in models:
+        # Analyze solutions
+        problems = analyze_solutions(model)
+        
+        # Generate HTML report
+        html = generate_html_report(problems, model)
+        
+        # Save report in the results directory
+        report_path = os.path.join(results_dir, f"{model}_solution_report.html")
+        with open(report_path, 'w', encoding='utf-8') as f:
+            f.write(html)
+        
+        print(f"Report generated for {model}: {os.path.abspath(report_path)}")
+    
+    # Open the DeepSeek report by default
+    webbrowser.open(f"file://{os.path.abspath(os.path.join(results_dir, 'deepseek_solution_report.html'))}")
 
 if __name__ == "__main__":
     main() 
