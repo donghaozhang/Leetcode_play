@@ -46,27 +46,27 @@ def open_browser():
 def run_server():
     try:
         with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
-            print(f"服务器已启动，请访问 http://localhost:{PORT}")
-            print("在浏览器中输入上面的URL来查看LeetCode题解网站。")
-            print("按Ctrl+C可停止服务器。")
+            print(f"Server started. Access at http://localhost:{PORT}")
+            print("Enter the URL above in your browser to view the LeetCode solution website.")
+            print("Press Ctrl+C to stop the server.")
             
             # Start browser in a separate thread
             threading.Thread(target=open_browser, daemon=True).start()
             
             httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n服务器已停止。")
+        print("\nServer stopped.")
         sys.exit(0)
     except OSError as e:
         if e.errno == 98:  # Address already in use
-            print(f"\n错误: 端口 {PORT} 已被占用。可能已有另一个实例正在运行。")
-            print(f"你可以尝试访问 http://localhost:{PORT}/llm_analysis_result/models_comparison_report.html")
+            print(f"\nError: Port {PORT} is already in use. Another instance may be running.")
+            print(f"You can try accessing http://localhost:{PORT}/llm_analysis_result/models_comparison_report.html")
         else:
-            print(f"\n错误: {e}")
+            print(f"\nError: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
-    print(f"正在目录 {os.getcwd()} 中启动HTTP服务器")
-    print("这将允许您的浏览器正确加载所有Python和Markdown文件。")
-    print("正在准备打开模型比较报告...")
+    print(f"Starting HTTP server in directory {os.getcwd()}")
+    print("This will allow your browser to properly load all Python and Markdown files.")
+    print("Preparing to open the model comparison report...")
     run_server() 

@@ -654,17 +654,12 @@ def generate_solution_links(model_name, problem, base_path=""):
     # Create clean problem path
     problem_base = f"leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}"
     
-    # For direct links use relative paths
-    direct_path = f"{base_path}/{model_name}_solutions/{problem_base}"
-    
     # For viewers, ensure proper path to the solution files
     # Use ../ as files are in the parent directory relative to the viewer in llm_analysis_result
     viewer_path = f"../{model_name}_solutions/{problem_base}"
     
     return f"""
         <div class="solution-links">
-            <a href="{direct_path}/solution.py" class="solution-link" target="_blank">Python</a>
-            <a href="{direct_path}/solution.md" class="solution-link" target="_blank">Solution</a>
             <a href="code-viewer.html?file={viewer_path}/solution.py" class="solution-link" target="_blank">View Python</a>
             <a href="markdown-viewer.html?file={viewer_path}/solution.md" class="solution-link" target="_blank">View Solution</a>
         </div>
