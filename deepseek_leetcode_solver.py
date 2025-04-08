@@ -104,7 +104,7 @@ Please provide:
         "temperature": 0.5
     }
     
-    print(f"DeepSeek解题中: {problem_name}...")
+    print(f"DeepSeek solving: {problem_name}...")
     response = requests.post(url, headers=headers, json=payload)
     
     if response.status_code == 200:
@@ -237,7 +237,7 @@ Provide a detailed comparison focusing on:
 # Function to process a single problem iteratively
 def process_problem(selected_question, run_tests=True, compare_with_llama=True):
     problem_number = selected_question['leetcode_number']
-    print(f"\n处理题目: {selected_question['full_name']}")
+    print(f"\nProcessing problem: {selected_question['full_name']}")
     
     # Create folder structure
     folder_name = selected_question['folder_name']
@@ -250,8 +250,8 @@ def process_problem(selected_question, run_tests=True, compare_with_llama=True):
     solution_py_path = os.path.join(folder_name, "solution.py")
     
     if exists:
-        print(f"  已有DeepSeek解决方案(创建于: {creation_time.strftime('%Y-%m-%d %H:%M:%S')})")
-        print(f"  跳过此题并继续...")
+        print(f"  DeepSeek solution already exists (created at: {creation_time.strftime('%Y-%m-%d %H:%M:%S')})")
+        print(f"  Skipping this problem and continuing...")
         return {
             "problem_number": problem_number,
             "status": "existing",
@@ -262,11 +262,11 @@ def process_problem(selected_question, run_tests=True, compare_with_llama=True):
     
     # Get problem description
     problem_description = get_leetcode_problem_description(problem_number)
-    print(f"  已获取题目描述")
+    print(f"  Problem description retrieved")
     
     # Solve the problem
     solution = solve_leetcode_problem(problem_description, selected_question['full_name'])
-    print(f"  已生成解决方案")
+    print(f"  Solution generated")
     
     # Save solution to markdown file
     with open(solution_md_path, 'w', encoding='utf-8') as f:
@@ -276,7 +276,7 @@ def process_problem(selected_question, run_tests=True, compare_with_llama=True):
         f.write("\n\n## Solution\n\n")
         f.write(solution)
     
-    print(f"  已保存解决方案到 {solution_md_path}")
+    print(f"  Solution saved to {solution_md_path}")
     
     # Extract Python code and save to Python file
     python_code = extract_python_code(solution)
@@ -284,12 +284,12 @@ def process_problem(selected_question, run_tests=True, compare_with_llama=True):
     
     if python_code:
         create_python_file(python_code, solution_py_path)
-        print(f"  已提取Python代码并保存到 {solution_py_path}")
+        print(f"  Python code extracted and saved to {solution_py_path}")
         
         # Run the solution if requested
         if run_tests:
             try:
-                print(f"  运行解决方案...")
+                print(f"  Running solution...")
                 result = subprocess.run(["python", solution_py_path], capture_output=True, text=True, timeout=30)
                 execution_result = {
                     "stdout": result.stdout,
@@ -297,28 +297,28 @@ def process_problem(selected_question, run_tests=True, compare_with_llama=True):
                     "success": result.returncode == 0
                 }
                 
-                print(f"  运行结果: {'成功' if result.returncode == 0 else '失败'}")
+                print(f"  Run result: {'Success' if result.returncode == 0 else 'Failed'}")
                 if result.stderr:
-                    print(f"  错误信息: {result.stderr[:100]}...")
+                    print(f"  Error running solution: {result.stderr[:100]}...")
             except Exception as e:
-                print(f"  运行解决方案时出错: {e}")
+                print(f"  Error running solution: {e}")
                 execution_result = {
                     "stdout": "",
                     "stderr": str(e),
                     "success": False
                 }
     else:
-        print(f"  在解决方案中未找到Python代码")
+        print(f"  No Python code found in solution")
     
     # Compare with Llama solution if requested
     comparison_result = None
     if compare_with_llama:
         llama_folder = f"llama4_maverick_solutions/leetcode_{problem_number}_{selected_question['english_name'].strip().lower().replace(' ', '_')}"
         if os.path.exists(llama_folder):
-            print(f"  检测到已有Llama-4解决方案，进行比较...")
+            print(f"  Detected existing Llama-4 solution, comparing...")
             comparison = compare_with_llama_solution(problem_number, selected_question['english_name'])
             comparison_result = comparison
-            print(f"  已完成解决方案比较")
+            print(f"  Solution comparison completed")
     
     return {
         "problem_number": problem_number,
@@ -334,22 +334,22 @@ def iterative_solution_generation(leetcode_questions, num_problems=5, run_tests=
     unsolved_questions = [q for q in leetcode_questions if not q['is_solved']]
     
     if not unsolved_questions:
-        print("没有未解决的题目，无法迭代生成解决方案。")
+        print("No unsolved problems found, cannot generate solutions iteratively.")
         return
     
     # Limit to the specified number or available unsolved problems
     num_to_solve = min(num_problems, len(unsolved_questions))
     questions_to_solve = unsolved_questions[:num_to_solve]
     
-    print(f"\n===== DeepSeek LeetCode 迭代解题 =====")
-    print(f"将依次解决 {num_to_solve} 道题目")
+    print(f"\n===== DeepSeek LeetCode Iterative Solving =====")
+    print(f"Will solve {num_to_solve} problems in sequence")
     
     results = []
     start_time = datetime.now()
     
     # Process each problem one by one
     for i, question in enumerate(questions_to_solve, 1):
-        print(f"\n[{i}/{num_to_solve}] 开始处理题目 {question['leetcode_number']}: {question['english_name']}")
+        print(f"\n[{i}/{num_to_solve}] Starting to process problem {question['leetcode_number']}: {question['english_name']}")
         result = process_problem(question, run_tests, compare_with_llama)
         results.append(result)
     
@@ -361,13 +361,13 @@ def iterative_solution_generation(leetcode_questions, num_problems=5, run_tests=
     failed_count = sum(1 for r in results if r["status"] == "new" and r["execution_result"] is not None and not r["execution_result"]["success"])
     skipped_count = sum(1 for r in results if r["status"] == "existing")
     
-    print("\n===== 迭代解题完成 =====")
-    print(f"总用时: {duration:.2f} 分钟")
-    print(f"总处理题目: {len(results)}")
-    print(f"新生成解决方案: {len(results) - skipped_count}")
-    print(f"  - 运行成功: {successful_count}")
-    print(f"  - 运行失败: {failed_count}")
-    print(f"跳过已有解决方案: {skipped_count}")
+    print("\n===== Iterative Solving Completed =====")
+    print(f"Total time: {duration:.2f} minutes")
+    print(f"Total problems processed: {len(results)}")
+    print(f"New solutions generated: {len(results) - skipped_count}")
+    print(f"  - Successfully run: {successful_count}")
+    print(f"  - Failed to run: {failed_count}")
+    print(f"Skipped existing solutions: {skipped_count}")
     
     # Generate detailed report file
     report_folder = "deepseek_reports"
@@ -375,39 +375,39 @@ def iterative_solution_generation(leetcode_questions, num_problems=5, run_tests=
     report_file = os.path.join(report_folder, f"iterative_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md")
     
     with open(report_file, 'w', encoding='utf-8') as f:
-        f.write("# DeepSeek LeetCode 迭代解题报告\n\n")
-        f.write(f"生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-        f.write(f"总用时: {duration:.2f} 分钟\n\n")
-        f.write(f"## 概要\n\n")
-        f.write(f"- 总处理题目: {len(results)}\n")
-        f.write(f"- 新生成解决方案: {len(results) - skipped_count}\n")
-        f.write(f"  - 运行成功: {successful_count}\n")
-        f.write(f"  - 运行失败: {failed_count}\n")
-        f.write(f"- 跳过已有解决方案: {skipped_count}\n\n")
+        f.write("# DeepSeek LeetCode Iterative Solving Report\n\n")
+        f.write(f"Generated at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+        f.write(f"Total time: {duration:.2f} minutes\n\n")
+        f.write(f"## Summary\n\n")
+        f.write(f"- Total problems processed: {len(results)}\n")
+        f.write(f"- New solutions generated: {len(results) - skipped_count}\n")
+        f.write(f"  - Successfully run: {successful_count}\n")
+        f.write(f"  - Failed to run: {failed_count}\n")
+        f.write(f"- Skipped existing solutions: {skipped_count}\n\n")
         
-        f.write("## 详细结果\n\n")
+        f.write("## Detailed Results\n\n")
         for result in results:
-            status_str = "已有解决方案，已跳过" if result["status"] == "existing" else "新生成解决方案"
+            status_str = "Existing solution, skipped" if result["status"] == "existing" else "New solution generated"
             execution_str = ""
             if result["status"] == "new" and result["execution_result"] is not None:
-                execution_str = "- 运行结果: " + ("成功" if result["execution_result"]["success"] else "失败")
+                execution_str = "- Run result: " + ("Success" if result["execution_result"]["success"] else "Failed")
                 if not result["execution_result"]["success"] and result["execution_result"]["stderr"]:
-                    execution_str += f"\n- 错误信息: ```\n{result['execution_result']['stderr'][:500]}...\n```"
+                    execution_str += f"\n- Error message: ```\n{result['execution_result']['stderr'][:500]}...\n```"
             
             comparison_str = ""
             if result["status"] == "new" and result["comparison_result"]:
-                comparison_str = "- 已与Llama-4解决方案进行比较"
+                comparison_str = "- Compared with Llama-4 solution"
             
             f.write(f"### LeetCode {result['problem_number']}\n\n")
-            f.write(f"- 状态: {status_str}\n")
-            f.write(f"- 解决方案路径: {result['solution_path']}\n")
+            f.write(f"- Status: {status_str}\n")
+            f.write(f"- Solution path: {result['solution_path']}\n")
             if execution_str:
                 f.write(f"{execution_str}\n")
             if comparison_str:
                 f.write(f"{comparison_str}\n")
             f.write("\n")
     
-    print(f"\n详细报告已保存到: {report_file}")
+    print(f"\nDetailed report saved to: {report_file}")
     
     return report_file
 
@@ -419,7 +419,7 @@ def main():
     leetcode_questions = extract_leetcode_questions(readme_path)
     
     if not leetcode_questions:
-        print("没有在README.md文件中找到LeetCode题目。")
+        print("No LeetCode problems found in README.md file.")
         return
     
     # Count solved and unsolved questions
@@ -427,28 +427,28 @@ def main():
     total_count = len(leetcode_questions)
     
     print("\n===== DeepSeek LeetCode Solver =====")
-    print(f"当前DeepSeek进度: 已解决 {solved_count}/{total_count} 题 ({(solved_count/total_count*100):.1f}%)")
-    print(f"未解决: {total_count - solved_count} 题")
+    print(f"Current DeepSeek progress: Solved {solved_count}/{total_count} problems ({(solved_count/total_count*100):.1f}%)")
+    print(f"Unsolved: {total_count - solved_count} problems")
     
     # Ask for operation mode
-    print("\n请选择操作模式:")
-    print("1. 交互式解题 (单题处理，有交互提示)")
-    print("2. 迭代式解题 (批量处理多道题目)")
+    print("\nPlease select operation mode:")
+    print("1. Interactive solving (single problem with prompts)")
+    print("2. Iterative solving (batch processing multiple problems)")
     
-    mode_choice = input("\n输入选项 (1 或 2，默认为 1): ").strip()
+    mode_choice = input("\nEnter option (1 or 2, default 1): ").strip()
     
     if mode_choice == "2":
         # Iterative mode
-        num_problems_str = input("\n要迭代解决的题目数量 (默认 5): ").strip()
+        num_problems_str = input("\nNumber of problems to solve iteratively (default 5): ").strip()
         try:
             num_problems = int(num_problems_str) if num_problems_str else 5
         except:
             num_problems = 5
         
-        run_tests_choice = input("是否运行生成的代码以验证解决方案? (y/n, 默认 y): ").lower().strip()
+        run_tests_choice = input("Run generated code to verify solution? (y/n, default y): ").lower().strip()
         run_tests = run_tests_choice != 'n'
         
-        compare_choice = input("是否与已有的Llama-4解决方案进行比较? (y/n, 默认 y): ").lower().strip()
+        compare_choice = input("Compare with existing Llama-4 solutions? (y/n, default y): ").lower().strip()
         compare_with_llama = compare_choice != 'n'
         
         report_file = iterative_solution_generation(
@@ -459,40 +459,40 @@ def main():
         )
         
         # Ask if user wants to view the report
-        view_report = input("\n是否在浏览器中查看生成报告? (y/n, 默认 y): ").lower().strip()
+        view_report = input("\nView generated report in browser? (y/n, default y): ").lower().strip()
         if view_report != 'n' and report_file:
             try:
                 webbrowser.open(f"file://{os.path.abspath(report_file)}")
-                print(f"已在浏览器中打开报告")
+                print(f"Report opened in browser")
             except:
-                print(f"无法在浏览器中打开。报告位置: {os.path.abspath(report_file)}")
+                print(f"Unable to open in browser. Report location: {os.path.abspath(report_file)}")
     else:
         # Interactive mode - original functionality
         # Ask if user wants to see solved problems
-        show_solved = input("\n是否显示已解决的题目？(y/n, 默认n): ").lower().strip() == 'y'
+        show_solved = input("\nShow solved problems? (y/n, default n): ").lower().strip() == 'y'
         
         # Display available LeetCode questions
-        print(f"\n找到 {len(leetcode_questions)} 个 LeetCode 题目在 README.md 中:")
+        print(f"\nFound {len(leetcode_questions)} LeetCode problems in README.md:")
         available_questions = []
         for i, question in enumerate(leetcode_questions, 1):
             if not question['is_solved'] or show_solved:
-                status = "[已解决]" if question['is_solved'] else "[未解决]"
+                status = "[Solved]" if question['is_solved'] else "[Unsolved]"
                 print(f"{i}. {status} {question['full_name']}")
                 available_questions.append(question)
         
         if not available_questions:
-            print("\n恭喜！所有题目都已解决！")
+            print("\nCongratulations! All problems have been solved!")
             return
         
         # Choose a random question or let user select
         try:
-            choice = input("\n输入题目编号来解题 (或直接按回车随机选择一题): ")
+            choice = input("\nEnter problem number to solve (or press Enter to randomly select one): ")
             if choice.strip():
                 index = int(choice) - 1
                 if 0 <= index < len(available_questions):
                     selected_question = available_questions[index]
                 else:
-                    print("无效的选择。随机选择一题。")
+                    print("Invalid selection. Randomly selecting a problem.")
                     # Only select from unsolved questions if not showing solved ones
                     candidates = [q for q in available_questions if not q['is_solved']] if not show_solved else available_questions
                     selected_question = random.choice(candidates)
@@ -501,13 +501,13 @@ def main():
                 candidates = [q for q in available_questions if not q['is_solved']] if not show_solved else available_questions
                 selected_question = random.choice(candidates)
         except:
-            print("无效的输入。随机选择一题。")
+            print("Invalid input. Randomly selecting a problem.")
             # Only select from unsolved questions if not showing solved ones
             candidates = [q for q in available_questions if not q['is_solved']] if not show_solved else available_questions
             selected_question = random.choice(candidates)
         
         problem_number = selected_question['leetcode_number']
-        print(f"\n已选择题目: {selected_question['full_name']}")
+        print(f"\nSelected problem: {selected_question['full_name']}")
         
         # Create folder structure
         folder_name = selected_question['folder_name']
@@ -517,13 +517,13 @@ def main():
         exists, md_content, py_content, creation_time = check_existing_solution(folder_name)
         
         if exists:
-            print(f"\n发现已有DeepSeek解决方案！创建于: {creation_time.strftime('%Y-%m-%d %H:%M:%S')}")
+            print(f"\nFound existing DeepSeek solution! Created at: {creation_time.strftime('%Y-%m-%d %H:%M:%S')}")
             solution_md_path = os.path.join(folder_name, "solution.md")
             solution_py_path = os.path.join(folder_name, "solution.py")
             
-            print(f"\n解决方案存储位置:")
-            print(f"- Markdown 文件: {solution_md_path}")
-            print(f"- Python 文件: {solution_py_path}")
+            print(f"\nSolution storage location:")
+            print(f"- Markdown file: {solution_md_path}")
+            print(f"- Python file: {solution_py_path}")
             
             # Extract problem description from existing markdown
             md_parts = md_content.split("## Problem Description\n\n", 1)
@@ -537,9 +537,9 @@ def main():
                 problem_description = "Problem description not found."
             
             # Ask if want to generate a new solution
-            choice = input("\n已有解决方案，是否要生成新的DeepSeek解决方案？(y/n, 默认n): ").lower().strip()
+            choice = input("\nExisting solution found, generate new DeepSeek solution? (y/n, default n): ").lower().strip()
             if choice == 'y':
-                print("\n将生成新的DeepSeek解决方案...")
+                print("\nGenerating new DeepSeek solution...")
                 # Backup old solution
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                 backup_folder = os.path.join(folder_name, f"previous_{timestamp}")
@@ -551,7 +551,7 @@ def main():
                 with open(os.path.join(backup_folder, "solution.py"), 'w', encoding='utf-8') as f:
                     f.write(py_content)
                 
-                print(f"已备份现有解决方案到 {backup_folder}")
+                print(f"Existing solution backed up to {backup_folder}")
                 
                 # Get problem description and solve
                 problem_description = get_leetcode_problem_description(problem_number)
@@ -565,60 +565,60 @@ def main():
                     f.write("\n\n## Solution\n\n")
                     f.write(solution)
                 
-                print(f"\n解决方案已保存到 {solution_md_path}")
+                print(f"\nSolution saved to {solution_md_path}")
                 
                 # Extract Python code and save to Python file
                 python_code = extract_python_code(solution)
                 if python_code:
                     create_python_file(python_code, solution_py_path)
-                    print(f"Python代码已提取并保存到 {solution_py_path}")
+                    print(f"Python code extracted and saved to {solution_py_path}")
             
             # Ask if user wants to run the solution
-            run_choice = input("\n是否运行解决方案？(y/n, 默认y): ").lower().strip()
+            run_choice = input("\nRun solution? (y/n, default y): ").lower().strip()
             if run_choice != 'n':
                 try:
-                    print("\n运行解决方案...")
+                    print("\nRunning solution...")
                     result = subprocess.run(["python", solution_py_path], capture_output=True, text=True)
-                    print("\n--- 执行结果 ---")
+                    print("\n--- Execution Result ---")
                     if result.stdout:
-                        print("输出:")
+                        print("Output:")
                         print(result.stdout)
                     if result.stderr:
-                        print("错误:")
+                        print("Error:")
                         print(result.stderr)
                     print("---------------")
                 except Exception as e:
-                    print(f"运行解决方案时出错: {e}")
+                    print(f"Error running solution: {e}")
             else:
-                print("\n跳过运行解决方案。")
+                print("\nSkipping solution execution.")
                 
             # Ask if user wants to view the solution
-            view_choice = input("\n是否在浏览器中查看解决方案？(y/n, 默认n): ").lower().strip()
+            view_choice = input("\nView solution in browser? (y/n, default n): ").lower().strip()
             if view_choice == 'y':
                 try:
                     webbrowser.open(f"file://{os.path.abspath(solution_md_path)}")
-                    print(f"已在浏览器中打开 solution.md")
+                    print(f"Solution.md opened in browser")
                 except:
-                    print(f"无法在浏览器中打开。文件位置: {os.path.abspath(solution_md_path)}")
+                    print(f"Unable to open in browser. File location: {os.path.abspath(solution_md_path)}")
             
             # Ask if user wants to compare with Llama solution
-            compare_choice = input("\n是否与Llama-4解决方案进行比较？(y/n, 默认n): ").lower().strip()
+            compare_choice = input("\nCompare with Llama-4 solution? (y/n, default n): ").lower().strip()
             if compare_choice == 'y':
                 comparison = compare_with_llama_solution(problem_number, selected_question['english_name'])
-                print("\n--- 解决方案比较 ---")
+                print("\n--- Solution Comparison ---")
                 print(comparison)
                 print("------------------")
         else:
             # Get problem description
             problem_description = get_leetcode_problem_description(problem_number)
-            print("\n--- 题目描述 ---")
+            print("\n--- Problem Description ---")
             print(problem_description)
             print("---------------------------\n")
             
             # Solve the problem
             solution = solve_leetcode_problem(problem_description, selected_question['full_name'])
             
-            print("\n--- DeepSeek解决方案 ---")
+            print("\n--- DeepSeek Solution ---")
             print(solution)
             print("---------------------------")
             
@@ -631,56 +631,56 @@ def main():
                 f.write("\n\n## Solution\n\n")
                 f.write(solution)
             
-            print(f"\n解决方案已保存到 {solution_md_path}")
+            print(f"\nSolution saved to {solution_md_path}")
             
             # Extract Python code and save to Python file
             python_code = extract_python_code(solution)
             if python_code:
                 solution_py_path = os.path.join(folder_name, f"solution.py")
                 create_python_file(python_code, solution_py_path)
-                print(f"Python代码已提取并保存到 {solution_py_path}")
+                print(f"Python code extracted and saved to {solution_py_path}")
                 
                 # Ask user if they want to run the solution
-                run_choice = input("\n是否运行解决方案? (y/n, 默认y): ").strip().lower()
+                run_choice = input("\nRun solution? (y/n, default y): ").strip().lower()
                 if run_choice != 'n':
                     try:
-                        print("\n运行解决方案...")
+                        print("\nRunning solution...")
                         result = subprocess.run(["python", solution_py_path], capture_output=True, text=True)
-                        print("\n--- 执行结果 ---")
+                        print("\n--- Execution Result ---")
                         if result.stdout:
-                            print("输出:")
+                            print("Output:")
                             print(result.stdout)
                         if result.stderr:
-                            print("错误:")
+                            print("Error:")
                             print(result.stderr)
                         print("---------------")
                     except Exception as e:
-                        print(f"运行解决方案时出错: {e}")
+                        print(f"Error running solution: {e}")
                 else:
-                    print("\n跳过运行解决方案。")
+                    print("\nSkipping solution execution.")
             else:
-                print("在解决方案中未找到Python代码。")
+                print("No Python code found in solution.")
             
             # Check if Llama solution exists for comparison
             llama_folder = f"llama4_maverick_solutions/leetcode_{problem_number}_{selected_question['english_name'].strip().lower().replace(' ', '_')}"
             if os.path.exists(llama_folder):
-                compare_choice = input("\n检测到已有Llama-4解决方案，是否进行比较？(y/n, 默认y): ").lower().strip()
+                compare_choice = input("\nDetected existing Llama-4 solution, compare? (y/n, default y): ").lower().strip()
                 if compare_choice != 'n':
                     comparison = compare_with_llama_solution(problem_number, selected_question['english_name'])
-                    print("\n--- 解决方案比较 ---")
+                    print("\n--- Solution Comparison ---")
                     print(comparison)
                     print("------------------")
                     
                     # Ask if user wants to view the comparison in browser
-                    view_compare = input("\n是否在浏览器中查看比较结果？(y/n, 默认n): ").lower().strip()
+                    view_compare = input("\nView comparison in browser? (y/n, default n): ").lower().strip()
                     if view_compare == 'y':
                         comparison_path = os.path.join("model_comparisons", f"comparison_leetcode_{problem_number}.md")
                         if os.path.exists(comparison_path):
                             try:
                                 webbrowser.open(f"file://{os.path.abspath(comparison_path)}")
-                                print(f"已在浏览器中打开比较结果")
+                                print(f"Comparison opened in browser")
                             except:
-                                print(f"无法在浏览器中打开。文件位置: {os.path.abspath(comparison_path)}")
+                                print(f"Unable to open in browser. File location: {os.path.abspath(comparison_path)}")
 
 if __name__ == "__main__":
     main() 
