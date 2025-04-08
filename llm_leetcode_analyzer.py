@@ -316,6 +316,271 @@ def analyze_solutions(model_name):
     
     return problems
 
+def generate_summary_report(model_results):
+    """Generate a summary HTML report comparing all models"""
+    # Calculate summary statistics for each model
+    summary_rows = []
+    for model_name, problems in model_results.items():
+        total_problems = len(problems)
+        solved_count = sum(1 for p in problems if p['status'] != 'Unsolved')
+        passed_count = sum(1 for p in problems if p['status'] == 'Pass')
+        error_count = sum(1 for p in problems if p['status'] == 'Fail')
+        
+        solved_percentage = (solved_count / total_problems * 100) if total_problems > 0 else 0
+        passed_percentage = (passed_count / total_problems * 100) if total_problems > 0 else 0
+        error_percentage = (error_count / total_problems * 100) if total_problems > 0 else 0
+        
+        summary_rows.append(f"""
+            <tr>
+                <td>{model_name.capitalize()}</td>
+                <td>{total_problems}</td>
+                <td>{solved_count} ({solved_percentage:.1f}%)</td>
+                <td>{passed_count} ({passed_percentage:.1f}%)</td>
+                <td>{error_count} ({error_percentage:.1f}%)</td>
+            </tr>
+        """)
+    
+    # Generate detailed comparison table
+    problem_details = {}
+    for model_name, problems in model_results.items():
+        for problem in problems:
+            number = problem['number']
+            if number not in problem_details:
+                problem_details[number] = {'name': problem['name'], 'models': {}}
+            
+            status_class = {
+                'Pass': 'status-pass',
+                'Fail': 'status-fail',
+                'Unsolved': 'status-unknown'
+            }[problem['status']]
+            
+            solution_links = f"""
+                <div class="solution-links">
+                    <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.py" class="solution-link">Python</a>
+                    <a href="../{model_name}_solutions/leetcode_{problem['number']}_{problem['name'].split(' (')[0].lower().replace(' ', '_')}/solution.md" class="solution-link">Solution</a>
+                </div>
+            """ if problem['status'] != 'Unsolved' else '-'
+            
+            error_details = ''
+            if problem['status'] == 'Fail' and problem['error_msg']:
+                error_id = f"error-{model_name}-{number}"
+                error_details = f"""
+                    <span class="toggle-error" onclick="toggleErrorDetails('{error_id}')">View Error</span>
+                    <div id="{error_id}" class="error-details">{problem['error_msg']}</div>
+                """
+            
+            problem_details[number]['models'][model_name] = {
+                'status': problem['status'],
+                'status_class': status_class,
+                'solution_links': solution_links,
+                'error_details': error_details
+            }
+    
+    # Generate comparison rows
+    comparison_rows = []
+    for number in sorted(problem_details.keys(), key=int):
+        problem = problem_details[number]
+        model_columns = []
+        for model_name in model_results.keys():
+            model_data = problem['models'].get(model_name, {
+                'status': 'Unsolved',
+                'status_class': 'status-unknown',
+                'solution_links': '-',
+                'error_details': ''
+            })
+            
+            model_columns.append(f"""
+                <td class="{model_data['status_class']}">{model_data['status']}</td>
+                <td>{model_data['solution_links']}</td>
+                <td>{model_data['error_details']}</td>
+            """)
+        
+        comparison_rows.append(f"""
+            <tr>
+                <td>{number}</td>
+                <td>{problem['name']}</td>
+                {''.join(model_columns)}
+            </tr>
+        """)
+    
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    # HTML template for summary page
+    html = f"""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LeetCode Models Comparison Report</title>
+        <style>
+            body {{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 20px;
+            }}
+            h1, h2 {{
+                text-align: center;
+                color: #333;
+                margin-bottom: 30px;
+            }}
+            .summary {{
+                background-color: #f8f9fa;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 30px;
+            }}
+            table {{
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 30px;
+            }}
+            th, td {{
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }}
+            th {{
+                background-color: #f8f9fa;
+                position: sticky;
+                top: 0;
+            }}
+            tr:hover {{
+                background-color: #f5f5f5;
+            }}
+            .status-pass {{
+                color: #28a745;
+                font-weight: bold;
+            }}
+            .status-fail {{
+                color: #dc3545;
+                font-weight: bold;
+            }}
+            .status-unknown {{
+                color: #6c757d;
+                font-weight: bold;
+            }}
+            .error-details {{
+                display: none;
+                background-color: #f8d7da;
+                padding: 10px;
+                margin-top: 5px;
+                border-radius: 4px;
+                font-family: monospace;
+                white-space: pre-wrap;
+            }}
+            .toggle-error {{
+                color: #dc3545;
+                cursor: pointer;
+                text-decoration: underline;
+            }}
+            .last-updated {{
+                text-align: right;
+                color: #6c757d;
+                font-size: 0.9em;
+            }}
+            .solution-links {{
+                display: flex;
+                gap: 10px;
+            }}
+            .solution-link {{
+                color: #007bff;
+                text-decoration: none;
+            }}
+            .solution-link:hover {{
+                text-decoration: underline;
+            }}
+            .model-links {{
+                text-align: center;
+                margin-bottom: 20px;
+            }}
+            .model-link {{
+                display: inline-block;
+                padding: 10px 20px;
+                margin: 0 10px;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+            }}
+            .model-link:hover {{
+                background-color: #0056b3;
+            }}
+        </style>
+    </head>
+    <body>
+        <h1>LeetCode Models Comparison Report</h1>
+        
+        <div class="model-links">
+            <a href="llama4_maverick_solution_report.html" class="model-link">Llama-4 Maverick Report</a>
+            <a href="deepseek_solution_report.html" class="model-link">DeepSeek Report</a>
+            <a href="gemini_solution_report.html" class="model-link">Gemini 2.5 Pro Report</a>
+        </div>
+        
+        <h2>Summary Statistics</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Total Problems</th>
+                    <th>Solved</th>
+                    <th>Passed</th>
+                    <th>Failed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {''.join(summary_rows)}
+            </tbody>
+        </table>
+        
+        <h2>Detailed Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Problem Name</th>
+                    {''.join([f'''
+                        <th colspan="3" style="text-align: center;">{model.capitalize()}</th>
+                    ''' for model in model_results.keys()])}
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    {''.join(['''
+                        <th>Status</th>
+                        <th>Solutions</th>
+                        <th>Details</th>
+                    ''' for _ in model_results.keys()])}
+                </tr>
+            </thead>
+            <tbody>
+                {''.join(comparison_rows)}
+            </tbody>
+        </table>
+        
+        <div class="last-updated">
+            Last Updated: {current_time}
+        </div>
+        
+        <script>
+            function toggleErrorDetails(id) {{
+                const details = document.getElementById(id);
+                if (details.style.display === 'none') {{
+                    details.style.display = 'block';
+                }} else {{
+                    details.style.display = 'none';
+                }}
+            }}
+        </script>
+    </body>
+    </html>
+    """
+    
+    return html
+
 def main():
     # Create results directory
     results_dir = "llm_analysis_result"
@@ -323,12 +588,14 @@ def main():
     
     # Analyze all models
     models = ['llama4_maverick', 'deepseek', 'gemini']
+    model_results = {}
     
     for model in models:
         # Analyze solutions
         problems = analyze_solutions(model)
+        model_results[model] = problems
         
-        # Generate HTML report
+        # Generate individual HTML report
         html = generate_html_report(problems, model)
         
         # Save report in the results directory
@@ -338,8 +605,16 @@ def main():
         
         print(f"Report generated for {model}: {os.path.abspath(report_path)}")
     
-    # Open the DeepSeek report by default
-    webbrowser.open(f"file://{os.path.abspath(os.path.join(results_dir, 'deepseek_solution_report.html'))}")
+    # Generate and save summary report
+    summary_html = generate_summary_report(model_results)
+    summary_path = os.path.join(results_dir, "models_comparison_report.html")
+    with open(summary_path, 'w', encoding='utf-8') as f:
+        f.write(summary_html)
+    
+    print(f"Summary report generated: {os.path.abspath(summary_path)}")
+    
+    # Open the summary report by default
+    webbrowser.open(f"file://{os.path.abspath(summary_path)}")
 
 if __name__ == "__main__":
     main() 
