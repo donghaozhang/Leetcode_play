@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- modified from https://philnash.github.io/mediadevices-camera-selection/ and
+https://philnash.github.io/mediadevices-camera-selection/app.js and
+https://philnash.github.io/mediadevices-camera-selection/app.css -->
+<!-- Provided by Dave Paradi of www.ThinkOutsideTheSlide.com. Use at your own risk. No warranty or guarantee of compatibility. -->
+
+<html dir="ltr" lang="en-US">
+
+<head>
+ <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
+  <title>Show Webcam (1920x1080)</title>
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: small;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+
+    main {
+      max-width: 1920px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .controls {
+      padding: 1em 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .controls p {
+      margin: 0;
+    }
+
+    button, select {
+      font-size: small;
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      background-color: white;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #stopcam {
+      background-color: #dc3545;
+    }
+
+    #stopcam:hover {
+      background-color: #c82333;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      max-width: 1920px;
+      margin: 20px auto;
+      display: block;
+      background-color: #000;
+    }
+
+    .instructions {
+      margin-bottom: 20px;
+      color: #666;
+    }
+
+    .footer {
+      font-size: 11px;
+      color: #999;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+ 
+<body>
+
+<main>
+  <div class="instructions">
+    <p>Shows a webcam in the browser window. Select the webcam using the drop down list. Click Show Camera. Allow the browser to access the camera if requested. Resize the browser window if desired (the video will resize if the window is made smaller). Click Stop Camera when done.</p>
+  </div>
+
+  <div class="controls">
+    <select id="select">
+      <option value="">Select Camera</option>
+    </select>
+    <button id="button">Show Camera</button>
+    <button id="stopcam">Stop Camera</button>
+  </div>
+
+  <video id="video" autoplay playsinline></video>
+</main>
+
+<p class="footer">Use this page at your own risk. No support provided. Code adapted from https://philnash.github.io/mediadevices-camera-selection/</p>
+
+   <script>
+// Set width and height of the video in these variables
+const width1 = 1920;
+const height1 = 1080;
+  const video = document.getElementById('video');
+const button = document.getElementById('button');
+const select = document.getElementById('select');
+const stopcam = document.getElementById('stopcam');
+let currentStream;
+
+function stopMediaTracks(stream) {
+  stream.getTracks().forEach(track => {
+    track.stop();
+  });
+}
+
+function gotDevices(mediaDevices) {
+  select.innerHTML = '';
+  select.appendChild(document.createElement('option'));
+  let count = 1;
+  mediaDevices.forEach(mediaDevice => {
+    if (mediaDevice.kind === 'videoinput') {
+      const option = document.createElement('option');
+      option.value = mediaDevice.deviceId;
+      const label = mediaDevice.label || `Camera ${count++}`;
+      const textNode = document.createTextNode(label);
+      option.appendChild(textNode);
+      select.appendChild(option);
+    }
+  });
+}
+
+stopcam.addEventListener('click', event => {
+      stopMediaTracks(currentStream);
+  });
+
+button.addEventListener('click', event => {
+  if (typeof currentStream !== 'undefined') {
+    stopMediaTracks(currentStream);
+  }
+  const videoConstraints = {};
+  if (select.value === '') {
+    videoConstraints.facingMode = 'environment';
+  } else {
+    videoConstraints.deviceId = { exact: select.value };
+  }
+  videoConstraints.width = width1;
+  videoConstraints.height = height1;
+  const constraints = {
+    video: videoConstraints,
+   	audio: false,
+  };
+	
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then(stream => {
+      currentStream = stream;
+      video.srcObject = stream;
+      return navigator.mediaDevices.enumerateDevices();
+    })
+    .then(gotDevices)
+    .catch(error => {
+      console.error(error);
+      alert('Error accessing camera: ' + error.message);
+    });
+});
+
+navigator.mediaDevices.enumerateDevices().then(gotDevices);
+
+  </script>
+  </body>
+
+</html>

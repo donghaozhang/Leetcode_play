@@ -4,17 +4,35 @@ import re
 import random
 import json
 import subprocess
+import time
 from dotenv import load_dotenv
 import webbrowser
 from datetime import datetime
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv("c:/Users/zdhpe/Desktop/Job_Search/bike_repair_repo/bike_repair_agent/.env")
 
 # Get OpenRouter API key
 api_key = os.getenv("OPENROUTER_API_KEY")
 if not api_key:
-    raise ValueError("OpenRouter API key not found. Please check your .env file.")
+    # Try to look for .env file in current and parent directories
+    potential_env_paths = [
+        ".env",
+        "../.env",
+        "../../.env",
+        os.path.join(os.path.expanduser("~"), ".env")
+    ]
+    
+    for env_path in potential_env_paths:
+        if os.path.exists(env_path):
+            print(f"Found .env file at {env_path}")
+            load_dotenv(env_path)
+            api_key = os.getenv("OPENROUTER_API_KEY")
+            if api_key:
+                break
+    
+    if not api_key:
+        raise ValueError("OpenRouter API key not found. Please create a .env file with OPENROUTER_API_KEY=your_key")
 
 # Function to read README.md and extract LeetCode questions
 def extract_leetcode_questions(readme_path):
@@ -42,6 +60,70 @@ def extract_leetcode_questions(readme_path):
     
     return leetcode_questions
 
+# Function to extract content from OpenRouter API response
+def extract_content_from_response(response_json):
+    # Check for different response structures
+    if "choices" in response_json and len(response_json["choices"]) > 0:
+        if "message" in response_json["choices"][0] and "content" in response_json["choices"][0]["message"]:
+            return response_json["choices"][0]["message"]["content"]
+    
+    # Gemini's response format
+    if "candidates" in response_json and len(response_json["candidates"]) > 0:
+        if "content" in response_json["candidates"][0]:
+            content_parts = response_json["candidates"][0]["content"]
+            if isinstance(content_parts, list):
+                for part in content_parts:
+                    if "text" in part:
+                        return part["text"]
+            elif isinstance(content_parts, dict) and "parts" in content_parts:
+                for part in content_parts["parts"]:
+                    if "text" in part:
+                        return part["text"]
+    
+    # Return a placeholder value for error cases
+    return "Content could not be retrieved due to API limitations. Please try again later."
+
+# Function to make API call with retries
+def make_api_call(url, headers, payload, max_retries=3, base_delay=10):
+    retry_count = 0
+    while retry_count <= max_retries:
+        try:
+            response = requests.post(url, headers=headers, json=payload)
+            
+            if response.status_code == 200:
+                return response.json(), None
+            
+            # Handle rate limiting (429)
+            elif response.status_code == 429:
+                retry_count += 1
+                if retry_count <= max_retries:
+                    # Exponential backoff
+                    delay = base_delay * (2 ** (retry_count - 1))
+                    print(f"Rate limit exceeded. Waiting {delay} seconds before retrying... (Attempt {retry_count}/{max_retries})")
+                    time.sleep(delay)
+                else:
+                    error_info = response.json().get("error", {})
+                    error_message = error_info.get("message", "Rate limit exceeded")
+                    print(f"Max retries reached: {error_message}")
+                    return None, f"API rate limit exceeded: {error_message}"
+            
+            # Handle other errors
+            else:
+                error_info = response.json().get("error", {})
+                error_message = error_info.get("message", f"HTTP error {response.status_code}")
+                return None, f"API error: {error_message}"
+                
+        except Exception as e:
+            retry_count += 1
+            if retry_count <= max_retries:
+                delay = base_delay * (2 ** (retry_count - 1))
+                print(f"Error making API call: {str(e)}. Retrying in {delay} seconds... (Attempt {retry_count}/{max_retries})")
+                time.sleep(delay)
+            else:
+                return None, f"Failed to make API call after {max_retries} attempts: {str(e)}"
+    
+    return None, "Maximum retries exceeded"
+
 # Function to get problem description from LeetCode using Gemini
 def get_leetcode_problem_description(problem_number):
     url = "https://openrouter.ai/api/v1/chat/completions"
@@ -55,7 +137,7 @@ def get_leetcode_problem_description(problem_number):
     prompt = f"Please provide the full description of LeetCode problem #{problem_number}, including examples and constraints. Return only the problem description as it appears on LeetCode."
     
     payload = {
-        "model": "google/gemini-2.5-pro-exp-03-25:free",
+        "model": "google/gemini-2.5-pro-preview-03-25",
         "messages": [
             {"role": "system", "content": "You are a helpful assistant that provides information about LeetCode problems."},
             {"role": "user", "content": prompt}
@@ -63,13 +145,12 @@ def get_leetcode_problem_description(problem_number):
         "temperature": 0.3
     }
     
-    response = requests.post(url, headers=headers, json=payload)
-    if response.status_code == 200:
-        return response.json()["choices"][0]["message"]["content"]
+    response_json, error = make_api_call(url, headers, payload)
+    
+    if response_json:
+        return extract_content_from_response(response_json)
     else:
-        print(f"Error: {response.status_code}")
-        print(response.text)
-        return f"Unable to retrieve problem description for LeetCode #{problem_number}"
+        return f"Unable to retrieve problem description for LeetCode #{problem_number}. Error: {error}"
 
 # Function to solve LeetCode problem using Gemini via OpenRouter API
 def solve_leetcode_problem(problem_description, problem_name):
@@ -94,8 +175,9 @@ Please provide:
 4. Test cases to verify the solution
 """
     
+    # Try with Gemini 2.5 Pro Preview
     payload = {
-        "model": "google/gemini-2.5-pro-exp-03-25:free",
+        "model": "google/gemini-2.5-pro-preview-03-25",
         "messages": [
             {"role": "system", "content": "You are an expert at solving LeetCode problems. Provide clear, optimized solutions with detailed explanations."},
             {"role": "user", "content": prompt}
@@ -104,14 +186,18 @@ Please provide:
     }
     
     print(f"Gemini is solving: {problem_name}...")
-    response = requests.post(url, headers=headers, json=payload)
+    response_json, error = make_api_call(url, headers, payload)
     
-    if response.status_code == 200:
-        return response.json()["choices"][0]["message"]["content"]
+    # If the first model fails with quota error, try an alternative model
+    if not response_json and "quota" in error.lower():
+        print(f"Switching to alternative model due to quota limitations...")
+        payload["model"] = "anthropic/claude-3-opus:free"  # Try Claude as a fallback
+        response_json, error = make_api_call(url, headers, payload)
+    
+    if response_json:
+        return extract_content_from_response(response_json)
     else:
-        print(f"Error: {response.status_code}")
-        print(response.text)
-        return f"Unable to solve the problem due to an API error."
+        return f"Unable to solve the problem due to API error: {error}"
 
 # Function to extract Python code from markdown solution
 def extract_python_code(markdown_content):
@@ -202,8 +288,9 @@ Provide a detailed comparison focusing on:
 5. Overall assessment of which solution is better and why
 """
     
+    # First try with Gemini
     payload = {
-        "model": "google/gemini-2.5-pro-exp-03-25:free", 
+        "model": "google/gemini-2.5-pro-preview-03-25", 
         "messages": [
             {"role": "system", "content": "You are an expert at comparing coding solutions and providing insightful analysis."},
             {"role": "user", "content": prompt}
@@ -212,10 +299,16 @@ Provide a detailed comparison focusing on:
     }
     
     print(f"Comparing solutions from {other_model.capitalize()} and Gemini...")
-    response = requests.post(url, headers=headers, json=payload)
+    response_json, error = make_api_call(url, headers, payload)
     
-    if response.status_code == 200:
-        comparison = response.json()["choices"][0]["message"]["content"]
+    # If Gemini fails, try Claude as fallback
+    if not response_json and "quota" in error.lower():
+        print(f"Switching to alternative model for comparison due to quota limitations...")
+        payload["model"] = "anthropic/claude-3-opus:free"
+        response_json, error = make_api_call(url, headers, payload)
+    
+    if response_json:
+        comparison = extract_content_from_response(response_json)
         
         # Save comparison to file
         comparison_folder = "model_comparisons"
@@ -229,9 +322,7 @@ Provide a detailed comparison focusing on:
         print(f"Comparison saved to {comparison_path}")
         return comparison
     else:
-        print(f"Error: {response.status_code}")
-        print(response.text)
-        return "Failed to generate comparison due to API error."
+        return f"Failed to generate comparison due to API error: {error}"
 
 # Function to process a single problem
 def process_problem(selected_question, run_tests=True, compare_with_other=True, other_model="deepseek"):
