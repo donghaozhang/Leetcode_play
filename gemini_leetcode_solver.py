@@ -10,7 +10,7 @@ import webbrowser
 from datetime import datetime
 
 # Load environment variables from .env file
-load_dotenv("c:/Users/zdhpe/Desktop/Job_Search/bike_repair_repo/bike_repair_agent/.env")
+load_dotenv(".env")
 
 # Get OpenRouter API key
 api_key = os.getenv("OPENROUTER_API_KEY")
