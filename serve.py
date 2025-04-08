@@ -5,65 +5,66 @@ import sys
 import webbrowser
 import threading
 import time
+import socket
 
 PORT = 8000
 
-class MyHandler(http.server.SimpleHTTPRequestHandler):
-    # Add CORS headers to allow loading resources
+# Custom request handler that adds CORS headers
+class CORSHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET')
         self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
         return super().end_headers()
     
-    # Ensure proper content type for different file types
     def guess_type(self, path):
-        if path.endswith('.py'):
-            return 'text/plain'
-        elif path.endswith('.md'):
+        """Guess the type of a file based on its extension."""
+        base, ext = os.path.splitext(path)
+        if ext == '.md':
             return 'text/markdown'
         return super().guess_type(path)
 
 def open_browser():
-    """Open the models comparison report in the default browser"""
-    # Wait a moment for the server to start
+    """Open the models comparison report in a web browser."""
+    # Wait for the server to start
     time.sleep(1)
     
-    # Path to the comparison report
+    # Path to the models comparison report
     report_path = "llm_analysis_result/models_comparison_report.html"
     
     # Check if the report exists
     if os.path.exists(report_path):
-        url = f"http://localhost:{PORT}/{report_path}"
-        print(f"Opening models comparison report: {url}")
+        url = f"http://localhost:8000/{report_path}"
+        print(f"\nOpening models comparison report at: {url}")
         webbrowser.open(url)
     else:
-        # Fallback to opening the server root
-        print(f"Models comparison report not found at {report_path}")
-        print(f"Opening server root instead")
-        webbrowser.open(f"http://localhost:{PORT}")
+        # If report doesn't exist, open the server root
+        url = "http://localhost:8000"
+        print(f"\nModels comparison report not found. Opening server root at: {url}")
+        webbrowser.open(url)
 
 def run_server():
+    PORT = 8000
+    Handler = CORSHTTPRequestHandler
+
     try:
-        with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
-            print(f"Server started. Access at http://localhost:{PORT}")
-            print("Enter the URL above in your browser to view the LeetCode solution website.")
-            print("Press Ctrl+C to stop the server.")
+        with socketserver.TCPServer(("", PORT), Handler) as httpd:
+            print(f"Serving at http://localhost:{PORT}")
+            print("Press Ctrl+C to stop the server")
             
-            # Start browser in a separate thread
+            # Start a thread to open the browser
             threading.Thread(target=open_browser, daemon=True).start()
             
+            # Start the server
             httpd.serve_forever()
+    except socket.error as e:
+        if e.errno == 10048:  # Port already in use
+            print(f"Port {PORT} is already in use. The server might already be running.")
+            print(f"Try accessing: http://localhost:{PORT}/llm_analysis_result/models_comparison_report.html")
+        else:
+            print(f"Socket error: {e}")
     except KeyboardInterrupt:
         print("\nServer stopped.")
-        sys.exit(0)
-    except OSError as e:
-        if e.errno == 98:  # Address already in use
-            print(f"\nError: Port {PORT} is already in use. Another instance may be running.")
-            print(f"You can try accessing http://localhost:{PORT}/llm_analysis_result/models_comparison_report.html")
-        else:
-            print(f"\nError: {e}")
-        sys.exit(1)
 
 if __name__ == "__main__":
     print(f"Starting HTTP server in directory {os.getcwd()}")

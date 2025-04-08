@@ -1239,8 +1239,16 @@ def main():
     
     print(f"Summary report generated: {os.path.abspath(summary_path)}")
     
-    # Open the summary report by default
-    webbrowser.open(f"file://{os.path.abspath(summary_path)}")
+    # Try to open the report, but don't use file:// protocol as it may be blocked by browsers
+    # Instead, print instructions for using the serve.py script
+    try:
+        webbrowser.open(f"file://{os.path.abspath(summary_path)}")
+        print("\nNote: If the report doesn't open or shows 'Failed to fetch' errors:")
+        print("1. Run 'python serve.py' to start a local web server")
+        print(f"2. Access http://localhost:8000/llm_analysis_result/models_comparison_report.html")
+    except Exception as e:
+        print(f"Could not open the report automatically: {e}")
+        print("Use 'python serve.py' to view the report via a local web server")
 
 if __name__ == "__main__":
     main() 
