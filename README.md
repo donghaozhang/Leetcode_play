@@ -7,6 +7,7 @@ This repository contains LeetCode problem solutions and a specialized tool for a
 - [Online LLM Leetcode Comparison Report](https://donghaozhang.github.io/Leetcode_play/llm_analysis_result/models_comparison_report.html) - View LLM Leetcode comparison results
 ![LeetCode Models Comparison Results](llm_analysis_result/leetcode_page.png)
 - [Online LLM Game Comparison Report](https://donghaozhang.github.io/Leetcode_play/llm_game_compare/video_gallery.html) - View LLM game comparison results
+![Online LLM Game Comparison Report](llm_game_compare/llm_game.png)
 - [LeetCode Solutions Documentation](leetcode_questions/README.md) - Full list of solutions organized by category
 
 ## Project Structure
