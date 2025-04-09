@@ -23,4 +23,5 @@ var/
 .installed.cfg
 *.egg
 
-.env 
+.env
+.mp4 

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Mario</title>
+  <style>
+    body {
+      margin: 0;
+      background: skyblue;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    #game {
+      position: relative;
+      width: 800px;
+      height: 400px;
+      background: linear-gradient(to top, green 50%, skyblue 50%);
+      margin: 40px auto;
+      border: 2px solid #000;
+      overflow: hidden;
+    }
+    #mario {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: red;
+      bottom: 50px;
+      left: 100px;
+      border-radius: 5px;
+    }
+    .obstacle {
+      position: absolute;
+      width: 30px;
+      height: 50px;
+      background: brown;
+      bottom: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">⬅️ ➡️ 左右移动，空格跳跃</h2>
+  <div id="game">
+    <div id="mario"></div>
+  </div>
+
+  <script>
+    const mario = document.getElementById('mario');
+    const game = document.getElementById('game');
+    let velocityY = 0;
+    let isJumping = false;
+    let gravity = 1;
+    let ground = 50;
+    let speed = 5;
+    let positionX = 100;
+
+    // 移动控制
+    let keys = {};
+    document.addEventListener('keydown', (e) => {
+      keys[e.key] = true;
+      if (e.key === ' ' && !isJumping) {
+        velocityY = -15;
+        isJumping = true;
+      }
+    });
+    document.addEventListener('keyup', (e) => {
+      keys[e.key] = false;
+    });
+
+    // 简单障碍
+    function spawnObstacle() {
+      const obs = document.createElement('div');
+      obs.classList.add('obstacle');
+      obs.style.left = '800px';
+      game.appendChild(obs);
+      let obsX = 800;
+
+      function moveObstacle() {
+        obsX -= 4;
+        obs.style.left = obsX + 'px';
+
+        // 碰撞检测
+        if (obsX < positionX + 40 && obsX + 30 > positionX && parseInt(mario.style.bottom) < 100) {
+          alert('💀 Game Over!');
+          window.location.reload();
+        }
+
+        if (obsX > -30) {
+          requestAnimationFrame(moveObstacle);
+        } else {
+          obs.remove();
+        }
+      }
+      moveObstacle();
+    }
+
+    // 每2秒生成一个障碍物
+    setInterval(spawnObstacle, 2000);
+
+    // 主循环
+    function gameLoop() {
+      // 左右移动
+      if (keys['ArrowRight']) {
+        positionX += speed;
+      }
+      if (keys['ArrowLeft']) {
+        positionX -= speed;
+      }
+
+      // 防止越界
+      positionX = Math.max(0, Math.min(760, positionX));
+      mario.style.left = positionX + 'px';
+
+      // 跳跃逻辑
+      velocityY += gravity;
+      let marioBottom = parseInt(mario.style.bottom || 0);
+      marioBottom += velocityY;
+      if (marioBottom <= ground) {
+        marioBottom = ground;
+        velocityY = 0;
+        isJumping = false;
+      }
+      mario.style.bottom = marioBottom + 'px';
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
+</body>
+</html>

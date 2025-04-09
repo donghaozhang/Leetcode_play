@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Three.js Flight Simulator</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">
+        <div>Controls: W/S - Throttle | A/D - Roll | Arrow Keys - Pitch/Yaw</div>
+        <div>Speed: <span id="speed">0</span> | Altitude: <span id="altitude">0</span></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script>
+
+// Import necessary modules
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.module.js';
+
+// Set up the scene, camera, and renderer
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+let renderer = new THREE.WebGLRenderer({
+    canvas: document.createElement('canvas'),
+    antialias: true
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Create the airplane
+let airplaneGeometry = new THREE.BoxGeometry(1, 0.5, 2);
+let airplaneMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+let airplane = new THREE.Mesh(airplaneGeometry, airplaneMaterial);
+airplane.position.set(0, 5, 0);
+scene.add(airplane);
+
+// Create the terrain
+let terrainGeometry = new THREE.PlaneGeometry(100, 100);
+let terrainMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, wireframe: true });
+let terrain = new THREE.Mesh(terrainGeometry, terrainMaterial);
+terrain.rotation.x = -Math.PI / 2;
+scene.add(terrain);
+
+// Set up the camera to follow the airplane
+camera.position.set(0, 10, -10);
+camera.lookAt(airplane.position);
+
+// Initialize variables
+let roll = 0;
+let pitch = 0;
+let yaw = 0;
+let velocity = new THREE.Vector3(0, 0, 0);
+
+// Animate function
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Update airplane position and rotation
+    airplane.rotation.z = roll;
+    airplane.rotation.x = pitch;
+    airplane.rotation.y = yaw;
+    airplane.position.add(velocity);
+
+    // Update camera position
+    camera.position.copy(airplane.position);
+    camera.position.y += 5;
+    camera.position.z -= 10;
+    camera.lookAt(airplane.position);
+
+    // Update velocity based on user input
+    if (keysPressed['w']) {
+        velocity.z -= 0.01;
+    }
+    if (keysPressed['s']) {
+        velocity.z += 0.01;
+    }
+    if (keysPressed['a']) {
+        roll -= 0.01;
+        yaw += 0.01;
+    }
+    if (keysPressed['d']) {
+        roll += 0.01;
+        yaw -= 0.01;
+    }
+
+    // Limit roll, pitch, and yaw
+    roll = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, roll));
+    pitch = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, pitch));
+    yaw = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, yaw));
+
+    // Render the scene
+    renderer.render(scene, camera);
+}
+
+// Handle keyboard input
+let keysPressed = {};
+document.addEventListener('keydown', (event) => {
+    keysPressed[event.key] = true;
+});
+document.addEventListener('keyup', (event) => {
+    keysPressed[event.key] = false;
+});
+
+// Start the animation
+animate();
+
+</script>
+</body>
+</html>

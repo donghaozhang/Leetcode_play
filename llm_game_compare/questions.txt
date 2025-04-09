@@ -1,0 +1,4 @@
+Q1 Make me a captivating endless runner game. Key instructions on the screen. p5js scene, no HTML. I like pixelated dinosaurs and interesting backgrounds.
+Q2 bounce ball: Create an effect using p5.js (no HTML needed) where 10 colorful balls bounce inside a rotating hexagon, taking into account gravity, elasticity, friction, and collisions.
+Q3 In pure three.js, without downloading any assets or textures, create a flight simulator game where i can fly an airplane. Make sure it runs in the browser
+Q4 p5js to explore a Mandelbrot set.

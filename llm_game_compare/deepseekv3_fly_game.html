@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Three.js Flight Simulator</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">
+        <div>Controls: W/S - Throttle | A/D - Roll | Arrow Keys - Pitch/Yaw</div>
+        <div>Speed: <span id="speed">0</span> | Altitude: <span id="altitude">0</span></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB); // Sky blue
+
+        // Camera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(0, 10, 20);
+
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        // Create airplane
+        function createAirplane() {
+            const airplane = new THREE.Group();
+
+            // Fuselage (body)
+            const bodyGeometry = new THREE.CylinderGeometry(0.5, 0.2, 3, 8);
+            const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.rotation.z = Math.PI / 2;
+            airplane.add(body);
+
+            // Wings
+            const wingGeometry = new THREE.BoxGeometry(4, 0.1, 1);
+            const wingMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+            const wing = new THREE.Mesh(wingGeometry, wingMaterial);
+            wing.position.set(0, 0, 0);
+            airplane.add(wing);
+
+            // Tail
+            const tailGeometry = new THREE.BoxGeometry(1, 0.1, 0.5);
+            const tail = new THREE.Mesh(tailGeometry, wingMaterial);
+            tail.position.set(-1.5, 0, 0);
+            airplane.add(tail);
+
+            // Vertical stabilizer
+            const stabilizerGeometry = new THREE.BoxGeometry(0.1, 0.5, 0.5);
+            const stabilizer = new THREE.Mesh(stabilizerGeometry, wingMaterial);
+            stabilizer.position.set(-1.5, 0.25, 0);
+            airplane.add(stabilizer);
+
+            // Propeller
+            const propellerGeometry = new THREE.BoxGeometry(0.1, 1.5, 0.2);
+            const propellerMaterial = new THREE.MeshPhongMaterial({ color: 0x888888 });
+            const propeller = new THREE.Mesh(propellerGeometry, propellerMaterial);
+            propeller.position.set(1.6, 0, 0);
+            airplane.add(propeller);
+
+            // Cockpit
+            const cockpitGeometry = new THREE.SphereGeometry(0.3, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2);
+            const cockpitMaterial = new THREE.MeshPhongMaterial({
+                color: 0x00BFFF,
+                transparent: true,
+                opacity: 0.7
+            });
+            const cockpit = new THREE.Mesh(cockpitGeometry, cockpitMaterial);
+            cockpit.position.set(0.5, 0.2, 0);
+            cockpit.rotation.z = Math.PI / 2;
+            airplane.add(cockpit);
+
+            return airplane;
+        }
+
+        const airplane = createAirplane();
+        scene.add(airplane);
+
+        // Create terrain
+        function createTerrain() {
+            const terrain = new THREE.Group();
+
+            // Ground
+            const groundGeometry = new THREE.PlaneGeometry(1000, 1000, 20, 20);
+            const groundMaterial = new THREE.MeshPhongMaterial({
+                color: 0x3A5F0B,
+                side: THREE.DoubleSide
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            terrain.add(ground);
+
+            // Generate random hills
+            const hillsGeometry = new THREE.PlaneGeometry(1000, 1000, 50, 50);
+            const positionAttribute = hillsGeometry.attributes.position;
+
+            for (let i = 0; i < positionAttribute.count; i++) {
+                const x = positionAttribute.getX(i);
+                const y = positionAttribute.getY(i);
+                const distance = Math.sqrt(x * x + y * y);
+                positionAttribute.setZ(i, Math.sin(distance * 0.05) * 5 + Math.random() * 2);
+            }
+
+            hillsGeometry.computeVertexNormals();
+            const hillsMaterial = new THREE.MeshPhongMaterial({
+                color: 0x2E8B57,
+                side: THREE.DoubleSide,
+                flatShading: true
+            });
+            const hills = new THREE.Mesh(hillsGeometry, hillsMaterial);
+            hills.rotation.x = -Math.PI / 2;
+            terrain.add(hills);
+
+            // Add some trees
+            for (let i = 0; i < 100; i++) {
+                const tree = new THREE.Group();
+
+                // Trunk
+                const trunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1, 8);
+                const trunkMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 });
+                const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+                tree.add(trunk);
+
+                // Leaves
+                const leavesGeometry = new THREE.ConeGeometry(0.5, 1.5, 8);
+                const leavesMaterial = new THREE.MeshPhongMaterial({ color: 0x228B22 });
+                const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+                leaves.position.y = 1;
+                tree.add(leaves);
+
+                // Position randomly
+                tree.position.x = (Math.random() - 0.5) * 800;
+                tree.position.z = (Math.random() - 0.5) * 800;
+
+                // Place on terrain
+                const terrainHeight = Math.sin(Math.sqrt(
+                    tree.position.x * tree.position.x +
+                    tree.position.z * tree.position.z
+                ) * 0.05) * 5 + Math.random() * 2;
+
+                tree.position.y = terrainHeight;
+                tree.rotation.y = Math.random() * Math.PI * 2;
+                tree.scale.setScalar(0.5 + Math.random() * 1.5);
+
+                terrain.add(tree);
+            }
+
+            return terrain;
+        }
+
+        const terrain = createTerrain();
+        scene.add(terrain);
+
+        // Flight physics variables
+        const flightParams = {
+            speed: 0,
+            maxSpeed: 0.5,
+            acceleration: 0.001,
+            deceleration: 0.002,
+            pitchSpeed: 0.001,
+            rollSpeed: 0.002,
+            yawSpeed: 0.001,
+            propellerSpeed: 0,
+            altitude: 0
+        };
+
+        // Controls state
+        const controls = {
+            throttle: 0,
+            pitch: 0,
+            roll: 0,
+            yaw: 0
+        };
+
+        // Keyboard controls
+        const keyState = {};
+
+        document.addEventListener('keydown', (event) => {
+            keyState[event.code] = true;
+        });
+
+        document.addEventListener('keyup', (event) => {
+            keyState[event.code] = false;
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Update controls based on keyboard state
+            if (keyState['KeyW']) controls.throttle = 1;
+            else if (keyState['KeyS']) controls.throttle = -0.5;
+            else controls.throttle = 0;
+
+            if (keyState['ArrowUp']) controls.pitch = 1;
+            else if (keyState['ArrowDown']) controls.pitch = -1;
+            else controls.pitch = 0;
+
+            if (keyState['KeyA']) controls.roll = 1;
+            else if (keyState['KeyD']) controls.roll = -1;
+            else controls.roll = 0;
+
+            if (keyState['ArrowLeft']) controls.yaw = 1;
+            else if (keyState['ArrowRight']) controls.yaw = -1;
+            else controls.yaw = 0;
+
+            // Update flight physics
+            if (controls.throttle > 0) {
+                flightParams.speed += flightParams.acceleration * controls.throttle;
+            } else if (controls.throttle < 0) {
+                flightParams.speed += flightParams.deceleration * controls.throttle;
+            } else if (flightParams.speed > 0) {
+                flightParams.speed = Math.max(0, flightParams.speed - flightParams.deceleration * 0.5);
+            }
+
+            flightParams.speed = Math.min(flightParams.speed, flightParams.maxSpeed);
+
+            // Update airplane position and rotation
+            if (flightParams.speed > 0) {
+                // Pitch (up/down)
+                airplane.rotation.x += controls.pitch * flightParams.pitchSpeed * flightParams.speed * 10;
+
+                // Roll (banking)
+                airplane.rotation.z += controls.roll * flightParams.rollSpeed * flightParams.speed * 10;
+
+                // Yaw (left/right)
+                airplane.rotation.y += controls.yaw * flightParams.yawSpeed * flightParams.speed * 10;
+
+                // Apply some automatic leveling when not rolling
+                if (controls.roll === 0) {
+                    airplane.rotation.z *= 0.98;
+                }
+            }
+
+            // Move airplane forward based on speed and direction
+            const forwardVector = new THREE.Vector3(0, 0, -1);
+            forwardVector.applyQuaternion(airplane.quaternion);
+            airplane.position.add(forwardVector.multiplyScalar(flightParams.speed * 2));
+
+            // Update altitude (affected by pitch)
+            airplane.position.y -= Math.sin(airplane.rotation.x) * flightParams.speed;
+
+            // Keep airplane above ground
+            const terrainHeight = Math.sin(Math.sqrt(
+                airplane.position.x * airplane.position.x +
+                airplane.position.z * airplane.position.z
+            ) * 0.05) * 5;
+
+            if (airplane.position.y < terrainHeight + 1) {
+                airplane.position.y = terrainHeight + 1;
+                flightParams.speed *= 0.9; // Slow down when hitting ground
+            }
+
+            // Update propeller rotation
+            flightParams.propellerSpeed = flightParams.speed * 100;
+            const propeller = airplane.children.find(child => child.geometry.type === 'BoxGeometry');
+            if (propeller) propeller.rotation.x += flightParams.propellerSpeed;
+
+            // Update camera position (third-person view)
+            const cameraOffset = new THREE.Vector3(0, 3, 10);
+            cameraOffset.applyQuaternion(airplane.quaternion);
+            camera.position.copy(airplane.position).add(cameraOffset);
+            camera.lookAt(airplane.position);
+
+            // Update altitude display
+            flightParams.altitude = airplane.position.y - terrainHeight;
+            document.getElementById('altitude').textContent = Math.floor(flightParams.altitude);
+            document.getElementById('speed').textContent = Math.floor(flightParams.speed * 100);
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
