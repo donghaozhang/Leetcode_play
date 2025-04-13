@@ -1,21 +1,52 @@
 # LeetCode Solutions and AI Model Analyzer
 
-LLaMA 4 was released just a few days ago, and it brings back memories of when the LLaMA series first set out to close the gap between open-source LLMs and their proprietary counterparts. I’m especially excited to experiment with LLaMA 4 Maverick. I initially noticed that Together.ai provides an API for it, but as always, OpenRouter was quick to support the model too. Given its clean and convenient interface—and support for a wide range of models like DeepSeek and Gemini 2.5 Pro—I’ve decided to use OpenRouter for my testing.
+🚀 LLaMA 4 is here—and it’s bringing back memories.
 
-Before diving into some toy comparisons I’ve been running, it’s worth highlighting a few key advancements. Notably, LLaMA 4 Scout supports a 10M token context window, thanks to its use of interleaved attention layers (iRope), eliminating the need for traditional positional embeddings. Readers interested in the underlying theory should check out the paper “Scalable-Softmax is Superior for Attention.” In a nutshell, scalable-softmax addresses the problem of attention fading by introducing a scaling parameter. This leads to:
+Just a week ago, LLaMA 4 was released, and it immediately reminded me of the early days when the LLaMA series set out to bridge the gap between open-source and proprietary LLMs. Although the LLaMA-4-Maverick-17B-128E-Instruct model has dropped in ranking from 2nd to 32nd (likely due to evolving benchmarks and newer versions), I’m still especially excited to experiment with LLaMA 4 Maverick.
 
-Faster convergence during pretraining
+I first noticed support via the Together.ai API, but—as usual—OpenRouter was lightning fast in integrating the model too. With its clean interface and broad model support (from DeepSeek to Gemini 2.5 Pro), OpenRouter has become my go-to for testing.
 
-Better generalization to longer contexts
+🔍 Before diving into some toy benchmarking experiments, here are a few notable LLaMA 4 advances worth highlighting:
 
-Significant improvements in Needle-in-a-Haystack benchmarks.
+LLaMA 4 Scout supports 10 million token context windows, enabled by interleaved attention layers (iRope)—removing the need for positional embeddings entirely.
 
-As for the toy benchmarking repo I’m working on, it includes scripts to generate LeetCode solutions using various LLMs, along with a detailed comparison report—covering code quality, explanations, and some basic statistics.
+For those curious about the underlying theory, the paper "Scalable-Softmax is Superior for Attention" is a must-read. In short, scalable-softmax helps:
 
-Both DeepSeek-V3 0324 and LLaMA 4 Maverick generate reasonable results for a simple endless runner game. That said, I slightly prefer DeepSeek's UI—it even changes the background color when the player dies, which adds a nice touch of polish.
+Speed up pretraining convergence
+
+Generalize better to longer contexts
+
+Improve performance on Needle-in-a-Haystack tasks
+
+🧪 Toy Benchmarking Repo
+
+I built a small repo to evaluate how various LLMs handle LeetCode-style problems. Each script includes:
+
+Code generation
+
+Detailed test case outputs
+
+Explanation logging
+
+Basic performance statistics
+
+Key insight: Most modern LLMs breeze through these tasks—achieving over 82% success in a single pass. LeetCode problems might no longer be the real test for top-tier models.
+
+🎮 Fun use-case testing: Mini Games
+
+Both DeepSeek-V3 0324 and LLaMA 4 Maverick performed well on simple tasks like:
+
+🏃 Endless Runner Game: I preferred DeepSeek’s version—it even changes the background color when the game ends.
+
+🔄 Bounce Ball Game: DeepSeek followed spatial constraints better (balls inside the rotating hexagon), while LLaMA 4 sometimes placed them outside.
+
+🌀 Mandelbrot Set Visualization: Both models produced visually accurate and smooth outputs.
+
+💡 Overall, LLaMA 4 continues to impress with its technical innovation and usability. If you're experimenting with it too—curious to hear your thoughts!
+
+#LLaMA4 #OpenSourceLLM #DeepSeek #OpenRouter #AI #Maverick #Benchmarking #GenerativeAI #LLM #LeetCode #Mandelbrot #Research
 
 ## Quick Links
-
 
 - [Online LLM Leetcode Comparison Report](https://donghaozhang.github.io/Leetcode_play/llm_analysis_result/models_comparison_report.html) - View LLM Leetcode comparison results
 ![LeetCode Models Comparison Results](llm_analysis_result/leetcode_page.png)
