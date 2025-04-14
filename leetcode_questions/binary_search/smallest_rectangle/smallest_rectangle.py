@@ -1,10 +1,10 @@
 def min_area(image, x, y):
     """
-    找到包含所有黑色像素的最小矩形面积
-    :param image: List[List[str]]，二维矩阵，'0'表示白色像素，'1'表示黑色像素
-    :param x: int，一个黑色像素点的x坐标
-    :param y: int，一个黑色像素点的y坐标
-    :return: int，最小矩形的面积
+    Find the area of the smallest (axis-aligned) rectangle that encloses all black pixels.
+    :param image: List[List[str]], 2D matrix, '0' is white pixel, '1' is black pixel
+    :param x: int, the x coordinate of one of the black pixels
+    :param y: int, the y coordinate of one of the black pixels
+    :return: int, the area of the smallest rectangle
     """
     if not image or not image[0]:
         return 0
@@ -12,10 +12,10 @@ def min_area(image, x, y):
     m, n = len(image), len(image[0])
     
     def search_columns(start, end, top, bottom, check_left):
-        """二分查找列的边界"""
+        """Binary search for column boundary"""
         while start + 1 < end:
             mid = (start + end) // 2
-            # 检查这一列是否有黑色像素
+            # Check if this column has black pixel
             has_black = False
             for i in range(top, bottom + 1):
                 if image[i][mid] == '1':
@@ -28,10 +28,10 @@ def min_area(image, x, y):
         return start if check_left else end
     
     def search_rows(start, end, left, right, check_top):
-        """二分查找行的边界"""
+        """Binary search for row boundary"""
         while start + 1 < end:
             mid = (start + end) // 2
-            # 检查这一行是否有黑色像素
+            # Check if this row has black pixel
             has_black = False
             for j in range(left, right + 1):
                 if image[mid][j] == '1':
@@ -43,13 +43,13 @@ def min_area(image, x, y):
                 start = mid
         return start if check_top else end
     
-    # 找左边界（从左往右第一个包含1的列）
+    # Find left boundary (first column containing 1 from left to right)
     left = search_columns(0, y, 0, m - 1, True)
-    # 找右边界（从右往左第一个包含1的列）
+    # Find right boundary (first column containing 1 from right to left)
     right = search_columns(y, n - 1, 0, m - 1, False)
-    # 找上边界（从上往下第一个包含1的行）
+    # Find top boundary (first row containing 1 from top to bottom)
     top = search_rows(0, x, left, right, True)
-    # 找下边界（从下往上第一个包含1的行）
+    # Find bottom boundary (first row containing 1 from bottom to top)
     bottom = search_rows(x, m - 1, left, right, False)
     
-    return (right - left + 1) * (bottom - top + 1) 
+    return (right - left + 1) * (bottom - top + 1)

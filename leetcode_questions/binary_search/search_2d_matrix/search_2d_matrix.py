@@ -22,7 +22,28 @@ def search_matrix(matrix, target):
             right = mid - 1
 
     return False
-
+def search_matrix_practice(matrix, target):
+    """
+    :param matrix: List[List[int]]
+    :param target: int
+    :return: bool
+    """
+    if not matrix or not matrix[0]:
+        return False
+    rows, cols = len(matrix), len(matrix[0])
+    left, right = 0, rows * cols - 1
+    while left <= right:
+        mid = (left + right) // 2
+        num = matrix[mid // cols][mid % cols]
+        if num == target:
+            return True
+        elif num < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return False
+    
+    
 # Test cases
 def run_tests():
     # Test Case 1: Example from problem description
@@ -32,13 +53,13 @@ def run_tests():
         [23, 30, 34, 50]
     ]
     assert search_matrix(matrix1, 3) == True, "Test Case 1 Failed: Target 3 should be found"
-    
+    assert search_matrix_practice(matrix1, 3) == True, "Test Case 1 Failed: Target 3 should be found"
     # Test Case 2: Target not in matrix
     assert search_matrix(matrix1, 13) == False, "Test Case 2 Failed: Target 13 should not be found"
-    
+    assert search_matrix_practice(matrix1, 13) == False, "Test Case 2 Failed: Target 13 should not be found"
     # Test Case 3: Target at beginning of matrix
     assert search_matrix(matrix1, 1) == True, "Test Case 3 Failed: Target 1 should be found"
-    
+    assert search_matrix_practice(matrix1, 1) == True, "Test Case 3 Failed: Target 1 should be found"
     # Test Case 4: Target at end of matrix
     assert search_matrix(matrix1, 50) == True, "Test Case 4 Failed: Target 50 should be found"
     
