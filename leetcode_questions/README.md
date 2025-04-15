@@ -24,6 +24,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - 3Sum Closest / 最接近的三数之和 [LeetCode 16] - [Python](array/three_sum_closest/three_sum_closest.py) - [Solution](array/three_sum_closest/three_sum_closest.md)
 - Rotate Image / 旋转图像 [LeetCode 48] - [Python](array/rotate_image/rotate_image.py) - [Solution](array/rotate_image/rotate_image.md)
 - Window Sum / 滑动窗口求和 [LintCode] - [Python](array/window_sum/window_sum.py) - [Solution](array/window_sum/window_sum.md)
+- Maximum Subarray / 最大子数组和 [LeetCode 53] - [Python](array/maximum_subarray/maximum_subarray.py) - [Solution](array/maximum_subarray/maximum_subarray.md)
 - Longest Repeating Character Replacement / 最长重复字符替换 [LeetCode 424] - [Python](array/longest_repeating_character/longest_repeating_character.py) - [Solution](array/longest_repeating_character/longest_repeating_character.md)
 - Two Sum Difference / 两数之差 - [Python](array/two_sum_difference/two_sum_difference.py) - [Solution](array/two_sum_difference/two_sum_difference.md)
 - Zero Substrings / 全零子串 - [Python](string_processing/zero_substrings/zero_substrings.py) - [Solution](string_processing/zero_substrings/zero_substrings.md)
