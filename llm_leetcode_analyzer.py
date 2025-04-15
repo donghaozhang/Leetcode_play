@@ -1226,9 +1226,9 @@ def main():
         
         # Save report in the results directory
         report_path = os.path.join(results_dir, f"{model}_solution_report.html")
-        with open(report_path, 'w', encoding='utf-8') as f:
-            f.write(html)
-        
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+    
         print(f"Report generated for {model}: {os.path.abspath(report_path)}")
     
     # Generate and save summary report

@@ -8,10 +8,10 @@
 - 最小黑色像素矩形 / Smallest Rectangle Enclosing Black Pixels [LintCode] - [Python](binary_search/smallest_rectangle/smallest_rectangle.py) - [题解](binary_search/smallest_rectangle/smallest_rectangle.md) ✅
 - 抄书问题 / Copy Books [LintCode] - [Python](binary_search/copy_books/copy_books.py) - [题解](binary_search/copy_books/copy_books.md) ✅
 - 经典二分查找 / Classical Binary Search [LintCode] - [Python](binary_search/classical_binary_search/classical_binary_search.py) - [题解](binary_search/classical_binary_search/classical_binary_search.md) ✅
-- 目标值的第一个位置 / First Position of Target [LintCode] - [Python](binary_search/first_position/first_position.py) - [题解](binary_search/first_position/first_position.md)
-- 目标值的最后一个位置 / Last Position of Target [LintCode] - [Python](binary_search/last_position/last_position.py) - [题解](binary_search/last_position/last_position.md)
-- 搜索大有序数组 / Search in Big Sorted Array [LintCode] - [Python](binary_search/search_big_sorted_array/search_big_sorted_array.py) - [题解](binary_search/search_big_sorted_array/search_big_sorted_array.md)
-- 找到K个最接近的元素 / Find K Closest Elements [LeetCode 658] - [Python](binary_search/k_closest_elements/k_closest_elements.py) - [题解](binary_search/k_closest_elements/k_closest_elements.md)
+- 目标值的第一个位置 / First Position of Target [LintCode] - [Python](binary_search/first_position/first_position.py) - [题解](binary_search/first_position/first_position.md)✅
+- 目标值的最后一个位置 / Last Position of Target [LintCode] - [Python](binary_search/last_position/last_position.py) - [题解](binary_search/last_position/last_position.md)✅
+- 搜索大有序数组 / Search in Big Sorted Array [LintCode] - [Python](binary_search/search_big_sorted_array/search_big_sorted_array.py) - [题解](binary_search/search_big_sorted_array/search_big_sorted_array.md)✅
+- 找到K个最接近的元素 / Find K Closest Elements [LeetCode 658] - [Python](binary_search/k_closest_elements/k_closest_elements.py) - [题解](binary_search/k_closest_elements/k_closest_elements.md)✅
 - 旋转排序数组中的最小值 / Find Minimum in Rotated Sorted Array [LeetCode 153] - [Python](binary_search/find_minimum_rotated/find_minimum_rotated.py) - [题解](binary_search/find_minimum_rotated/find_minimum_rotated.md)
 - 搜索旋转排序数组 / Search in Rotated Sorted Array [LeetCode 33] - [Python](binary_search/search_rotated/search_rotated.py) - [题解](binary_search/search_rotated/search_rotated.md)
 - 寻找峰值元素 / Find Peak Element [LeetCode 162] - [Python](binary_search/find_peak_element/find_peak_element.py) - [题解](binary_search/find_peak_element/find_peak_element.md)

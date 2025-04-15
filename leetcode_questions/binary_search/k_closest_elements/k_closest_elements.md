@@ -50,3 +50,58 @@
 1. 找到最接近的值
 2. 二分查找
 3. 双指针技巧 
+
+---
+
+# Find K Closest Elements (English Version)
+
+## Problem Description
+Given a sorted array, two integers k and target, find the k closest elements to the target in the array. The result should be sorted in ascending order. If two numbers have the same absolute difference from the target, the smaller number should be preferred.
+
+## Example
+Input: [1, 2, 3, 4, 5], k = 4, target = 3
+Output: [1, 2, 3, 4]
+
+## Solution Approach
+
+### Method 1: Binary Search
+1. **Determine the Start Position**
+   - Use binary search to find the optimal starting position
+   - Compare the distances from both ends of the [mid, mid+k] range to the target
+   - Adjust the search range based on the comparison result
+
+2. **Return the Result**
+   - Return k consecutive numbers starting from the found position
+
+### Method 2: Two Pointers
+1. **Initialize Pointers**
+   - Left pointer points to the beginning, right pointer points to the end
+   - Need to remove len(arr) - k numbers
+
+2. **Shrink the Range**
+   - Compare the distances from both ends to the target
+   - Remove the number with the larger distance
+   - Continue until k numbers remain
+
+### Complexity Analysis
+- Binary Search Method:
+  - Time Complexity: O(log(n-k))
+  - Space Complexity: O(1)
+- Two Pointers Method:
+  - Time Complexity: O(n-k)
+  - Space Complexity: O(1)
+
+## Key Implementation Points
+1. Handle boundary conditions correctly
+2. Process cases with equal distances
+3. Ensure the return value is sorted
+4. Optimize code readability:
+   - Use meaningful variable names
+   - Add clear comments
+   - Separate logical steps
+   - Provide multiple implementation methods
+
+## Related Problems
+1. Find the closest value
+2. Binary search
+3. Two-pointer technique 

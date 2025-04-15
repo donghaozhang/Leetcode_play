@@ -47,3 +47,55 @@
 1. 搜索旋转排序数组
 2. 寻找旋转排序数组中的目标值
 3. 寻找峰值元素 
+
+---
+
+# Find Minimum in Rotated Sorted Array
+
+## Problem Description
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. For example, the array [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]. Find the minimum element in this rotated sorted array.
+
+## Example
+Input: [4, 5, 6, 7, 0, 1, 2]
+Output: 0
+
+## Solution Approach
+
+### Method 1: Basic Binary Search
+1. **Initialization**
+   - Set left and right pointers
+   - Special case: If array is not rotated, return the first element
+
+2. **Binary Search**
+   - Compare the middle element with the first element
+   - If the middle element is greater than the first element, the minimum value is in the right half
+   - Otherwise, the minimum value is in the left half or is the middle element itself
+
+### Method 2: Handling Duplicate Elements
+1. **Initialization**
+   - Same as the basic method
+   - Need to handle cases with duplicate elements
+
+2. **Binary Search**
+   - Compare the middle element with the last element
+   - When the middle element equals the right boundary element, we cannot determine the position of the minimum value
+   - In this case, we can safely move the right boundary one position to the left
+
+### Complexity Analysis
+- Basic Method:
+  - Time Complexity: O(log n)
+  - Space Complexity: O(1)
+- Handling Duplicate Elements:
+  - Time Complexity: Worst case O(n), average case O(log n)
+  - Space Complexity: O(1)
+
+## Key Implementation Points
+1. Correctly handle arrays that are not rotated
+2. Choose appropriate comparison elements (first element or last element)
+3. Handle special cases with duplicate elements
+4. Pay attention to boundary conditions
+
+## Related Problems
+1. Search in Rotated Sorted Array
+2. Find Target in Rotated Sorted Array
+3. Find Peak Element 
