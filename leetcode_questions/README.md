@@ -29,6 +29,11 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Maximum Subarray / 最大子数组和 [LeetCode 53] - [Python](array/maximum_subarray/maximum_subarray.py) - [Solution](array/maximum_subarray/maximum_subarray.md)
 - Longest Repeating Character Replacement / 最长重复字符替换 [LeetCode 424] - [Python](array/longest_repeating_character/longest_repeating_character.py) - [Solution](array/longest_repeating_character/longest_repeating_character.md)
 - Two Sum Difference / 两数之差 - [Python](array/two_sum_difference/two_sum_difference.py) - [Solution](array/two_sum_difference/two_sum_difference.md)
+- Trapping Rain Water / 接雨水 [LeetCode 42] - [Python](array/trapping_rain_water/trapping_rain_water.py) - [Solution](array/trapping_rain_water/trapping_rain_water.md)
+- Missing Number / 缺失数字 [LeetCode 268] - [Python](array/missing_number/missing_number.py) - [Solution](array/missing_number/missing_number.md)
+
+## String Processing (字符串处理)
+- Compare Version Numbers / 比较版本号 [LeetCode 165] - [Python](string_processing/compare_version_numbers/compare_version_numbers.py) - [Solution](string_processing/compare_version_numbers/compare_version_numbers.md)
 - Zero Substrings / 全零子串 - [Python](string_processing/zero_substrings/zero_substrings.py) - [Solution](string_processing/zero_substrings/zero_substrings.md)
 
 ## Dynamic Programming (动态规划)
@@ -106,4 +111,6 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Integer to Roman / 整数转罗马数字 [LeetCode 12] - [Python](string_manipulation/int_to_roman/int_to_roman.py) - [Solution](string_manipulation/int_to_roman/int_to_roman.md)
 - Longest Palindromic Substring / 最长回文子串 [LeetCode 5] - [Python](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.py) - [Solution](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.md)
 - Valid Parentheses / 有效的括号 [LeetCode 20] - [Python](string_manipulation/valid_parentheses/valid_parentheses.py) - [Solution](string_manipulation/valid_parentheses/valid_parentheses.md)
-- Integer to English Words / 整数转英文表示 [LeetCode 273] - [Python](string_manipulation/int_to_english_words/int_to_english_words.py) - [Solution](string_manipulation/int_to_english_words/int_to_english_words.md) 
+- Integer to English Words / 整数转英文表示 [LeetCode 273] - [Python](string_manipulation/int_to_english_words/int_to_english_words.py) - [Solution](string_manipulation/int_to_english_words/int_to_english_words.md)
+- First Unique Character in a String / 字符串中的第一个唯一字符 [LeetCode 387] - [Python](string_manipulation/first_unique_character/first_unique_character.py) - [Solution](string_manipulation/first_unique_character/first_unique_character.md)
+- Roman to Integer / 罗马数字转整数 [LeetCode 13] - [Python](string_manipulation/roman_to_integer/roman_to_integer.py) - [Solution](string_manipulation/roman_to_integer/roman_to_integer.md) 
