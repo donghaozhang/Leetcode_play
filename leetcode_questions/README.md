@@ -84,6 +84,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Level Order Traversal / 层序遍历 [LeetCode 102] - [Python](tree/level_order_traversal/level_order_traversal.py) - [Solution](tree/level_order_traversal/level_order_traversal.md)
 
 ### Other Tree Problems (其他树问题)
+- Binary Tree Maximum Path Sum / 二叉树中的最大路径和 [LeetCode 124] - [Solution](tree/binary_tree_maximum_path_sum/binary_tree_maximum_path_sum.md)
 - Binary Tree Paths / 二叉树路径 [LeetCode 257] - [Python](tree/binary_tree_paths/binary_tree_paths.py) - [Solution](tree/binary_tree_paths/binary_tree_paths.md)
 - Balanced Binary Tree / 平衡二叉树 [LeetCode 110] - [Python](tree/balanced_binary_tree/balanced_binary_tree.py) - [Solution](tree/balanced_binary_tree/balanced_binary_tree.md)
 - Subtree Maximum Average / 最大平均值子树 - [Python](tree/subtree_maximum_average/subtree_maximum_average.py) - [Solution](tree/subtree_maximum_average/subtree_maximum_average.md)
@@ -95,6 +96,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Kth Smallest in BST / BST中第k小的元素 [LeetCode 230] - [Python](tree/kth_smallest_bst/kth_smallest_bst.py) - [Solution](tree/kth_smallest_bst/kth_smallest_bst.md)
 - Closest BST Value / BST中最接近的值 - [Python](tree/closest_bst_value/closest_bst_value.py) - [Solution](tree/closest_bst_value/closest_bst_value.md)
 - Symmetric Tree / 对称二叉树 [LeetCode 101] - [Python](tree/symmetric_tree/symmetric_tree.py) - [Solution](tree/symmetric_tree/symmetric_tree.md)✅
+- Diameter of Binary Tree / 二叉树的直径 [LeetCode 543] - [Python](tree/diameter_of_binary_tree/diameter_of_binary_tree.py) - [Solution](tree/diameter_of_binary_tree/diameter_of_binary_tree.md)
 
 ## String Manipulation (字符串处理)
 - Reverse String / 翻转字符串 [LeetCode 344] - [Python](string_manipulation/reverse_string/reverse_string.py) - [Solution](string_manipulation/reverse_string/reverse_string.md)
@@ -102,4 +104,6 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Valid Palindrome II / 验证回文串 II [LeetCode 680] - [Python](string_manipulation/palindrome_ii/palindrome_ii.py) - [Solution](string_manipulation/palindrome_ii/palindrome_ii.md)
 - Implement strStr() / 实现 strStr() [LeetCode 28] - [Python](string_manipulation/str_str/str_str.py) - [Solution](string_manipulation/str_str/str_str.md)
 - Integer to Roman / 整数转罗马数字 [LeetCode 12] - [Python](string_manipulation/int_to_roman/int_to_roman.py) - [Solution](string_manipulation/int_to_roman/int_to_roman.md)
-- Longest Palindromic Substring / 最长回文子串 [LeetCode 5] - [Python](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.py) - [Solution](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.md) 
+- Longest Palindromic Substring / 最长回文子串 [LeetCode 5] - [Python](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.py) - [Solution](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.md)
+- Valid Parentheses / 有效的括号 [LeetCode 20] - [Python](string_manipulation/valid_parentheses/valid_parentheses.py) - [Solution](string_manipulation/valid_parentheses/valid_parentheses.md)
+- Integer to English Words / 整数转英文表示 [LeetCode 273] - [Python](string_manipulation/int_to_english_words/int_to_english_words.py) - [Solution](string_manipulation/int_to_english_words/int_to_english_words.md) 
