@@ -18,11 +18,13 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Wood Cut / 木材切割问题 [LintCode] - [Python](binary_search/wood_cut/wood_cut.py) - [Solution](binary_search/wood_cut/wood_cut.md)
 
 ## Array (数组)
-- Two Sum / 两数之和 [LeetCode 1] - [Python](array/two_sum/two_sum.py) - [Solution](array/two_sum/two_sum.md)
-- Two Sum - All Pairs / 两数之和-所有配对 [LeetCode 1 Variant] - [Python](array/two_sum_multiple_solutions/two_sum_multiple_solutions.py) - [Solution](array/two_sum_multiple_solutions/two_sum_multiple_solutions.md)
+- Two Sum / 两数之和 [LeetCode 1] - [Python](array/two_sum/two_sum.py) - [Solution](array/two_sum/two_sum.md) ✅
+- Two Sum - All Pairs / 两数之和-所有配对 [LeetCode 1 Variant] - [Python](array/two_sum_multiple_solutions/two_sum_multiple_solutions.py) - [Solution](array/two_sum_multiple_solutions/two_sum_multiple_solutions.md) ✅
 - 3Sum / 三数之和 [LeetCode 15] - [Python](array/three_sum/three_sum.py) - [Solution](array/three_sum/three_sum.md)
 - 3Sum Closest / 最接近的三数之和 [LeetCode 16] - [Python](array/three_sum_closest/three_sum_closest.py) - [Solution](array/three_sum_closest/three_sum_closest.md)
 - Rotate Image / 旋转图像 [LeetCode 48] - [Python](array/rotate_image/rotate_image.py) - [Solution](array/rotate_image/rotate_image.md)
+- Merge Intervals / 合并区间 [LeetCode 56] - [Python](array/merge_intervals/merge_intervals.py) - [Solution](array/merge_intervals/merge_intervals.md)
+- Top K Frequent Elements / 前 K 个高频元素 [LeetCode 347] - [Python](array/top_k_frequent/top_k_frequent.py) - [Solution](array/top_k_frequent/top_k_frequent.md)
 - Window Sum / 滑动窗口求和 [LintCode] - [Python](array/window_sum/window_sum.py) - [Solution](array/window_sum/window_sum.md)
 - Maximum Subarray / 最大子数组和 [LeetCode 53] - [Python](array/maximum_subarray/maximum_subarray.py) - [Solution](array/maximum_subarray/maximum_subarray.md)
 - Longest Repeating Character Replacement / 最长重复字符替换 [LeetCode 424] - [Python](array/longest_repeating_character/longest_repeating_character.py) - [Solution](array/longest_repeating_character/longest_repeating_character.md)
@@ -30,7 +32,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Zero Substrings / 全零子串 - [Python](string_processing/zero_substrings/zero_substrings.py) - [Solution](string_processing/zero_substrings/zero_substrings.md)
 
 ## Dynamic Programming (动态规划)
-- Fibonacci / 斐波那契数列 - [Python](math/fibonacci/fibonacci.py) - [Solution](math/fibonacci/fibonacci.md)
+- Fibonacci / 斐波那契数列 - [Python](math/fibonacci/fibonacci.py) - [Solution](math/fibonacci/fibonacci.md) ✅
 - Knight Shortest Path II / 骑士最短路径 II - [Python](dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.py) - [Solution](dynamic_programming/knight_shortest_path_ii/knight_shortest_path_ii.md)
 - Longest Continuous Increasing Subsequence II / 最长连续递增子序列 II - [Python](dynamic_programming/longest_continuous_increasing_subsequence_ii/longest_continuous_increasing_subsequence_ii.py) - [Solution](dynamic_programming/longest_continuous_increasing_subsequence_ii/longest_continuous_increasing_subsequence_ii.md)
 - Backpack / 背包问题 - [Python](dynamic_programming/backpack/backpack.py) - [Solution](dynamic_programming/backpack/backpack.md)
@@ -39,6 +41,8 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Backpack III / 多重背包问题 - [Python](dynamic_programming/backpack_iii/backpack_iii.py) - [Solution](dynamic_programming/backpack_iii/backpack_iii.md)
 - Unique Paths / 不同路径 [LeetCode 62] - [Python](dynamic_programming/unique_paths/unique_paths.py) - [Solution](dynamic_programming/unique_paths/unique_paths.md)
 - Jump Game / 跳跃游戏 [LeetCode 55] - [Python](dynamic_programming/jump_game/jump_game.py) - [Solution](dynamic_programming/jump_game/jump_game.md)
+- Coin Change / 零钱兑换 [LeetCode 322] - [Python](dynamic_programming/coin_change/coin_change.py) - [Solution](dynamic_programming/coin_change/coin_change.md)
+- Best Time to Buy and Sell Stock / 买卖股票的最佳时机 [LeetCode 121] - [Python](dynamic_programming/best_time_to_buy_sell_stock/best_time_to_buy_sell_stock.py) - [Solution](dynamic_programming/best_time_to_buy_sell_stock/best_time_to_buy_sell_stock.md)
 
 ## Greedy (贪心算法)
 - Stone Collision / 石头碰撞 - [Python](greedy/stone_collision/stone_collision.py) - [Solution](greedy/stone_collision/stone_collision.md)
@@ -90,6 +94,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Flatten Binary Tree / 二叉树展开为链表 [LeetCode 114] - [Python](tree/flatten_binary_tree/flatten_binary_tree.py) - [Solution](tree/flatten_binary_tree/flatten_binary_tree.md)
 - Kth Smallest in BST / BST中第k小的元素 [LeetCode 230] - [Python](tree/kth_smallest_bst/kth_smallest_bst.py) - [Solution](tree/kth_smallest_bst/kth_smallest_bst.md)
 - Closest BST Value / BST中最接近的值 - [Python](tree/closest_bst_value/closest_bst_value.py) - [Solution](tree/closest_bst_value/closest_bst_value.md)
+- Symmetric Tree / 对称二叉树 [LeetCode 101] - [Python](tree/symmetric_tree/symmetric_tree.py) - [Solution](tree/symmetric_tree/symmetric_tree.md)✅
 
 ## String Manipulation (字符串处理)
 - Reverse String / 翻转字符串 [LeetCode 344] - [Python](string_manipulation/reverse_string/reverse_string.py) - [Solution](string_manipulation/reverse_string/reverse_string.md)
