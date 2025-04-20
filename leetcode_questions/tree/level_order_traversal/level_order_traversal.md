@@ -1,10 +1,12 @@
-# 二叉树的层序遍历
+# Binary Tree Level Order Traversal
 
-## 题目描述
-给定一个二叉树，返回其按层序遍历得到的节点值。层序遍历即逐层地、从左到右访问所有节点。
+## Problem
 
-## 示例
-输入:
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+## Examples
+
+**Example 1:**
 ```
     3
    / \
@@ -12,57 +14,172 @@
     /  \
    15   7
 ```
-输出:
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[9,20],[15,7]]
+
+**Example 2:**
 ```
-[
-  [3],
-  [9,20],
-  [15,7]
-]
+Input: root = [1]
+Output: [[1]]
 ```
 
-## 解题思路
+**Example 3:**
+```
+Input: root = []
+Output: []
+```
 
-### 1. 单队列实现
-- 使用一个队列存储节点
-- 在每一层开始前记录当前队列的大小
-- 处理完当前层的所有节点后再处理下一层
-- 时间复杂度：O(n)
-- 空间复杂度：O(w)，其中w是树的最大宽度
+## Approach: Breadth-First Search (BFS)
 
-### 2. 双队列实现
-- 使用两个队列交替存储当前层和下一层的节点
-- 处理完当前队列后切换到下一队列
-- 时间复杂度：O(n)
-- 空间复杂度：O(w)
+The key to level order traversal is to process nodes level by level. We can use a Breadth-First Search (BFS) approach with a queue data structure:
 
-### 3. 哑节点实现
-- 使用一个特殊的标记节点（None）作为层分隔符
-- 遇到分隔符时表示当前层结束
-- 时间复杂度：O(n)
-- 空间复杂度：O(w)
+1. Start by adding the root node to a queue.
+2. While the queue is not empty:
+   a. Get the number of nodes at the current level (the current queue size).
+   b. Process all nodes at the current level by dequeuing them one by one.
+   c. For each node, add its value to the current level's result.
+   d. Enqueue all of its children (left and right) for processing in the next level.
+   e. After processing all nodes at the current level, add the level's result to the final result.
 
-## 实现比较
-1. **单队列**
-   - 优点：空间效率最好，实现简单
-   - 缺点：需要额外记录层大小
+This ensures that we process nodes level by level, from left to right.
 
-2. **双队列**
-   - 优点：层次划分明确
-   - 缺点：需要两个队列，空间开销较大
+## Solution
 
-3. **哑节点**
-   - 优点：不需要记录层大小
-   - 缺点：需要额外的分隔符，可能增加队列操作次数
+```python
+def level_order_traversal(root: Optional[TreeNode]) -> List[List[int]]:
+    # Handle empty tree case
+    if not root:
+        return []
+    
+    result = []
+    queue = deque([root])
+    
+    # BFS traversal
+    while queue:
+        # Number of nodes at current level
+        level_size = len(queue)
+        level_values = []
+        
+        # Process all nodes at current level
+        for _ in range(level_size):
+            node = queue.popleft()
+            level_values.append(node.val)
+            
+            # Add children to queue for next level processing
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        
+        # Add current level values to result
+        result.append(level_values)
+    
+    return result
+```
 
-## 应用场景
-1. 树的层次遍历
-2. 图的广度优先搜索
-3. 二叉树的层次特征分析
-4. Web爬虫的层次控制
+## Time Complexity
 
-## 代码实现要点
-1. 正确处理空树情况
-2. 层次信息的维护
-3. 队列操作的顺序
-4. 结果集的组织方式 
+- O(n): We visit each node exactly once, where n is the number of nodes in the tree.
+
+## Space Complexity
+
+- O(n): In the worst case, the queue will contain all nodes in the last level of the tree, which could be up to n/2 nodes (in a complete binary tree).
+
+## Alternative Approaches
+
+### Two Queue Approach
+
+Instead of tracking the level size, we can use two queues:
+- One for the current level's nodes
+- Another for the next level's nodes
+
+```python
+def level_order_two_queues(root: Optional[TreeNode]) -> List[List[int]]:
+    if not root:
+        return []
+    
+    result = []
+    current_queue = [root]
+    
+    while current_queue:
+        next_queue = []
+        level_values = []
+        
+        for node in current_queue:
+            level_values.append(node.val)
+            
+            if node.left:
+                next_queue.append(node.left)
+            if node.right:
+                next_queue.append(node.right)
+                
+        result.append(level_values)
+        current_queue = next_queue
+    
+    return result
+```
+
+### Dummy Node Separator Approach
+
+We can use a dummy node (None) as a level separator:
+
+```python
+def level_order_dummy_node(root: Optional[TreeNode]) -> List[List[int]]:
+    if not root:
+        return []
+    
+    result = []
+    level_values = []
+    queue = deque([root, None])  # None as level separator
+    
+    while queue:
+        node = queue.popleft()
+        
+        if node is None:
+            result.append(level_values)
+            level_values = []
+            if queue:  # If there are more nodes to process
+                queue.append(None)
+            continue
+            
+        level_values.append(node.val)
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+    
+    return result
+```
+
+### Recursive Approach
+
+Though less common for level order traversal, we can also use recursion:
+
+```python
+def level_order_recursive(root: Optional[TreeNode]) -> List[List[int]]:
+    result = []
+    
+    def traverse(node, level):
+        if not node:
+            return
+        
+        # If this is a new level, add an empty list
+        if len(result) <= level:
+            result.append([])
+            
+        # Add the current node value
+        result[level].append(node.val)
+        
+        # Recurse on children
+        traverse(node.left, level + 1)
+        traverse(node.right, level + 1)
+    
+    traverse(root, 0)
+    return result
+```
+
+## Applications
+
+- Level order traversal is particularly useful for problems involving tree width, finding specific levels, or zigzag traversal
+- It's often used for serializing and deserializing binary trees
+- It's the basis for algorithms that need to process trees in a breadth-first manner 

@@ -1,3 +1,92 @@
+# Validate Binary Search Tree
+
+## Problem Description
+Given a binary tree, determine if it is a valid binary search tree (BST).
+
+A binary search tree is defined as:
+1. The left subtree of a node contains only nodes with values less than the node's value
+2. The right subtree of a node contains only nodes with values greater than the node's value
+3. Both the left and right subtrees must also be binary search trees
+
+## Examples
+Input:
+```
+    5
+   / \
+  3   7
+ / \ / \
+1  4 6  8
+```
+Output: true
+
+Input:
+```
+    5
+   / \
+  3   7
+ / \ / \
+1  4 2  8
+```
+Output: false
+Explanation: Node 7's left child (2) is less than the root node value (5)
+
+## Solution Approach
+
+### Recursive Range Validation
+1. **Core Idea**
+   - Maintain a valid value range for each node
+   - Recursively validate each node
+   - Pass range constraints top-down
+
+2. **Implementation Details**
+```python
+def validate(node, min_val, max_val):
+    if not node:
+        return True
+        
+    if node.val <= min_val or node.val >= max_val:
+        return False
+        
+    return validate(node.left, min_val, node.val) and \
+           validate(node.right, node.val, max_val)
+```
+
+### Inorder Traversal Method (Optional)
+1. **Core Idea**
+   - BST inorder traversal produces a sorted sequence
+   - Keep track of the previous node's value
+   - Verify if the sequence maintains ascending order
+
+## Complexity Analysis
+- Time Complexity: O(N), each node is visited once
+- Space Complexity: O(H), where H is the height of the tree (recursive stack depth)
+
+## Implementation Key Points
+1. Correctly maintain value ranges
+2. Handle empty node cases
+3. Consider boundary values
+4. Avoid integer overflow
+
+## Common Mistakes
+1. Only validating against parent nodes
+2. Not considering equality cases
+3. Incorrect range validation
+4. Ignoring empty tree cases
+
+## Optimization Strategies
+1. Iterative implementation
+2. Inorder traversal optimization
+3. Early return for invalid cases
+4. Special value handling
+
+## Related Problems
+1. Lowest Common Ancestor in a BST
+2. Kth Smallest Element in a BST
+3. Successor in BST
+4. Recover BST
+
+---
+
 # 验证二叉搜索树
 
 ## 题目描述
