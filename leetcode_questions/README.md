@@ -31,6 +31,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Two Sum Difference / 两数之差 - [Python](array/two_sum_difference/two_sum_difference.py) - [Solution](array/two_sum_difference/two_sum_difference.md)
 - Trapping Rain Water / 接雨水 [LeetCode 42] - [Python](array/trapping_rain_water/trapping_rain_water.py) - [Solution](array/trapping_rain_water/trapping_rain_water.md)
 - Missing Number / 缺失数字 [LeetCode 268] - [Python](array/missing_number/missing_number.py) - [Solution](array/missing_number/missing_number.md)
+- Product of Array Except Self / 除自身以外数组的乘积 [LeetCode 238] - [Python](array/product_except_self/product_except_self.py) - [Solution](array/product_except_self/product_except_self.md)
 
 ## String Processing (字符串处理)
 - Compare Version Numbers / 比较版本号 [LeetCode 165] - [Python](string_processing/compare_version_numbers/compare_version_numbers.py) - [Solution](string_processing/compare_version_numbers/compare_version_numbers.md)
@@ -113,4 +114,6 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Valid Parentheses / 有效的括号 [LeetCode 20] - [Python](string_manipulation/valid_parentheses/valid_parentheses.py) - [Solution](string_manipulation/valid_parentheses/valid_parentheses.md)
 - Integer to English Words / 整数转英文表示 [LeetCode 273] - [Python](string_manipulation/int_to_english_words/int_to_english_words.py) - [Solution](string_manipulation/int_to_english_words/int_to_english_words.md)
 - First Unique Character in a String / 字符串中的第一个唯一字符 [LeetCode 387] - [Python](string_manipulation/first_unique_character/first_unique_character.py) - [Solution](string_manipulation/first_unique_character/first_unique_character.md)
-- Roman to Integer / 罗马数字转整数 [LeetCode 13] - [Python](string_manipulation/roman_to_integer/roman_to_integer.py) - [Solution](string_manipulation/roman_to_integer/roman_to_integer.md) 
+- Roman to Integer / 罗马数字转整数 [LeetCode 13] - [Python](string_manipulation/roman_to_integer/roman_to_integer.py) - [Solution](string_manipulation/roman_to_integer/roman_to_integer.md)
+- Reorder Log Files / 重新排列日志文件 [LeetCode 937] - [Python](string_manipulation/reorder_log_files/reorder_log_files.py) - [Solution](string_manipulation/reorder_log_files/reorder_log_files.md)
+- Most Common Word / 最常见的单词 [LeetCode 819] - [Python](string_manipulation/most_common_word/most_common_word.py) - [Solution](string_manipulation/most_common_word/most_common_word.md) 
