@@ -20,6 +20,8 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 ## Array (数组)
 - Two Sum / 两数之和 [LeetCode 1] - [Python](array/two_sum/two_sum.py) - [Solution](array/two_sum/two_sum.md) ✅
 - Two Sum - All Pairs / 两数之和-所有配对 [LeetCode 1 Variant] - [Python](array/two_sum_multiple_solutions/two_sum_multiple_solutions.py) - [Solution](array/two_sum_multiple_solutions/two_sum_multiple_solutions.md) ✅
+- Word Search / 单词搜索 [LeetCode 79] - [Python](array/word_search/word_search.py) - [Solution](array/word_search/word_search.md) ✅
+- Word Search II / 单词搜索 II [LeetCode 212] - [Python](array/word_search_ii/word_search_ii.py) - [Solution](array/word_search_ii/word_search_ii.md) ✅
 - 3Sum / 三数之和 [LeetCode 15] - [Python](array/three_sum/three_sum.py) - [Solution](array/three_sum/three_sum.md)
 - 3Sum Closest / 最接近的三数之和 [LeetCode 16] - [Python](array/three_sum_closest/three_sum_closest.py) - [Solution](array/three_sum_closest/three_sum_closest.md)
 - Container With Most Water / 盛最多水的容器 [LeetCode 11] - [Python](array/container_with_most_water/container_with_most_water.py) - [Solution](array/container_with_most_water/container_with_most_water.md)
@@ -72,6 +74,11 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Traveling Salesman / 旅行商问题 - [Python](data_structure/traveling_salesman/traveling_salesman.py) - [Solution](data_structure/traveling_salesman/traveling_salesman.md)
 - K Sum II / K数之和 II - [Python](data_structure/k_sum_ii/k_sum_ii.py) - [Solution](data_structure/k_sum_ii/k_sum_ii.md)
 - Letter Combinations / 电话号码的字母组合 [LeetCode 17] - [Python](data_structure/letter_combinations/letter_combinations.py) - [Solution](data_structure/letter_combinations/letter_combinations.md)
+- Design Tic-Tac-Toe / 设计井字棋 [LeetCode 348] - [Python](data_structure/tic_tac_toe/tic_tac_toe.py) - [Solution](data_structure/tic_tac_toe/tic_tac_toe.md)
+- Search Autocomplete System / 搜索自动补全系统 [LeetCode 642] - [Python](data_structure/search_autocomplete/search_autocomplete.py) - [Solution](data_structure/search_autocomplete/search_autocomplete.md)
+- Serialize and Deserialize Binary Tree / 二叉树的序列化与反序列化 [LeetCode 297] - [Python](data_structure/serialize_deserialize_binary_tree/serialize_deserialize_binary_tree.py) - [Solution](data_structure/serialize_deserialize_binary_tree/serialize_deserialize_binary_tree.md)
+- Find Median from Data Stream / 数据流的中位数 [LeetCode 295] - [Python](data_structure/find_median_from_data_stream/find_median_from_data_stream.py) - [Solution](data_structure/find_median_from_data_stream/find_median_from_data_stream.md)
+- Min Stack / 最小栈 [LeetCode 155] - [Python](data_structure/min_stack/min_stack.py) - [Solution](data_structure/min_stack/min_stack.md)
 
 ## Graph (图论)
 - Word Ladder II / 单词接龙 II [LeetCode 126] - [Python](graph_search/word_ladder_ii/word_ladder_ii.py) - [Solution](graph_search/word_ladder_ii/word_ladder_ii.md)
@@ -84,6 +91,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Graph Valid Tree / 图是否是树 [LeetCode 261] - [Python](graph/graph_valid_tree/graph_valid_tree.py) - [Solution](graph/graph_valid_tree/graph_valid_tree.md)
 - Search Graph Nodes / 搜索图中节点 - [Python](graph/search_graph_nodes/search_graph_nodes.py) - [Solution](graph/search_graph_nodes/search_graph_nodes.md)
 - Zombie Matrix / 僵尸矩阵 - [Python](graph/zombie_matrix/zombie_matrix.py) - [Solution](graph/zombie_matrix/zombie_matrix.md)
+- Cut Off Trees for Golf Event / 高尔夫球场砍树 [LeetCode 675] - [Python](graph/cut_off_trees/cut_off_trees.py) - [Solution](graph/cut_off_trees/cut_off_trees.md)
 
 ## Tree (树)
 ### Tree Traversal (树的遍历)
@@ -117,6 +125,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Integer to Roman / 整数转罗马数字 [LeetCode 12] - [Python](string_manipulation/int_to_roman/int_to_roman.py) - [Solution](string_manipulation/int_to_roman/int_to_roman.md)
 - Longest Palindromic Substring / 最长回文子串 [LeetCode 5] - [Python](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.py) - [Solution](string_manipulation/longest_palindromic_substring/longest_palindromic_substring.md)
 - Valid Parentheses / 有效的括号 [LeetCode 20] - [Python](string_manipulation/valid_parentheses/valid_parentheses.py) - [Solution](string_manipulation/valid_parentheses/valid_parentheses.md)
+- Generate Parentheses / 括号生成 [LeetCode 22] - [Python](string_manipulation/generate_parentheses/generate_parentheses.py) - [Solution](string_manipulation/generate_parentheses/generate_parentheses.md) ✅
 - Integer to English Words / 整数转英文表示 [LeetCode 273] - [Python](string_manipulation/int_to_english_words/int_to_english_words.py) - [Solution](string_manipulation/int_to_english_words/int_to_english_words.md)
 - First Unique Character in a String / 字符串中的第一个唯一字符 [LeetCode 387] - [Python](string_manipulation/first_unique_character/first_unique_character.py) - [Solution](string_manipulation/first_unique_character/first_unique_character.md)
 - Roman to Integer / 罗马数字转整数 [LeetCode 13] - [Python](string_manipulation/roman_to_integer/roman_to_integer.py) - [Solution](string_manipulation/roman_to_integer/roman_to_integer.md)
