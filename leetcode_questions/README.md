@@ -38,6 +38,8 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Trapping Rain Water / 接雨水 [LeetCode 42] - [Python](array/trapping_rain_water/trapping_rain_water.py) - [Solution](array/trapping_rain_water/trapping_rain_water.md)
 - Missing Number / 缺失数字 [LeetCode 268] - [Python](array/missing_number/missing_number.py) - [Solution](array/missing_number/missing_number.md)
 - Product of Array Except Self / 除自身以外数组的乘积 [LeetCode 238] - [Python](array/product_except_self/product_except_self.py) - [Solution](array/product_except_self/product_except_self.md)
+- Median of Two Sorted Arrays / 寻找两个正序数组的中位数 [LeetCode 4] - [Python](array/median_of_two_sorted_arrays/median_of_two_sorted_arrays.py) - [Solution](array/median_of_two_sorted_arrays/median_of_two_sorted_arrays.md)
+- K Closest Points to Origin / 最接近原点的 K 个点 [LeetCode 973] - [Python](array/k_closest_points/k_closest_points.py) - [Solution](array/k_closest_points/k_closest_points.md)
 
 ## String Processing (字符串处理)
 - Compare Version Numbers / 比较版本号 [LeetCode 165] - [Python](string_processing/compare_version_numbers/compare_version_numbers.py) - [Solution](string_processing/compare_version_numbers/compare_version_numbers.md)
@@ -131,4 +133,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 - Roman to Integer / 罗马数字转整数 [LeetCode 13] - [Python](string_manipulation/roman_to_integer/roman_to_integer.py) - [Solution](string_manipulation/roman_to_integer/roman_to_integer.md)
 - Reorder Log Files / 重新排列日志文件 [LeetCode 937] - [Python](string_manipulation/reorder_log_files/reorder_log_files.py) - [Solution](string_manipulation/reorder_log_files/reorder_log_files.md)
 - Most Common Word / 最常见的单词 [LeetCode 819] - [Python](string_manipulation/most_common_word/most_common_word.py) - [Solution](string_manipulation/most_common_word/most_common_word.md)
-- Group Anagrams / 字母异位词分组 [LeetCode 49] - [Python](string_manipulation/group_anagrams/group_anagrams.py) - [Solution](string_manipulation/group_anagrams/group_anagrams.md) 
+- Group Anagrams / 字母异位词分组 [LeetCode 49] - [Python](string_manipulation/group_anagrams/group_anagrams.py) - [Solution](string_manipulation/group_anagrams/group_anagrams.md)
+
+## Math
+- Reverse Integer / 整数反转 [LeetCode 7] - [Python](math/reverse_integer/reverse_integer.py) - [Solution](math/reverse_integer/reverse_integer.md) 
