@@ -137,3 +137,7 @@ This repository contains my solutions to LeetCode problems, categorized by algor
 
 ## Math
 - Reverse Integer / 整数反转 [LeetCode 7] - [Python](math/reverse_integer/reverse_integer.py) - [Solution](math/reverse_integer/reverse_integer.md) 
+
+## Linked List
+- Add Two Numbers / 两数相加 [LeetCode 2] - [Python](linked_list/add_two_numbers/add_two_numbers.py) - [Solution](linked_list/add_two_numbers/add_two_numbers.md)
+- Merge Two Sorted Lists / 合并两个有序链表 [LeetCode 21] - [Python](linked_list/merge_two_sorted_lists/merge_two_sorted_lists.py) - [Solution](linked_list/merge_two_sorted_lists/merge_two_sorted_lists.md) 
